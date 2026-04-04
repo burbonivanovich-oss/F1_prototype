@@ -1,0 +1,83 @@
+{
+  "project": {
+    "name": "Autosport Manager 2027",
+    "description": "A PC-based sports management game focused on team management and race tactics",
+    "genre": "Sports Management / Simulation",
+    "version": "0.1.0-preproduction"
+  },
+  "target": {
+    "platforms": ["PC (Windows/Steam)"],
+    "audience": "Core-Hardcore",
+    "audience_details": "Experienced gamers familiar with F1, F2, other motorsports management games",
+    "minage": 16
+  },
+  "scope": {
+    "focus": "Team management & race tactics (no dynamic race simulation)",
+    "core_features": [
+      "Team management (drivers, engineers, staff)",
+      "Tactical race planning (pit strategy, tire strategy)",
+      "Season progression",
+      "Vehicle setup & development",
+      "Career progression system",
+      "Live race monitor (text-based or simplified visuals)"
+    ],
+    "excluded_v1": [
+      "Dynamic race simulation engine",
+      "Multiplayer",
+      "VR support",
+      "Console versions"
+    ]
+  },
+  "timeline": {
+    "preproduction_weeks": 10,
+    "preproduction_target": "2024-06-30",
+    "production_estimate": "24-36 weeks",
+    "alpha_target": "Q4 2024",
+    "beta_target": "Q1 2025",
+    "release_target": "Q2 2025"
+  },
+  "team": {
+    "current_mode": "Full Development (Design Mode focus for pre-production)",
+    "active_agents": [
+      "master_orchestrator",
+      "producer_agent",
+      "market_analyst",
+      "sr_game_designer",
+      "mid_game_designer",
+      "data_scientist",
+      "mechanics_developer",
+      "technical_artist",
+      "ui_ux_agent",
+      "qa_agent"
+    ]
+  },
+  "deliverables": {
+    "phase_1_preproduction": {
+      "gdd": "100+ pages covering all game systems, UI, formulas, AI behavior",
+      "tdd": "Technical architecture, engine choice, platform details, tools",
+      "prototype": "Playable build of 1 race weekend with basic UI",
+      "risk_assessment": "Comprehensive risk list with mitigations",
+      "roadmap": "Weekly breakdown for main production phase"
+    }
+  },
+  "engine": {
+    "options": ["Unity", "Godot", "Unreal"],
+    "recommendation": "Unity (best balance for management UI-heavy game)",
+    "decision_target": "Week 1 of pre-production"
+  },
+  "monetization": {
+    "model": "TBD - Premium/F2P/Season Pass under evaluation",
+    "market_analysis_required": true
+  },
+  "risks": {
+    "high_priority": [
+      "Licensing requirements for F1/motorsport teams and drivers",
+      "AI complexity for realistic team management behavior",
+      "UI performance at scale (many game objects)"
+    ],
+    "medium_priority": [
+      "Save game system complexity",
+      "Balancing competitive fairness vs engagement"
+    ]
+  }
+}
