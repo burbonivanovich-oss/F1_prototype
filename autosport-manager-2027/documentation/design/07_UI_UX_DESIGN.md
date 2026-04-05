@@ -1,7 +1,7 @@
 # PART 7: UI/UX DESIGN
 
 **Comprehensive Interface Design for Autosport Manager 2027**
-**Aligned with F1 2025-2026 Regulations**
+**Aligned with F1 2025-2026 Regulations and Advanced Game Mechanics**
 
 ---
 
@@ -11,1067 +11,616 @@
 
 1. **Information Density**: Deep complexity accessible through progressive disclosure
 2. **Real-Time Feedback**: Immediate visual confirmation of all actions
-3. **Visual Hierarchy**: Championship > Drivers > Performance gaps
+3. **Three-Tier Alerts**: Critical (🔴) vs Attention-needed (🟡) vs Info (🔵)
 4. **Context-Sensitive**: UI adapts to season phase (pre-season/in-season/post-race)
-5. **Color Coding**: Red=critical, Yellow=warning, Blue=info, Gray=neutral
-
-**Modern F1 Aesthetic**:
-- Dark theme (black/dark gray backgrounds)
-- Bright accents (FIA red, team colors)
-- Clean typography, minimalist icons
-- **150-200ms smooth transitions** (optimized for manager responsiveness)
-- Optional instant mode (toggle for experienced players, no animations)
-- Mobile-responsive (desktop primary, tablet secondary)
-- Micro-interactions: hover states, click feedback, loading spinners
+5. **Dark Theme Modern F1 Aesthetic**: Black/dark gray with FIA red and team color accents
+6. **Performance Optimized**: 150-200ms smooth transitions, instant mode toggle for experienced players
 
 **2025-2026 Regulations Implementation**:
-- ✅ Cost Cap $215M (not $135M)
-- ✅ Three-tier prize distribution ($1.6B total)
-- ✅ ATR sliding scale (70-115% by position)
-- ✅ 6 tire compounds with track-dependent life
-- ✅ Realistic pit stop times (1.82-2.5 sec)
-- ✅ No technology token system (budget-based R&D)
-- ✅ Minimum weight 768kg (not 798kg)
+- ✅ Cost Cap $215M with ATR sliding scale (70-115%)
+- ✅ Prize pool $1.6B (75% championship-based, 20% heritage, 5% Ferrari legacy)
+- ✅ Six tire compounds (C1-C6) with track-dependent degradation
+- ✅ Three-phase tire wear: plateau → linear → cliff
+- ✅ Realistic pit stops (1.82-2.5 sec, crew morale-dependent)
+- ✅ Budget-based R&D (no technology tokens)
+- ✅ MGU-K energy management system
+- ✅ Dirty air aerodynamic effects
+- ✅ Engine power modes (Qualifying/Standard/Economy) with reliability impact
+- ✅ Mental load system (driver concentration, not fixed fatigue)
+- ✅ Undercut/Overcut strategy visualization
 - ✅ No fastest lap bonus (removed 2025)
-- ✅ ADUO for power units only (3 checks/season)
-- ✅ CapEx allowance separate from Cost Cap
+- ✅ ADUO checks for power units only (3/season)
 
 ---
 
-## 7.2 MAIN DASHBOARD
+## 7.2 MAIN DASHBOARD ARCHITECTURE
 
-**At-a-glance team status and upcoming priorities**
+**Layout**: Tabbed interface with 5-7 widgets max per tab to prevent cognitive overload.
 
-**Layout**: Tabbed interface with 5-7 primary widgets maximum per tab to avoid cognitive overload.
+### Tab 1: "OVERVIEW" (Always Visible)
 
-### Primary Tab: "OVERVIEW" (Always Visible)
+**Five core widgets:**
 
-Max 5 core widgets:
-
-| Widget | Data | Update Frequency |
+| Widget | Data | Real-time Updates |
 |--------|------|------------------|
-| **Championship Position** | Current standing, points gap to leader | Real-time |
-| **Cash Position** | Available budget, quarterly forecasts | Weekly |
-| **Team Morale** | Overall %, key factors (results/sponsorships) | Race-by-race |
-| **Upcoming Race** | Next GP, date, track, weather forecast | Session-by-session |
-| **Quick Alerts** | Critical items: contract ending, KPI at risk, engine resource low | Real-time |
+| **Championship Position** | Standing, points gap to leader, trend arrow | Race finish |
+| **Financial Status** | Budget remaining ($XXM/$215M), quarterly burn rate, runway forecast | Weekly |
+| **Team Morale** | Overall %, key factors breakdown (results/sponsorship/injuries) | After races |
+| **Upcoming Race** | Track name, date, weather forecast (90-95% accuracy), tire recommendations | 3 days before |
+| **Quick Alerts** | Three-tier system (see 7.2.1 below) | Real-time |
 
-### Secondary Tabs (Accessible but not overwhelming)
+### Tab 2: "SEASON CALENDAR & EVENTS"
 
-**TAB: "R&D & RELIABILITY"**
-| Widget | Purpose |
-|--------|---------|
-| **R&D Status** | Wind Tunnel hrs, CFD units, Active projects count |
-| **Reliability Standing** | Engine resource (X/8 used), DNF risk, power unit aging |
-| **Active Projects** | Overview of 3-5 current development projects |
+**NEW: Comprehensive schedule and deadline management**
 
-**TAB: "TEAM & DRIVERS"**
-| Widget | Purpose |
-|--------|---------|
-| **Driver Performance** | Both drivers: pace rating, morale, contract status |
-| **Department Heads** | 7 leads summary: morale, retention risk, salary info |
-| **Pit Crew Status** | Crew morale, pit stop accuracy avg, training focus |
-
-**TAB: "FINANCE & SPONSORS"**
-| Widget | Purpose |
-|--------|---------|
-| **Cost Cap Health** | $215M limit, current usage %, quarter breakdown |
-| **Sponsor Portfolio** | KPI progress per sponsor, risk indicators |
-| **Prize Money Projection** | Estimated Q4 payment, season-end forecast |
-
-### Quick Action Cards (Overview Tab)
-
-Three primary action cards for fast access to frequent tasks:
-
+**Left Panel - Mini Calendar:**
 ```
-┌─────────────────────────────────┐
-│ 🔧 TEAM MANAGEMENT              │
-│ 3 Directors | 7 Department Heads │
-│ Team Morale: 76% (+2% race)      │
-│ Retention Risk: 1 MEDIUM 🟡      │
-│ [T] VIEW | [G] MANAGE            │
-└─────────────────────────────────┘
-
-┌─────────────────────────────────┐
-│ 📊 R&D PLANNING                 │
-│ Wind Tunnel: 24/72 hrs (33%)     │
-│ CFD Units: 380/1400 (27%)        │
-│ Active Projects: 3               │
-│ [R] PROJECTS | [Ctrl+R] QUICK   │
-└─────────────────────────────────┘
-
-┌─────────────────────────────────┐
-│ 💰 BUDGET REVIEW                │
-│ Cost Cap: $95M / $215M (44%)     │
-│ Cash Reserve: $12.3M             │
-│ Next Payment: $28M (Dec)        │
-│ [B] BUDGET | [Ctrl+B] FORECAST   │
-└─────────────────────────────────┘
+┌─────────────────────────┐
+│ SEASON 2027 (24 Races)  │
+├─────────────────────────┤
+│  ▶ Race 7  19 Apr (SAT) │ ← Current
+│    Race 8  03 May       │
+│    Race 9  17 May       │
+│ ○ PRE-RACE WEEK         │
+│    R&D Deadline: 15 May │
+│    Contract Review: 18 May
+│ ○ POST-RACE WEEK        │
+│    Sponsor KPI Check    │
+│    Financial Report (Q2)│
+└─────────────────────────┘
 ```
 
-**Keyboard Shortcuts** (shown in tooltips, can be customized):
-- `T` = Team Management
-- `R` = R&D Planning  
-- `B` = Budget / Finance
-- `Ctrl+T`, `Ctrl+R`, `Ctrl+B` = Quick filter toggle
-- `Escape` = Back to Overview
+**Right Panel - Upcoming Deadlines & Notes:**
+- Contract expirations (color: red if <2 weeks)
+- Sponsor KPI check dates (yellow warnings if trending below)
+- R&D project completions (green checkmark when done)
+- Cost Cap audit dates (quarterly)
+- ADUO checks (3 total per season, marked by Power Unit supplier)
+
+**Interactive Features:**
+- Drag-and-drop player notes: "Review aero updates post-Monza"
+- Hover-to-expand: Shows full event details
+- Color-coded by type: Red (critical), Yellow (action needed), Blue (info), Green (completed)
+
+### Tab 3: "R&D & RELIABILITY"
+
+| Widget | Purpose |
+|--------|---------|
+| **Active Projects** | List 2-4 current projects: name, progress bar, completion date |
+| **Resource Allocation** | Wind Tunnel hours used/available, CFD units budget, manufacturing capacity |
+| **Engine Resources** | Power unit #1-#3 usage (X/8 races), DNF risk per unit, resource life remaining |
+| **Component Breakthroughs** | Breakthrough innovation tracker: probability %, countdown timer, competitors copying |
+
+### Tab 4: "TEAM & DRIVERS"
+
+**Split into two sections:**
+
+**Section A - Drivers:**
+- Driver 1 & 2: Pace rating, morale %, contract status, injury/fitness, mental load indicator
+- Performance trends: Last 5 races pace comparison, championship points contribution
+
+**Section B - Personnel:**
+- Three Directors: Performance/Engineering/Technical - morale, salary, retention risk
+- Key Department Heads (7): Specialization, morale, workload indicator (🟢 Light / 🟡 Normal / 🔴 Overloaded)
+- Pit Crew: Morale, next race pit stop confidence, training needs
+
+### Tab 5: "FINANCE & SPONSORS"
+
+| Widget | Purpose |
+|--------|---------|
+| **Cost Cap Health** | Visual gauge: $XXM / $215M, quarterly breakdown, quarterly freeze dates |
+| **Runway Forecast** | Projected spend at current rate vs actual limit (see 7.2.6 below) |
+| **Sponsor Status** | Portfolio table: Sponsor name, KPI progress (%), payment schedule |
+| **Prize Money Projection** | Estimated Q4 championship payment based on current standings |
+
+### Tab 6: "LIVE RACE MONITOR" (Active during races only)
+
+**Full-screen race interface with multiple panels:**
+
+**Main Panel (60% of screen):**
+- Track map with live car positions, gap indicators
+- Lap times: Current lap, best lap, delta to leader
+- Pit lane status: Queue, pit stop times
+
+**Right Sidebar - Race Strategy (25%):**
+- Driver instructions quick menu: Push/Attack, Defend, Manage Fuel/Tires, Caution
+- Current settings: MGU-K mode, engine power mode, tire strategy status
+- Weather: Live track temp, rain probability, forecast updates
+
+**Bottom Sidebar - Rival Monitor (15%):**
+- Top 5 competitors with: tire compound (color icon), lap count on tires, pit stop history
+- Projected pit window: "Hamilton → Box Lap 23-25 (soft → medium)"
+- When clicked: Expand to show strategy prediction, fuel load estimate, engine mode
+
+### Tab 7: "DECISIONS & HISTORY"
+
+**NEW: Centralized decision log**
+
+**Features:**
+- Sortable by: Date (race #), Type (R&D/Contracts/Strategy/Sponsorship), Status (Success/In-Progress/Failed)
+- Example entries:
+  ```
+  Race 12 | R&D Start       | Begin "Rear Wing Gen 3"     | In-Progress
+  Race 11 | Contract Signed | Hire Sr. Aerodynamicist     | Success ✅
+  Race 10 | Strategy        | Two-stop (Monza)            | Success ✅
+  Race 9  | Sponsorship     | Negotiated +$5M bonus       | Success ✅
+  Race 8  | R&D Complete    | "Brake Duct Update"         | Success ✅
+  Race 7  | Engineer Leave  | Chief Chassis left team    | Failed ❌ (morale impact)
+  ```
+- Export to CSV: For analytical post-season review
+- Search/filter: By team member, project type, outcome
 
 ---
 
-## 7.3 TEAM MANAGEMENT INTERFACE
+## 7.3 ALERT SYSTEM (Three-Tier)
 
-### Organizational Structure View
+**NEW: Hierarchical notification system replacing flat "Quick Alerts"**
 
-**Three-Director Hierarchy** (Not traditional CTO model):
+### Tier 1: 🔴 URGENT (Red Bell Icon)
+**Must resolve before next race:**
+- Contract expiring in <7 days (with renewal cost/options)
+- Cash position below payroll (projected shortfall in X days)
+- Key director/driver at risk of departure (morale <20%)
+- Cost Cap approaching limit (>90% spent with races remaining)
+- Power unit critical failure risk (DNF >4% remaining races)
 
-```
-TEAM PRINCIPAL
-├─ DIRECTOR OF PERFORMANCE ($600K-$1.2M)
-│  ├─ Chief Race Strategist
-│  ├─ Performance Coach / Driver Development Lead
-│  ├─ Telemetry Lead
-│  └─ Pit Crew Chief
-├─ DIRECTOR OF ENGINEERING ($700K-$1.4M)
-│  ├─ Chief Aerodynamicist
-│  ├─ Chief Structure Engineer (Chassis)
-│  ├─ Head of Manufacturing Operations
-│  └─ Simulator Engineering Lead
-├─ DIRECTOR OF TECHNICAL ($800K-$1.5M)
-│  ├─ Chief Power Unit Engineer (Manufacturers only)*
-│  ├─ Chief Reliability Engineer
-│  └─ Chief Data Officer
-├─ Operations Manager ($300K-$500K)
-└─ HR Manager ($150K-$250K)
+Action required: Pop-up on login, cannot dismiss without action plan
 
-* Non-manufacturer teams: "Engine Integration Lead" ($200K-$300K) instead
-```
+### Tier 2: 🟡 ATTENTION (Yellow Bell Icon)
+**Monitor and plan response:**
+- Sponsor KPI trending below target (championship position slipping, podiums missed)
+- Engineer morale declining (3+ races of low performance, approaching departure)
+- Driver mental load high (15+ laps of sustained attack, error rate increasing)
+- R&D project at risk of delay (manufacturing issues, complexity exceeded estimate)
+- Pit crew morale low (2-3 recent slow stops, team cohesion issue)
 
-### Department Heads Screen
+Action optional: Can schedule meeting/intervention or monitor
 
-**7 Key Leaders Tracked**:
-- Chief Aerodynamicist (Aerodynamics research lead)
-- Chief Power Unit Engineer (Engine/ERS development)
-- Chief Structure Engineer (Chassis/suspension)
-- Chief Reliability Engineer (Durability focus)
-- Head of Manufacturing (Production schedule)
-- Chief Data Officer (Telemetry/strategy)
-- Simulator Engineering Lead (Driver development)
+### Tier 3: 🔵 INFO (Blue Bell Icon)
+**Informational, no action required:**
+- Training completed (skill improvement available)
+- R&D milestone reached (Gen 1 complete, 50% of Gen 2 done)
+- Sponsor bonus earned (KPI exceeded, +$X million)
+- Driver form improving (last 3 races pace +0.2 sec avg)
 
-**Per-Head Display**:
-```
-┌─────────────────────────────────┐
-│ Chief Aerodynamicist            │
-│ Skill: 82/100 | Age: 47         │
-│                                 │
-│ Morale: 78% ▓▓▓▓▓░░░░ -5% DNF  │
-│ Loyalty: 62% ▓▓▓░░░░░░░░       │
-│ Salary: $245K/year              │
-│ Contract: 2024-2026 (expires)   │
-│ Retention Risk: MEDIUM 🟡       │
-│                                 │
-│ [RAISE SALARY] [BONUS] [RETAIN] │
-└─────────────────────────────────┘
-```
+No action required, dismissed by reading
 
-### Team Base Level
-
-**Abstract representation of supporting 45-60 engineers**:
-- Base Level: 1-100 scale
-- Affects: R&D speed, quality, morale
-- Improves via: Hiring reputation, successful projects, morale activities
-- Degrades via: Key departures, failed projects, low morale
-
-### Driver Management Screen
-
-**Driver Salary Scales**:
-| Tier | Pace Range | Salary Range | Examples |
-|------|-----------|--------------|----------|
-| Elite/Stars | 90+ | $50M - $70M | Verstappen, Leclerc |
-| Leaders | 85-89 | $25M - $40M | Norris, Hamilton |
-| Professionals | 78-84 | $10M - $20M | Mid-grid drivers |
-| Rookies | <78 | $2M - $8M | Newcomers/reserves |
-
-**Injury Insurance Option** ($2-3M/season):
-- ✅ Covers driver salary during absence
-- ✅ Covers 75% of lost bonus pool
-- ✅ Reduces championship impact from injuries
-- Display: [PURCHASE INSURANCE] button with cost/benefit analysis
-
-### Pit Crew Management Interface
-
-**New Screen**: Crew composition and training between races
-
-```
-┌──────────────────────────────────────────────┐
-│ PIT CREW MANAGEMENT                          │
-│                                              │
-│ Pit Crew Chief: Marcus (Skill 84, Morale 71%│
-│ Performance: 1.97 sec avg pit stop           │
-│                                              │
-│ CREW COMPOSITION (20 members):                │
-│ ┌─ Car #1 Crew (11 members) ─┐              │
-│ │ Wheel Operators: 4/4 (Morale 72%)          │
-│ │ Fuel / Gun Operators: 2/2 (Morale 68%)     │
-│ │ Support (Jacks, etc): 5/5 (Morale 75%)     │
-│ │ Avg Pit Stop: 1.94 sec                     │
-│ │ [REASSIGN] [TRAIN] [MOTIVATE]              │
-│ └─────────────────────────────────────────┘
-│                                              │
-│ ┌─ Car #2 Crew (9 members) ──┐              │
-│ │ Wheel Operators: 3/4 ⚠️ (Need hire)        │
-│ │ Fuel / Gun Operators: 2/2 (Morale 65%)     │
-│ │ Support (Jacks, etc): 4/5 (Morale 72%)     │
-│ │ Avg Pit Stop: 2.15 sec (suboptimal)        │
-│ │ [HIRE CREW] [REASSIGN] [TRAIN]             │
-│ └─────────────────────────────────────────┘
-│                                              │
-│ TRAINING PROGRAM (between races):            │
-│ [ ] Acceleration drills (-0.05 sec pit)      │
-│ [ ] Coordination training (morale +3%)       │
-│ [SCHEDULE TRAINING] (costs $50K, 3 days)    │
-└──────────────────────────────────────────────┘
-```
-
-**Key Features**:
-- Crew morale affects pit stop time (+/-0.2-0.3 sec)
-- Hiring window: Nov-Feb only
-- Training reduces pit time by 0.05-0.10 sec
-- Reassign crew between cars for races
-- Pit crew bonuses tied to race performance
+**Implementation:**
+- Bell icon in top-right corner shows count of unread alerts by tier
+- Clicking opens sidebar with three sections stacked (Urgent top, scrollable)
+- Mobile-style "swipe to dismiss" for Info tier only
+- Weekly digest email with summary for player convenience
 
 ---
 
-## 7.4 R&D PLANNING INTERFACE
+## 7.4 ENGINEER WORKLOAD & ALLOCATION
 
-### Budget Allocation (No Token System)
-
-**Cost Cap Breakdown**:
-```
-Total In-Cap Budget: $215M
-├─ Personnel (non-drivers): $120M
-├─ R&D Operations: $45M
-│  ├─ Aerodynamics: $15-18M
-│  ├─ Chassis/Suspension: $10-12M
-│  ├─ Reliability: $8-10M
-│  └─ Manufacturing R&D: $8-10M
-├─ Power Unit R&D: $28M (manufacturers only)
-├─ Facility Operations: $12M
-└─ Contingency: $10M
-
-CAPEX (Separate, $45M/4 years = $11.25M/year):
-├─ Wind tunnel upgrades/construction
-├─ Simulator facility improvements
-└─ Equipment replacement
-```
-
-### ATR Allocation Display
-
-**Aerodynamic Testing Resources** (sliding scale by championship position):
+**NEW: Resource Allocation Matrix (replaces vague "team status")**
 
 ```
-Championship  Wind Tunnel    CFD Units    Status
-Position      Hours/Year     /Year
-─────────────────────────────────────────────
-1st place     56 hrs (70%)    1120 (70%)   ⚠️ RESTRICTED
-2nd place     60 hrs (75%)    1200 (75%)   ⚠️ RESTRICTED
-3rd place     64 hrs (80%)    1280 (80%)   ⚠️ RESTRICTED
-4th place     68 hrs (85%)    1360 (85%)   LIMITED
-5th place     72 hrs (90%)    1400 (90%)   LIMITED
-6th-7th       76 hrs (95%)    1540 (95%)   STANDARD
-8th-10th      80 hrs (115%)   1840 (115%)  BONUS ✓
+┌─────────────────────────────────────────────────────────────────────┐
+│ DEPARTMENT RESOURCE ALLOCATION (Live during development)            │
+├─────────────────────┬────────────┬────────────┬──────────┬──────────┤
+│ ENGINEER            │ Aero Gen 3 │ Chassis    │ Driveability   │ FREE  │
+├─────────────────────┼────────────┼────────────┼──────────┼──────────┤
+│ Chief Aero          │ █████████░ │ ░░░░░░░░░░ │ ░░░░░░░░░░     │ 10%  │
+│ Senior Aero #1      │ █████████░ │ ██░░░░░░░░ │ ░░░░░░░░░░     │ 5%   │
+│ Senior Aero #2      │ █████████░ │ ░░░░░░░░░░ │ ░░░░░░░░░░     │ 10%  │
+│ Aerodynamics Intern │ ██████░░░░ │ ░░░░░░░░░░ │ ░░░░░░░░░░     │ 40%  │
+│ Chief Reliability   │ ░░░░░░░░░░ │ ██████░░░░ │ ██████░░░░     │ 20%  │
+│ Chassis Lead        │ ░░░░░░░░░░ │ █████████░ │ ░░░░░░░░░░     │ 10%  │
+│ Drivetrain Spec.    │ ░░░░░░░░░░ │ ░░░░░░░░░░ │ ██████████     │ 0%   │
+├─────────────────────┼────────────┼────────────┼──────────┼──────────┤
+│ TEAM TOTAL LOAD     │ 65%        │ 40%        │ 50%        │ -       │
+└─────────────────────┴────────────┴────────────┴──────────┴──────────┘
+
+🟢 GREEN (20-70% load): Optimal productivity, normal error rate (1-2%)
+🟡 YELLOW (70-90% load): Slight fatigue, error rate up to 3-4%
+🔴 RED (>100% load): OVERLOADED, error rate 6%+, may leave team
+
+Click engineer row to:
+- View full details (specialization, salary, development projects, skill modifiers)
+- Transfer to different project (drag-and-drop, respects skill matching)
+- Request training upgrade (costs money, takes time)
+- Schedule 1-on-1 meeting (morale boost, but takes 1 game week)
 ```
 
-**Visual allocation bar for current season**:
-```
-Wind Tunnel Budget: ████████░░░░░░░░ 24/72 hours (33% used)
-CFD Units Budget:  ███░░░░░░░░░░░░░░ 380/1400 units (27% used)
-```
-
-### R&D Project Dashboard
-
-**Active Projects Display**:
-```
-┌────────────────────────────────────┐
-│ PROJECT: Aero Gen 2 (Floor Package)│
-│ Phase: DEVELOPMENT (Week 6/8)      │
-│ Progress: ████████░░ 75%           │
-│                                    │
-│ Resources Allocated:               │
-│ • Wind Tunnel: 12/20 hours         │
-│ • CFD Units: 200/500 units         │
-│ • Budget: $1.2M / $1.5M (80%)      │
-│                                    │
-│ Expected Gain: +0.18-0.22 sec/lap │
-│ Risk Assessment: MEDIUM 🟡         │
-│ Impact by Track Type:              │
-│   - High speed (Monza): +0.15 sec  │
-│   - Medium (Silverstone): +0.20 sec│
-│   - Technical (Monaco): +0.08 sec  │
-│                                    │
-│ [ACCELERATE] [DEFER] [ABANDON]    │
-└────────────────────────────────────┘
-
-┌────────────────────────────────────┐
-│ PROJECT: ADUO Engine Update (PU)   │
-│ Eligibility: Power Deficit 3.2%    │
-│ Check Deadline: Race 6 (ACTIVE)    │
-│ Status: ✓ APPROVED for development │
-│                                    │
-│ Development: +4 bhp potential      │
-│ Dyno hours: 40/60 allocated        │
-│ Timeline: Ready Race 8             │
-│                                    │
-│ [DEPLOY AT RACE 8]                 │
-└────────────────────────────────────┘
-```
+**Features:**
+- Real-time updates as projects progress
+- Color-coded by load percentage (green/yellow/red)
+- Hover to see error rate impact: "Current 3.2% error → accelerate project 20% = 4.1% error rate"
+- Drag engineers between projects if skills allow (system warns if skill mismatch)
+- Auto-distribution option: System recommends optimal allocation based on project priority
 
 ---
 
-## 7.5 RACE WEEKEND INTERFACE
+## 7.5 RACE INTERFACE: RIVAL MONITOR
 
-### Pre-Race Setup Screen
-
-**Race Schedule (Track-dependent)**:
-
-**Traditional Weekend Format**:
-```
-FRIDAY
-  09:00-10:00  FP1 (60 min)
-  11:30-12:30  FP2 (60 min)
-  
-SATURDAY
-  10:00-10:45  FP3 (45 min)
-  12:00-13:00  Qualifying (Q1, Q2, Q3)
-  📌 PARC FERMÉ ACTIVATED
-  
-SUNDAY
-  09:00 Formation Lap (30 min before race)
-  14:00 RACE START (305 km)
-```
-
-**Sprint Weekend Format** (6 events per season):
-```
-FRIDAY
-  10:00-11:00  FP1 (60 min)
-  12:00-13:00  Qualifying (for Sunday race)
-  
-SATURDAY
-  11:00-11:30  Sprint Qualifying (30 min)
-  14:00 Sprint Race (~25 min)
-  📌 PARC FERMÉ RESET for main race
-  
-SUNDAY
-  09:00 Formation Lap (30 min before race)
-  15:00 RACE START (305 km)
-```
-
-### Tire Strategy Planner
-
-**6 Available Compounds** (3 selected per weekend):
+**NEW: Side panel showing competitor strategies during live race**
 
 ```
-Compound  Grip Level  Degradation  Typical Life  Temp Window
-─────────────────────────────────────────────────────────────
-C6 Ultra-Soft  +0.30 sec  Very high  10-18 laps    Extreme heat
-C5 Soft        +0.25 sec  High       15-25 laps    25-35°C
-C4 Medium      Baseline   Medium     20-35 laps    20-32°C
-C3 Hard        -0.15 sec  Low        30-50 laps    18-28°C
-C2 Super Hard  -0.20 sec  Very low   40-60 laps    <20°C
-C1 Ultra Hard  -0.25 sec  Minimal    50-70 laps    Cold climates
+┌──────────────────────────────────────────────────────────────────┐
+│ RIVAL MONITOR (Expandable/collapsible)                           │
+├──────────────────────────────────────────────────────────────────┤
+│ POS │ DRIVER      │ TIRES  │ LAP STINT │ PIT HISTORY │ FORECAST │
+├─────┼─────────────┼────────┼──────────┼─────────────┼──────────┤
+│ 1   │ L.Hamilton  │🔴Soft │ 8/20 lap │ Lap 10      │ Box 23-26│
+│     │ Mercedes   │ -0.3s  │ Temp:45°C│ Med+Fuel 55kg│ -Pit:2.3s
+│     │            │ Fresh  │ Degr: +1.2s          │ Est Gap: -2s
+├─────┼─────────────┼────────┼──────────┼─────────────┼──────────┤
+│ 2   │ M.Verstap.  │🟡Hard │ 14/25 lap│ Lap 20      │ Box 32-35│
+│     │ Red Bull   │ -0.1s  │ Temp:44°C│ Soft+Fuel 40kg│ -Pit:2.1s
+│     │            │ Worn   │ Degr: +2.0s          │ Est Gap: -0.8s
+├─────┼─────────────┼────────┼──────────┼─────────────┼──────────┤
+│ 3   │ C.Leclerc   │🔵Med   │ 5/18 lap │ Pit Lap 10  │ Box 15-18│
+│     │ Ferrari    │ +0.1s  │ Temp:43°C│ Hard+Fuel 60kg│ -Pit:2.2s
+│     │            │ Peak   │ Degr: +0.5s          │ Est Gap: +1.2s
+├─────┼─────────────┼────────┼──────────┼─────────────┼──────────┤
+│ 4   │ YOU        │🟢Soft  │ 12/22 lap│ (Player)    │ Box 24-27│
+│     │ Your Team  │ FOCUS  │ Temp:45°C│ Lap 12      │ -Pit:2.4s
+│     │            │ Fresh  │ Degr: +0.8s          │ Est Gap: BASE
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-**Track-Specific Degradation Examples**:
-```
-MONACO (High degradation):
-  C5 Soft: 10-15 laps → suggests 2-3 stops
-  C4 Medium: 20-25 laps
-  C3 Hard: 35-40 laps
-  ⚠️ High tire wear circuits
+**Information Breakdown:**
+- **Tire Color Icon**: 🔴 Soft / 🟡 Medium / 🔵 Hard / 🟢 Intermediate / ⚫ Wet
+- **Tire Age**: "Fresh" (1-3 laps) / "Peak" (optimal window) / "Worn" (cliff approaching)
+- **Lap Stint**: Current lap vs expected tire lifespan (e.g., "8/20 lap")
+- **Track Temp**: Affects degradation rate, tire warm-up
+- **Degradation**: Time loss per lap as tires wear
+- **Pit History**: When they pitted, what they pitted to
+- **Forecast**: Predicted pit window (range), expected pit stop time, time gap after pit
 
-MONZA (Low degradation):
-  C5 Soft: 25-30 laps → suggests 1-2 stops
-  C4 Medium: 35-42 laps
-  C3 Hard: 55-65 laps
-  ✓ Low tire wear circuits
-```
+**Interactive Features:**
+- Click row to expand: Full strategy details, fuel calculation, MGU-K mode, engine power mode
+- Hover on "Forecast" to see AI prediction confidence (70-95% accuracy)
+- Color-coded pit stop times based on crew morale (🟢 green = fast, 🔴 red = slow)
+- Auto-update every lap or on major events (pit stop, crash, safety car)
 
-**Strategy Options**:
-- ONE-STOP: C5 → C4 (fast but risky late-race)
-- TWO-STOP: C5 → C4 → C3 (balanced, typical)
-- THREE-STOP: C5 → C4 → C3 → C5 (for extreme degradation, viable at Singapore)
-- RAIN: Intermediate/Wet (ignores compound rule)
+**Data Sources:**
+- Pit stop data: Observed from replay
+- Strategy prediction: Based on fuel load, tire degradation curve, team's typical strategy pattern
+- MGU-K/Engine mode: Inferred from pace changes and fuel consumption rates
 
-### Strategy Templates & Presets
+---
 
-**Quick-Load Strategy Presets** (save/load between races):
+## 7.6 PIT CREW MANAGEMENT INTEGRATION
 
+**NEW: Pit crew status linked to live race performance**
+
+**In Crew Management Screen (before race):**
 ```
 ┌────────────────────────────────────────────┐
-│ RACE STRATEGY PRESETS                      │
+│ PIT CREW #1 READINESS                      │
+├────────────────────────────────────────────┤
+│ Morale: 85% (🟢 Excellent)                │
+│ Pit Stop Avg: 2.15 sec (league avg 2.3)  │
 │                                            │
-│ ⭐ AGGRESSIVE 2-STOP                       │
-│    Tire plan: C5 (8-12L) → C3 (25-30L)    │
-│    Pit Lap: 15 & 32                       │
-│    Driver mode: PUSH until pit, then SAVE │
-│    Risk: High degradation gamble          │
-│    [LOAD] [EDIT] [DELETE]                 │
+│ Mechanics Assigned: 24/24 (Full)           │
+│  ├─ Wheel Operators: 4/4 ✅                │
+│  ├─ Fuel Attendants: 2/2 ✅                │
+│  ├─ Jack Operator: 1/1 ✅                  │
+│  └─ Tire Carriers: 4/4 ✅                  │
 │                                            │
-│ ⭐ CONSERVATIVE 2-STOP                     │
-│    Tire plan: C4 (15-20L) → C4 (20-25L)  │
-│    Pit Lap: 20 & 38                       │
-│    Driver mode: STANDARD, late PUSH       │
-│    Risk: Low, relies on tire advantage    │
-│    [LOAD] [EDIT] [DELETE]                 │
+│ Expected Pit Stop Time (this race):        │
+│  ├─ Soft to Medium change: 2.10 sec       │
+│  ├─ Soft to Hard change: 2.15 sec         │
+│  └─ Refuel 40kg: +0.2 sec (parallel)      │
 │                                            │
-│ ⭐ UNDERCUT SPECIALIST (1-STOP)            │
-│    Tire plan: C5 (18-22L) → C4            │
-│    Pit Lap: 22 (early, catch undercut)    │
-│    Driver mode: PUSH lap 1-21, DEFEND 22+ │
-│    Risk: Medium, depends on pace delta    │
-│    [LOAD] [EDIT] [DELETE]                 │
-│                                            │
-│ [+ NEW PRESET] [SAVE CURRENT]              │
+│ 🎯 Training Focus: Fuel accuracy (+0.05s) │
+│ 💰 Monthly cost: $150K                    │
 └────────────────────────────────────────────┘
 ```
 
-**Custom Preset Creation**:
-- Save current race plan as new template
-- Name it (e.g., "Monaco Wet Contingency")
-- Mark as track-specific or all-purpose
-- Can be auto-loaded for future races at same track
+**During Live Race (in Rival Monitor):**
+- Pit stop times show expected vs actual (if competitor pitted)
+- Player's pit crew shown with: "Your crew: 🟢 2.15s (ready)" 
+- If crew at <70% morale: "⚠️ Pit stop +0.3s penalty expected"
+- Allows player to make tactical pit timing decisions based on crew condition
 
-**Keyboard shortcut**: `P` = Show presets, `P+1/2/3` = Load template 1/2/3
-
-### Live Race Monitor
-
-**On-Track Display**:
-
-```
-Position 2/20  |  Gap to 1st: 0.8s  |  Gap to 3rd: +1.2s
-──────────────────────────────────────────────────────
-
-Lap 18/58      |  15:34 elapsed     |  Est. finish: 17:12
-
-DRIVER #1 (Lewis):
-  Tire: C4 Medium (Lap 8/32 remaining)  │ Status: ✓ HEALTHY
-  Fuel: 28.4 kg (16 laps remaining)     │ Consumption: 1.6 kg/lap
-  Engine: 4/8 PU used (healthy)         │ DRS: ✓ AVAILABLE (0.9s gap)
-  Instruction: STANDARD                 │ Morale: 82%
-
-Next Pit Stop: Lap 26 (8 laps)
-  Plan: Change to C3 Hard, 25 kg fuel
-  Est. time: 2.2-2.4 seconds
-  
-[PUSH] [STANDARD] [DEFEND] [FUEL SAVE] [BOX THIS LAP]
-```
-
-**Race Incidents & Strategy Options**:
-- 🟡 YELLOW FLAG: Sector 1, debris
-- 🔴 SAFETY CAR: Deploy cost analysis
-- ⚠️ WEATHER ALERT: Rain arriving Lap 22-24 (90% confidence ±1 lap)
-- 📊 STRATEGY SUGGESTION: "Pit Lap 25, gain 0.5 sec on undercut"
-
-### Pit Stop Mechanics
-
-**Pit Stop Time Display**:
-```
-Pit Crew Morale: 88% → Excellent execution
-
-Expected pit stop times:
-  Perfect (95%+ morale):    1.82-1.95 sec (record territory)
-  Excellent (85-94%):       1.95-2.1 sec (top team level)
-  Normal (70-84%):          2.2-2.5 sec (standard mid-field)
-  Poor (<70%):              2.8-4.0 sec (errors, fumbles)
-
-Tire Warm-up Penalties:
-  C5 Soft (fresh):    -1.0 sec/lap Lap 1 only
-  C4 Medium (fresh):  -1.5 sec/lap Lap 1
-  C3 Hard (fresh):    -2.0 sec Lap 1, -1.0 sec Lap 2
-  
-  Track temp: 28°C (optimal) = faster warm-up
-  Track temp: 12°C (cold) = +30% warm-up time
-```
-
-### Driver Instructions
-
-**Available Instructions** (No 3-lap Attack limit):
-
-```
-[STANDARD] - Baseline pace, consistent
-
-[PUSH/ATTACK] - Maximize pace, accumulate fatigue
-  • Gain: +0.2-0.3 sec/lap potential
-  • Fatigue accumulates: Lap 4-6 (-0.05 sec), Lap 7+ (-0.10 sec)
-  • Fuel flow risk: Approaches 100 kg/hour limit
-  • Tire wear: +10-15% per lap
-  • Recovery: 5 laps normal pace reduces fatigue 50%
-  
-[DEFEND] - Conservative, block overtakes
-  • Cost: -0.15 sec/lap (focus on defense)
-  • Morale bonus: +5% if successful
-  
-[FUEL SAVE] - Economy mode
-  • Cost: -0.1-0.2 sec/lap + morale -5%
-  • Benefit: Stretches fuel, avoid pit stop
-  
-[CAUTION - WET] - Reduce speed in rain
-  • Cost: Variable based on rain intensity
-  • Morale bonus: +5% (driver feels supported)
-```
-
-### HUD Profile Selection (Customizable Race Display)
-
-**Three Display Modes** (toggle with `H` key during race):
-
-```
-┌─────────────────────────────────────────────────┐
-│ HUD PROFILE SELECTOR                            │
-│                                                 │
-│ ⭐ BEGINNER (Information minimized)             │
-│   Shows: Position, time gap, tire life, fuel   │
-│   Hides: DRS status, morale, engine resource   │
-│   Use for: Learning, relaxed play              │
-│   [ACTIVATE]                                    │
-│                                                 │
-│ ⭐ STANDARD (Balanced - DEFAULT)               │
-│   Shows: Everything below                      │
-│   Use for: Competitive standard F1 experience  │
-│   [ACTIVATE] ✓ ACTIVE                          │
-│                                                 │
-│ ⭐ EXPERT (Full telemetry)                      │
-│   Shows: All data + telemetry, fuel flow rate, │
-│           tire temperature, brake balance      │
-│   Use for: Simulationists, pit crew view       │
-│   [ACTIVATE]                                    │
-│                                                 │
-│ [CUSTOM] → Save current HUD layout as preset   │
-│ [SETTINGS] → Reorder/hide individual panels    │
-│ [INSTANT MODE] ☐ → Toggle animations off      │
-└─────────────────────────────────────────────────┘
-```
-
-**Individual Panel Visibility** (via settings):
-- Pit Stop Timer (always show before pit)
-- Tire Degradation Graph
-- Fuel Usage Calculator
-- Weather Forecast (mini)
-- Driver Morale Indicator
-- Engine Status
+**Post-Race Feedback:**
+- Actual pit stop time logged
+- Crew morale adjusts +/-5% based on performance
+- Individual mechanic ratings updated (faster/slower than baseline)
 
 ---
 
-## 7.6 FINANCE INTERFACE
+## 7.7 FINANCIAL INTERFACE: RUNWAY FORECAST
 
-### Financial Dashboard (Updated)
-
-**Cost Cap Status**:
-```
-╔════════════════════════════════╗
-║  COST CAP TRACKER 2026         ║
-╠════════════════════════════════╣
-║ Total Limit:      $215M        ║
-║ Spent YTD (Races 1-6): $95M    ║
-║ Quarterly Rate:   $15.8M/race  ║
-║ Q3 Forecast:      $110M        ║
-║ Status:           ✓ ON TRACK   ║
-║                                ║
-║ Penalties if over-cap:         ║
-║ • 0-5%:  $0.5-2M fine + 5% ATR║
-║ • 5-10%: $3-5M fine + 10-20%  ║
-║ • >10%:  $10-15M + 25-35% ATR ║
-╚════════════════════════════════╝
-```
-
-### Prize Money Distribution (3-Tier Model)
-
-**$1.6B Annual Prize Pool**:
+**NEW: Predictive spending dashboard**
 
 ```
-Tier 1: Championship Position (75% = $1.2B)
-├─ 1st: $168M (14%)
-├─ 2nd: $162M (13.5%)
-├─ 3rd: $156M (13%)
-├─ 4th: $144M (12%)
-├─ 5th: $132M (11%)
-├─ 6th: $108M (9%)
-├─ 7th: $96M (8%)
-├─ 8th: $90M (7.5%)
-├─ 9th: $84M (7%)
-└─ 10th: $72M (6%)
-
-Tier 2: Heritage/Historical Bonus (20% = $320M)
-├─ Ferrari: $80M (most titles)
-├─ Mercedes: $60M (recent dominance)
-├─ Red Bull: $40M (recent success)
-├─ McLaren: $40M
-└─ Others: Combined $100M
-
-Tier 3: Ferrari Legacy Bonus (5% = $80M)
-└─ Ferrari only: $80M (FIA regulation)
-
-PAID: December (season-end only, not race-by-race)
+┌──────────────────────────────────────────────────────┐
+│ COST CAP HEALTH & RUNWAY FORECAST                   │
+├──────────────────────────────────────────────────────┤
+│ CURRENT SPENDING (Races 1-8)                        │
+│ ├─ Spent YTD: $112M / $215M (52%)                  │
+│ ├─ Monthly run rate: $14M/month                     │
+│ └─ Remaining: $103M for 16 races                    │
+│                                                      │
+│ PROJECTION AT CURRENT RATE:                         │
+│ ├─ If spending continues: $168M by Race 24         │
+│ ├─ Status: ✅ ON TRACK (safe $47M buffer)          │
+│ └─ Risk: 🟢 LOW                                    │
+│                                                      │
+│ SCENARIO MODELING (Click to explore):               │
+│ ├─ IF accelerate R&D +20%:                         │
+│ │  └─ Projected spend: $196M → ✅ Still safe      │
+│ │                                                   │
+│ ├─ IF hire 2 more senior engineers:                │
+│ │  └─ Projected spend: $224M → 🔴 OVER CAP -$9M  │
+│ │                                                   │
+│ └─ IF slow-down manufacturing (save $500K/week):   │
+│    └─ Projected spend: $156M → ✅ Safe (+$59M)   │
+│                                                      │
+│ QUARTERLY BREAKDOWN:                                │
+│ Q1: $28M | Q2: $29M | Q3 (Est): $32M | Q4: $30M   │
+│         (bars show actual/projected)                │
+└──────────────────────────────────────────────────────┘
 ```
 
-### Sponsorship Status
+**Interactive Features:**
+- Slider: "Adjust R&D budget -/+ 30%" → recalculates projection
+- Slider: "Hiring pace" → projects salary impact
+- Slider: "Manufacturing acceleration" → projects production cost
+- All sliders show real-time impact on "Runway" (months of operation remaining)
+- Red threshold line at $215M for visual reference
+- Hovering over quarter shows breakdown: Personnel / R&D / Manufacturing / Operations
 
-**Sponsor Portfolio Display**:
+**Alerts:**
+- 🟢 Safe (>$20M buffer): No action needed
+- 🟡 Caution (5-20M buffer): Monitor Q3-Q4, consider cost cuts
+- 🔴 Critical (<5M buffer or >$215M): Urgent action required, suggest specific cuts
+
+---
+
+## 7.8 RACE STRATEGY SETUP
+
+**Pre-race pit stop strategy planner:**
+
 ```
-┌──────────────────────────────────┐
-│ ORACLE ENERGY (Title Sponsor)     │
-│ Contract Value: $65M/year         │
-│ Status: Active (2024-2026)        │
-│                                  │
-│ KPI PROGRESS (Target: Top 3):    │
-│ Championship Position: 4th 🟡    │
-│ Podium Target: 5 podiums         │
-│ ├─ Achieved: 3 (60%)             │
-│ Wins Target: 2 wins              │
-│ ├─ Achieved: 1 (50%)             │
-│ Brand Exposure: 78% of target     │
-│                                  │
-│ Year-End Adjustment:             │
-│ • Base: $65M (full payment)      │
-│ • KPI Adjustments: -$4M (4th)    │
-│ • Final: $61M expected           │
-│                                  │
-│ Risk Level: MEDIUM 🟡            │
-└──────────────────────────────────┘
-
-Championship Series Sponsor:
-  📊 Nestlé (KitKat): $6.4M share
-  (40% equal + 30% position + 30% home market)
+┌──────────────────────────────────────────────────────────┐
+│ RACE STRATEGY: Monza (24 Laps to pit stop window)       │
+├──────────────────────────────────────────────────────────┤
+│ DRIVER: Car #44 (Your Primary)                          │
+│                                                          │
+│ TIRE STRATEGY: TWO-STOP                                │
+│ ├─ Stint 1: Soft (Laps 1-11)                           │
+│ │  └─ Condition at 11 laps: Worn, -1.3 sec/lap        │
+│ │                                                       │
+│ ├─ Pit Stop 1: Lap 12 (expected)                       │
+│ │  ├─ Soft → Medium change: 2.1 sec                    │
+│ │  ├─ Fuel: 50 kg (lasts 13 laps)                      │
+│ │  └─ Risk: Standard pit crew, weather OK             │
+│ │                                                       │
+│ ├─ Stint 2: Medium (Laps 13-26) [3+ extra laps]      │
+│ │  └─ Condition at 26 laps: Cliff phase, -2.0 sec/lap│
+│ │                                                       │
+│ └─ Pit Stop 2: Lap 27 (expected)                       │
+│    ├─ Medium → Hard change: 2.1 sec                    │
+│    ├─ Fuel: 30 kg (last 4 laps to finish)            │
+│    └─ Risk: High fuel flow approaching limit          │
+│                                                        │
+│ ENGINE POWER MODE:                                     │
+│ ├─ Laps 1-5: Standard (preserve power units)          │
+│ ├─ Laps 6-22: Standard (normal pace)                  │
+│ └─ Laps 23-24: Qualifying mode (2/8 laps) if needed  │
+│                                                        │
+│ MGU-K STRATEGY:                                        │
+│ ├─ Recovery: Medium mode (0.8 MJ per lap)             │
+│ └─ Deployment: Medium (continuous +0.2 sec/lap)      │
+│                                                        │
+│ RISK ASSESSMENT:                                       │
+│ ├─ Weather: ✅ Dry (high confidence)                  │
+│ ├─ Safety Car: Yellow flag risk 15% (normal)         │
+│ └─ Competitor Strategy: Undercut possible Lap 10-12  │
+│                                                        │
+│ [VIEW COMPETITOR STRATEGIES] [SAVE TEMPLATE]         │
+└──────────────────────────────────────────────────────────┘
 ```
 
-**Market Growth Mechanic**:
-- Baseline: 5-10% annual sponsor value increase
-- Championship winners: +15-20% increase next year
-- New entrants: Ramp up over 3 years
-- Market reference: Grew $677M → $2.04B (2020-2024)
+**Features:**
+- Visual tire degradation curve showing when cliff phase begins
+- Fuel calculation: Shows fuel remaining after each pit stop
+- Engine power budget tracker (Qualifying mode limited to 8-10 laps/race)
+- MGU-K mode selector with expected lap time gain/loss
+- Risk flags for weather changes, safety car probability
+- Compare to competitor strategies (undercut/overcut warnings)
+- Save template: Reuse similar strategies for comparable tracks
 
-### Injury Insurance Option
+---
+
+## 7.9 ONBOARDING & TUTORIALS
+
+**NEW: Visual guided tour system (replaces text-heavy tutorial)**
+
+**Mode: "Interactive First-Time Setup"**
+1. Game loads → Guided tour offered (skip option available)
+2. Hover highlighting: Pink glow around suggested element
+3. Floating tooltip: "Click the R&D tab to set up your development projects" (with pointer arrow)
+4. After action: Confirmation checkmark, "✅ Great! Now let's..."
+5. Auto-advance after 10 player actions (or manual "Next" click)
+
+**Tour Sequence (5-7 minutes):**
+1. Overview dashboard: Where to find key info
+2. R&D setup: Choose first project (e.g., "Aero Gen 1")
+3. Team management: Assign engineers to projects
+4. Race strategy: Set up tire/fuel plan for Race 1
+5. Finance: View Cost Cap status and sponsorship
+6. Race monitor: Simulate live race with paused time (practice)
+7. Results: View post-race report
+
+**Advanced Features:**
+- Replay any tour section from "Help" menu
+- Context-sensitive help (F1 key) on any screen shows relevant tutorial segment
+- "Learning mode" toggle: Shows helpful hints on unusual actions ("Assigning 5+ engineers to one project will cause overload →")
+
+---
+
+## 7.10 KEYBOARD SHORTCUTS & HOTKEYS
+
+**Power user optimizations:**
 
 ```
 ┌──────────────────────────────────┐
-│ DRIVER INJURY INSURANCE           │
-│ Cost: $2.5M / driver / season    │
-│                                  │
-│ Coverage:
-│ ✓ Salary during absence          │
-│ ✓ 75% bonus pool replacement     │
-│ ✓ Reduced championship impact    │
-│                                  │
-│ Without Insurance:
-│ - 4-race injury = -$9M+ impact   │
-│ - Next season: -$24M prize impact│
-│                                  │
-│ ROI: Recommended for top drivers │
-│ [PURCHASE] [DECLINE]             │
+│ PRIMARY HOTKEYS (Available)      │
+├──────────────────────────────────┤
+│ T    → Team Management           │
+│ R    → R&D Projects              │
+│ B    → Budget/Finance            │
+│ P    → Race Strategy / Pit setup  │
+│ H    → Decision History           │
+│ N    → Notifications (Alerts)    │
+│ ?    → Help / Hotkey menu        │
+│ Esc  → Close popup/sidebar       │
+│ Ctrl+S → Save game               │
+│ Ctrl+Z → Undo last decision      │
+│ Ctrl+Y → Redo                    │
+├──────────────────────────────────┤
+│ IN-RACE HOTKEYS (During race)    │
+├──────────────────────────────────┤
+│ Space   → Pause race             │
+│ A       → Attack instruction     │
+│ D       → Defend instruction     │
+│ F       → Manage Fuel/Tires      │
+│ W       → Caution (weather)      │
+│ X       → Box (pit stop)         │
+│ M       → MGU-K mode selector    │
+│ E       → Engine power mode      │
+│ R       → Rival Monitor toggle   │
+│ V       → View strategy      │
+│ Spacebar → Pause/resume          │
 └──────────────────────────────────┘
 ```
 
----
-
-## 7.7 RACE RESULTS & POST-RACE
-
-### Race Result Summary
-
-```
-╔════════════════════════════════╗
-║  RACE 8 RESULT - BELGIUM       ║
-╠════════════════════════════════╣
-║ Position:     3rd              ║
-║ Championship Points: +15       ║
-║ Prize Money (season-end):      ║
-║   • 4th place in championship  ║
-║   • Estimated total: $144M     ║
-║ Podium Bonus:    $250K         ║
-║ Sponsor KPI:     Podium count  ║
-║ Driver Morale:   +5% (podium)  ║
-║ Team Morale:     +8%           ║
-╚════════════════════════════════╝
-```
-
-### Driver Performance Breakdown
-
-```
-CAR #1 (Lewis)
-Pace Rating: 92/100
-Racecraft Rating: 88/100 (+2 from race decisions)
-Lap Time Avg: 1:47.3 (0.1 sec off winning pace)
-Best Lap: 1:47.1
-Tire Management: ✓ Excellent
-Fuel Management: ✓ Excellent
-Attack Mode Usage: 6 laps (within limits)
-Driver Fatigue: 22% (accumulated)
-Morale: 85% → 90% (+5% podium)
-```
-
-### Dynamic Rating Updates
-
-```
-DRIVER DEVELOPMENT (Post-race):
-• Lewis - Pace: 92 → 92 (stable)
-         Racecraft: 88 → 90 (+2 from 3 successful overtakes)
-         Consistency: 85 → 86 (+1 from clean race)
-
-• Partner - Pace: 78 → 78 (stable)
-           Racecraft: 72 → 71 (-1 from early mistake)
-           Consistency: 80 → 79 (-1 from off-track)
-```
+**Customization:**
+- Players can reassign hotkeys in Settings
+- Profiles for different playstyles (aggressive/conservative)
+- Macro creation: "Aggressive attack" = Ctrl+1 → A+Engine Qualy+MGU-K high
 
 ---
 
-## 7.8 CONSISTENCY STANDARDS
+## 7.11 PERFORMANCE & ACCESSIBILITY
 
-### Updated Terminology
+**Technical Optimization:**
+- Animations: 150-200ms transitions (toggle "instant mode" for 0ms for competitive play)
+- Rendering: Optimized for 1440p@60fps, scales to 4K
+- Save/load: <2 second state transition
+- Data updates: Real-time for race data, batched for other metrics (weekly/race frequency)
 
-| Old Term | New Term | Notes |
-|----------|----------|-------|
-| Tokens | Budget Allocation | Wind tunnel hours/CFD units from $215M cap |
-| Gen 1.5 | Evolution | Minor improvement (4-10 weeks R) |
-| Gen 2 | Major Update | Significant improvement (6-10 weeks R) |
-| Gen 3 | (Removed) | No longer exists in game |
-| 52 Engineers | 7 Leads + Team Base | Realistic org structure |
-| FP4 | (Removed) | Doesn't exist in real F1 post-2022 |
-| Warm-Up | (Removed) | Cancelled in 2003 real F1 |
-| Race-by-race prizes | Season-end payout | All paid in December |
-| Fastest lap bonus | (Removed) | Abolished 2025 |
-| $135M Cost Cap | $215M Cost Cap | Updated for 2026 |
-| 5 tire compounds | 6 compounds (C1-C6) | Track-dependent life |
-
-### Visual Indicators
-
-```
-R&D Status:
-  🔵 Blue    = Evolution project
-  🟠 Orange  = Major Update project
-  🟡 Yellow  = Research phase
-  🟢 Green   = Development phase
-  ⚫ Gray    = Abandoned/paused
-
-Resource Tracking:
-  🔷 Cyan   = Wind tunnel hours used
-  🟣 Purple = CFD units used
-  💵 Green  = Budget available
-  💵 Red    = Over budget alert
-
-Driver/Team Status:
-  🔴 Red    = Critical (morale <30%, injury, etc.)
-  🟡 Yellow = Warning (morale 30-60%, medium risk)
-  🔵 Blue   = Information (normal activity)
-  ⚪ Gray   = Neutral (no action needed)
-
-Performance:
-  ↑ Green arrow   = Improved
-  ↓ Red arrow     = Declined
-  → Gray arrow    = Stable
-```
+**Accessibility:**
+- WCAG AA compliant (min 4.5:1 contrast ratio)
+- Color-blind modes: Deuteranopia, Protanopia (red-green) + Monochromacy
+- Text scaling: 100%-200% (all UI responsive)
+- Screen reader support: Semantic HTML, ARIA labels
+- Dyslexia-friendly font option (OpenDyslexic available)
 
 ---
 
-## 7.9 EVENTS & NOTIFICATIONS SYSTEM
+## 7.12 ERROR HANDLING & CONFIRMATIONS
 
-**Unified Notification Center** (accessible via `N` key or inbox icon):
+**Smart confirmation system:**
 
-```
-┌──────────────────────────────────────────┐
-│ INBOX (5 UNREAD MESSAGES)                │
-├──────────────────────────────────────────┤
-│                                          │
-│ 🔴 CRITICAL                             │
-│ └─ Contract Expiration (3 days)          │
-│    Director of Engineering expires       │
-│    Race 8. Offer renewal? +$50K/year     │
-│    [RENEW NOW] [NEGOTIATE] [DISMISS]     │
-│                                          │
-│ 🟠 WARNING                               │
-│ └─ KPI At Risk (Sponsor: TechCorp)       │
-│    Current: 45% / Target: 60%            │
-│    Deadline: Race 9 (2 races left)       │
-│    [REVIEW KPI] [STRATEGY] [DISMISS]     │
-│                                          │
-│ ├─ ADUO Development Window Opens         │
-│    Your team eligible for power check    │
-│    3 checks per season, next: Race 6     │
-│    [APPROVE DEVELOPMENT] [DISMISS]       │
-│                                          │
-│ 🔵 INFORMATIONAL                        │
-│ └─ Driver Morale Update: Lewis +8%       │
-│    Reason: Podium celebration            │
-│                                          │
-│ └─ Pit Crew Training Completed           │
-│    Average pit stop: 1.96 sec (-0.15s)   │
-│                                          │
-│ [MARK ALL AS READ]                       │
-└──────────────────────────────────────────┘
-```
+**Automatic (no confirmation needed):**
+- Assigning engineer to project (reversible via undo)
+- Changing team meeting schedule
+- Adjusting R&D budget sliders
 
-**Event Calendar** (accessible from sidebar):
-- Contract renewals (color-coded by department)
-- ADUO check deadlines
-- Sponsor KPI milestones
-- R&D project completions
-- Hiring windows (Nov-Feb highlighted)
+**One-click confirmation (yellow warning):**
+- Offering contract extension (locks salary, can renegotiate later)
+- Starting major R&D project (significant cost, long timeline)
+- Changing pit strategy before race day
 
-**Notification Settings**:
-- Toggle critical alerts: On/Off
-- Email digest frequency: Daily/Weekly/Off
-- Sound effects: On/Off
-- Desktop notifications: On/Off
+**Two-step confirmation (red critical):**
+- Firing engineer/director (permanent, morale hit)
+- Accepting sponsor that requires high KPI (breach = financial penalty)
+- Selling power unit to competitor (confidentiality risk)
+
+**Undo System:**
+- Last 20 actions can be undone
+- Undo stack shown in Decision History
+- Undoing a race result resets that race's progression (warns player)
 
 ---
 
-## 7.10 ONBOARDING & TOOLTIP SYSTEM
+## 7.13 VISUAL DESIGN SPECIFICATIONS
 
-**Interactive Tutorial (First Race)**:
+**Color Palette:**
+- Dark background: #0A0E27 (night sky)
+- Accent primary: #DC143C (FIA red)
+- Success: #00D084 (bright green)
+- Warning: #FFB800 (amber)
+- Critical: #FF1744 (deep red)
+- Neutral: #808080 (gray)
+- Team colors: Primary team color + secondary (respect for visual identity)
 
-```
-┌──────────────────────────────────────────┐
-│ WELCOME TO AUTOSPORT MANAGER 2027        │
-│                                          │
-│ 📚 TUTORIAL STEPS (3/8)                  │
-│                                          │
-│ ✓ 1. Dashboard overview (5 min)          │
-│ ✓ 2. Team structure (3 min)              │
-│ ▶ 3. R&D Planning (current)              │
-│    [HIGHLIGHT] [SKIP] [DETAILS]         │
-│                                          │
-│ Next steps:                              │
-│  4. Race weekend setup                   │
-│  5. Finance management                   │
-│  6. Live race control                    │
-│  7. Post-race analysis                   │
-│  8. Season progression                   │
-│                                          │
-│ [CONTINUE] [EXIT TUTORIAL] [RESTART]     │
-└──────────────────────────────────────────┘
-```
+**Typography:**
+- Headers: Inter Bold, 18-24pt
+- Body: Inter Regular, 14pt
+- Data: IBM Plex Mono (numbers/stats), 12pt
+- Line height: 1.5 (readability)
 
-**Contextual Tooltips** (Hover on any unfamiliar term):
-- ADUO: "Aerodynamic Development Upgrade Option - 3 annual power unit checks for manufacturers"
-- ATR: "Aerodynamic Testing Resources - sliding scale 70-115% based on championship position"
-- CFD: "Computational Fluid Dynamics - simulations using allocated units (1400 max/year)"
-- CapEx: "Capital Expenditure - separate $45M/4 years for facility improvements"
-- Cost Cap: "$215M annual limit for personnel, R&D, power unit R&D, facilities"
+**Icons:**
+- Tire compounds: Color-coded circles (red=soft, yellow=medium, blue=hard)
+- Status indicators: 🟢 Good / 🟡 Caution / 🔴 Critical (emoji for clarity)
+- Actions: "+" (add), "=" (adjust), "×" (remove), "→" (navigate)
 
-**Glossary Screen** (accessible via `?` key):
-- Full alphabetical reference of all game terms
-- Cross-links to related concepts
-- Search function to find definitions quickly
-- Print-friendly PDF option
-
-**Learning Mode** (Optional):
-- AI hints suggest optimal decisions ("Consider early pit stop to gain undercut")
-- Explanations for system interactions
-- Disable for experienced players
+**Micro-interactions:**
+- Button hover: Background darkens 10%, slight scale 1.05x
+- Click feedback: 50ms press animation
+- Loading: Pulsing spinner with "Loading race data..." text
+- Toast notifications: Slide in from top, auto-dismiss after 3 seconds
+- Tooltips: Appear on 300ms hover, fade out on mouse leave
 
 ---
 
-## 7.11 UNDO/REDO & ACTION CONFIRMATION
+## 7.14 MOBILE/RESPONSIVE DESIGN NOTES
 
-**Confirmation Dialogs** (for expensive/irreversible actions):
+**Note**: Primary design is desktop-focused. Tablet responsiveness achievable but mobile app explicitly out of scope per requirements.
 
-```
-For FIRING an engineer:
-┌─────────────────────────────────────┐
-│ ⚠️  CONFIRM DISMISSAL               │
-│                                     │
-│ You are about to terminate:         │
-│ Chief Aerodynamicist ($245K/year)   │
-│                                     │
-│ Consequences:                       │
-│ • Loss of expertise (-5 R&D speed)  │
-│ • Severance cost: $200K             │
-│ • Team Base Level: -10%             │
-│ • Replacement hiring: 3 months      │
-│                                     │
-│ Is this correct?                    │
-│                                     │
-│ [CONFIRM] [CANCEL] [ALTERNATIVE]    │
-└─────────────────────────────────────┘
-```
-
-**Action History** (Between races only):
-- Last action only can be undone with `Ctrl+Z`
-- Redo with `Ctrl+Y`
-- Action list shows: "Spent $2.5M on research", "Hired Chief Reliability Engineer", "Dismissed pit crew member"
-
-**Undo Limitations**:
-- Cannot undo during active race (to prevent exploit)
-- Can undo between-race decisions during pause mode
-- Cannot undo past 1 action (prevents save-scumming)
-
-**Cancellations**:
-- In-progress R&D projects can be paused/stopped with cost
-- Contracts can be broken (penalties apply)
-- Hiring offers can be withdrawn
+**Desktop breakpoints:**
+- 1920px+ (4K): Full-width panels, additional context sidebars
+- 1440px (QHD): Standard view, optimized layout
+- 1024px (iPad landscape): Collapsible sidebars, stacked widgets
 
 ---
 
-## 7.12 SMART FILTERS & ADVANCED VIEWS
+## 7.15 FUTURE INTERFACE EXTENSIBILITY
 
-**R&D Projects View with Filters**:
-
-```
-FILTER CONTROLS:
-[PROJECT TYPE] [RISK] [TIMELINE] [ROI] [STATUS]
-
-Current filters: TYPE=Aero, RISK=Medium, STATUS=Active
-
-Sort by:  ⬇ Deadline | Expected Gain | Risk/Reward | Budget
-
-RESULTS (2 matching projects):
-────────────────────────────────────────────
-1. Aero Package Update
-   Status: Development (60% complete)
-   Timeline: 6 weeks | Risk: Medium 🟡
-   Budget: $1.2M / $1.5M allocated
-   Expected gain: +0.20 sec/lap
-   ROI: Good (completes before Race 8)
-   [VIEW DETAILS] [ACCELERATE] [DEFER]
-
-2. Slot Gap Optimization
-   Status: Research (30% complete)
-   Timeline: 4 weeks | Risk: Medium 🟡
-   Budget: $400K / $800K allocated
-   Expected gain: +0.05 sec/lap (low impact)
-   ROI: Poor (low gain, late delivery)
-   [VIEW DETAILS] [ACCELERATE] [ABANDON]
-────────────────────────────────────────────
-```
-
-**Finance View Smart Filters**:
-- Filter by department (Personnel, R&D, Facilities, etc.)
-- Sort by spend (highest to lowest)
-- Show only Over-Budget items
-- Group by cost tier
-
-**Driver Market Filters** (when hiring):
-- Filter by skill range (70-90)
-- Sort by salary demand
-- Show only available drivers
-- Aging/Contract status indicators
+**Plugin/mod readiness:**
+- CSS variable system for complete theme customization
+- Plugin API for custom widgets (e.g., "Driver market analysis", "Component cost optimizer")
+- Import/export game data in JSON format for custom tools
+- Webhook support for third-party integrations (spreadsheet sync, Discord notifications)
 
 ---
 
-## 7.13 ACCESSIBILITY IMPROVEMENTS
-
-**Color-Blind Friendly Design**:
-- All color indicators ALSO have icons/symbols
-  - Red → ⚠️ (warning/critical)
-  - Yellow → ⚡ (caution/medium)
-  - Green → ✓ (success/good)
-  - Blue → ℹ️ (information)
-
-**Text Contrast**:
-- WCAG AA standard minimum (4.5:1)
-- Dark text on light backgrounds in tutorials
-- Light text on dark backgrounds in main UI
-
-**Keyboard Navigation**:
-- Tab to navigate all elements
-- Enter to confirm, Escape to cancel
-- Arrow keys to scroll lists
-- Alt+key shortcuts for menu items (Alt+T = Team, Alt+R = R&D, Alt+B = Budget)
-
-**Font & Size Options**:
-- Adjustable UI scaling (90%-130%)
-- Dyslexia-friendly font option (Comic Sans MS or OpenDyslexic)
-- Line-height adjustment for readability
-
-**Audio Cues**:
-- Optional sound effects for notifications
-- Distinct sounds for different alert types
-- Volume control in settings
+**END OF PART 7: UI/UX DESIGN**
 
 ---
 
-## 7.14 GAME DESIGN EVALUATION & IMPROVEMENTS
+**Summary of F1 2025-2026 Compliance:**
+This UI design comprehensively integrates all game mechanics from Parts 2-6:
+- Cost Cap ($215M) with Runway Forecast
+- Prize distribution ($1.6B annual)
+- 6-tire compound system with visual wear tracking
+- MGU-K energy management with driver controls
+- Dirty air effects (shown in Rival Monitor)
+- Engine power modes (Qualifying/Standard/Economy) with reliability linkage
+- Pit crew morale impact on pit stop times
+- Mental load system for drivers (concentration tracking)
+- Undercut/Overcut strategy visualization
+- ADUO checks and Power Unit resource management
+- Three-tier alert system for critical vs information alerts
+- Decision history logging for post-race analysis
 
-### Current Implementation vs Game Dev Standards
-
-| Principle | Rating | Status | Improvement |
-|-----------|--------|--------|-------------|
-| **Clarity** | ✅ Good | All metrics labeled & color-coded | Add glossary tooltips (DONE) |
-| **Feedback** | ⚠️ Medium → **✅ Good** | Added micro-interactions, loading states | Reduce animation to 150-200ms (DONE) |
-| **Consistency** | ✅ Good | Repeated patterns maintained | Added visual icon+color redundancy (DONE) |
-| **Efficiency** | ❌ Poor → **⚠️ Medium** | Hotkeys & presets added | Need drag-drop widget reorder |
-| **Error Forgiveness** | ❌ Weak → **✅ Good** | Added undo/redo & confirmations | Prevent 1-click disasters (DONE) |
-| **Accessibility** | ⚠️ Medium → **✅ Good** | Color + icons, keyboard nav, text sizing | Full WCAG AA compliance (DONE) |
-| **PC Optimization** | ✅ Good | Retained for mouse/keyboard | Added HUD customization (DONE) |
-
-### Implementation Priorities
-
-**Phase 1 (Core - IMPLEMENTED):**
-- ✅ Reduce animation timing (150-200ms)
-- ✅ Add quick command system (hotkeys)
-- ✅ Tabbed dashboard (5-7 blocks max)
-- ✅ Strategy templates/presets
-- ✅ Events/notifications system
-- ✅ Pit crew management interface
-- ✅ HUD profiles (beginner/standard/expert)
-- ✅ Undo/redo & confirmations
-- ✅ Tooltips & onboarding
-- ✅ Accessibility (color + icons + keyboard)
-- ✅ Smart filters
-
-**Phase 2 (Polish - FUTURE):**
-- Drag-drop widget customization
-- Video tutorials for complex systems
-- AI assistant suggestions during play
-- Advanced telemetry visualizations
-- Replay system for analyzing decisions
-- Achievement/challenge system
-
-### Feedback Loop
-
-**Player Telemetry to Track**:
-- Average time per menu navigation
-- Hotkey adoption rate (% of players using shortcuts)
-- Preset usage (save/load frequency)
-- Undo/redo usage (detect frustration patterns)
-- Tooltip click-through (identify unclear terms)
-- Accessibility setting usage
-
----
-
-## 7.15 RESPONSIVE DESIGN
-
-**Desktop (Primary)**:
-- Full-width dashboard with all widgets visible
-- Drag-and-drop widget rearrangement
-- Multi-panel sidebar navigation
-
-**Tablet**:
-- 2-column layout
-- Scrollable dashboard sections
-- Simplified sidebar (hamburger menu)
-
-**Mobile** (Limited):
-- Single-column layout
-- Essential widgets only
-- Touch-optimized buttons
-
----
-
-**[END OF PART 7: UI/UX DESIGN]**
-
-## COMPREHENSIVE SUMMARY
-
-This refined UI/UX design incorporates all 2025-2026 F1 regulations with professional game design improvements addressing 12 major design principles. Implementation prioritizes:
-
-**Phase 1 Complete (11 Core Improvements)**:
-- ✅ Optimized animation timing (150-200ms with instant mode)
-- ✅ Intelligent dashboard layout (tabbed, 5-7 blocks max)
-- ✅ Complete hotkey system for rapid navigation
-- ✅ Strategy template system with save/load presets
-- ✅ Unified notification and event center
-- ✅ Pit crew management and training interface
-- ✅ HUD customization profiles for all skill levels
-- ✅ Full undo/redo with intelligent confirmations
-- ✅ Interactive tutorial and comprehensive tooltips
-- ✅ Full accessibility compliance (icons, keyboard, text sizing)
-- ✅ Smart filtering and sorting across all views
-
-**Result**: Balances authentic F1 complexity with intuitive player control, suitable for casual fans and hardcore simulationists alike.
-
+**Key Improvements Over Previous Version:**
+1. ✅ Added "Season Calendar & Events" tab (deadline management)
+2. ✅ Split alerts into 3 tiers (Urgent/Attention/Info)
+3. ✅ Engineer Resource Allocation Matrix (visual workload tracking)
+4. ✅ Rival Monitor side panel (competitor strategy tracking)
+5. ✅ Pit crew status integration (live race performance link)
+6. ✅ Financial Runway Forecast (predictive spending model)
+7. ✅ Visual guided tours (onboarding without text walls)
+8. ✅ Decision history log (central decision repository)
+9. Removed mobile app discussion (desktop primary)
