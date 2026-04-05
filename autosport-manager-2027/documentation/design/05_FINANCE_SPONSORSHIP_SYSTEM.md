@@ -130,7 +130,7 @@ No performance bonuses (typical for smaller sponsors)
 | Casual Gaming | Minor | $1.5M | Social engagement |
 | Various Small | Minor | $3M | Minimal KPIs |
 
-**Total Sponsorship**: $78M/year (54% of $145M Cost Cap)
+**Total Sponsorship**: $78M/year (54% of $135M Cost Cap)
 **Range of Outcomes**: $65M (poor season) to $85M (championship-winning season)
 
 ### 5.2.3 Sponsorship Crisis Mechanics
@@ -256,7 +256,7 @@ Your Team Q2 TV Revenue:
 
 ### 5.3.1 Cost Cap Breakdown (Revisited with Detail)
 
-Total Annual Budget: $145M
+Total Annual Budget: $135M
 
 | Category | Budget | Monthly Rate | Notes |
 |----------|--------|------------|--------|
@@ -374,7 +374,7 @@ DECEMBER (Q4 + Off-Season):
 
 ANNUAL SUMMARY:
   Total Income: $120M (sponsorship) + $30M (prize) + $6M (TV) = $156M
-  Total Expenses: $145M (Cost Cap hard limit)
+  Total Expenses: $135M (Cost Cap hard limit)
   Net Profit: +$11M (best case scenario with top-3 finish)
 ```
 
@@ -454,7 +454,7 @@ Financial Crisis:
     Q3: $0 sponsorship (TechCorp still paying), -$4M from other sponsors = -$4M net
     Q4: Recovery to $10M from remaining sponsors
     
-  Total seasonal impact: -$25M income, $145M fixed expenses = IMPOSSIBLE BUDGET
+  Total seasonal impact: -$25M income, $135M fixed expenses = IMPOSSIBLE BUDGET
   
   Survival Actions Required:
   1. Emergency cost reduction: -$15M (across all departments)
@@ -523,8 +523,8 @@ Sponsorship: $50M (many sponsors cancelled due to poor results)
 
 Total income: $60M
 Loan repayment: -$5M (year 1 principal + interest)
-Cost Cap: $145M
-Available for operations: $60M - $145M = -$85M DEFICIT
+Cost Cap: $135M
+Available for operations: $60M - $135M = -$85M DEFICIT
 
 Team is INSOLVENT, faces bankruptcy, enters administration (FIA takeover)
 ```
@@ -569,7 +569,7 @@ Expected Net: -$10M loss (operating at loss, requires external investment)
 ### 5.6.2 Aggressive Budget (Championship Contender)
 
 ```
-Annual Budget: $145M (at Cost Cap ceiling)
+Annual Budget: $135M (at Cost Cap ceiling)
 
 Allocation:
   Personnel: $45M (31%)
@@ -659,7 +659,7 @@ FORECAST TO SEASON END:
     - Sponsorship adjusted: $75M (TechCorp reduced 15% due to position)
     - TV Rights: $6M
     - Total Income: $111M
-    - Expenses: $145M (Cost Cap hard limit)
+    - Expenses: $135M (Cost Cap hard limit)
     - Year-End: -$34M SHORTFALL
   
   Status: CONCERNING
@@ -790,7 +790,7 @@ Example Scenario (Off-Season, December):
 **Every Season Start (January):**
 
 ```
-Player decides: How to allocate $145M Cost Cap?
+Player decides: How to allocate $135M Cost Cap?
 
 Option A: Conservative
   - Personnel: 32% ($46.4M)

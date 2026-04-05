@@ -12,7 +12,7 @@
 PRE-RACE (2 hours before race):
   - Final setup adjustments (suspension, aero, engine mode)
   - Driver briefing (weather forecast, strategy outline)
-  - Pit crew preparation (tire selection, fuel loading)
+  - Pit crew preparation (tire selection, tire selection)
   - Team radio checks
 
 RACE START (Time = 0:00):
@@ -50,7 +50,7 @@ RACE INTERFACE:
 
 ### 6.2.1 Tire Compounds & Degradation
 
-**Three Tire Compounds** (mandatory in race):
+**Five Tire Compounds (C1-C5)** (mandatory in race):
 
 | Compound | Grip Level | Durability | Optimal Window | Typical Life |
 |----------|-----------|-----------|----------------|-------------|
@@ -82,7 +82,7 @@ Example - Soft Tire Behavior:
 ```
 High Degradation Tracks (street circuits, high-temp):
   - Monaco, Singapore, Mexico City
-  - Soft tire life: 12-15 laps only
+  - C5 life: 10-18 laps only
   - Medium tire life: 20-25 laps
   - Hard tire life: 35-40 laps
   - Strategy: More frequent pit stops needed (2-3 stops mandatory)
@@ -139,9 +139,9 @@ Pit Stop Timeline (Real-Time):
     - Car exits pit box
     - New tire compound installed and warming up
     - Performance loss during lap 1 on new tires: Fresh tires cold
-      - Soft tires (fresh): -0.3 sec/lap Lap 1 only (cold tires)
-      - Medium tires (fresh): -0.2 sec/lap Lap 1
-      - Hard tires (fresh): -0.4 sec/lap Laps 1-2 (take longer to warm up)
+      - Soft tires (fresh): -1.5 sec/lap Lap 1 only (cold tires)
+      - Medium tires (fresh): -1.2 sec/lap Lap 1
+      - Hard tires (fresh): -1.8 sec/lap Laps 1-2 (take longer to warm up)
     
     After tire warm-up (Lap 2+): Full grip available
 ```

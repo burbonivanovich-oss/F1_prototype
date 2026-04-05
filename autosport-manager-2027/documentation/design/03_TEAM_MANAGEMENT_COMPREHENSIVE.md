@@ -13,7 +13,7 @@
 | **Personnel** | 45-60 employees (drivers, engineers, mechanics, administration) |
 | **R&D Centers** | 8 specialized departments |
 | **Base Facilities** | 6 core subsystems (wind tunnel, simulator, maintenance, assembly, data, operations) |
-| **Annual Budget** | $145M (FIA Cost Cap hard limit) |
+| **Annual Budget** | $135M (FIA Cost Cap hard limit) |
 | **Management Cycle** | Weekly, intensifies during inter-race windows |
 | **Critical Events** | Driver injuries, key staff departures, morale crises, poaching attempts |
 
@@ -37,7 +37,7 @@
 | **Workshop Manager** | 1 | Equipment & logistics lead | $150K - $200K |
 | **HR Manager** | 1 | Contracts & personnel management | $100K - $150K |
 
-**Total annual personnel budget**: $31M - $45M (45% of Cost Cap)
+**Total annual personnel budget**: $25M - $35M (45% of Cost Cap)
 
 ### 3.2.2 Decision-Making Hierarchy
 
@@ -134,6 +134,9 @@ Instead of abstract "R&D," the system divides into 8 specialized centers, each w
 - DNF probability increases 1-2% per aggressive power mapping
 - Engine failure mid-season is catastrophic (reliability center must compensate)
 - Reliability insurance costs: $500K-$2M per season (if purchased)
+
+
+**IMPORTANT - Non-Manufacturer Teams**: Client teams (Haas, Alfa Romeo, etc.) do NOT have independent Power Unit R&D centers. Instead, they purchase complete power units from manufacturers and have only a small "Engine Integration" department (2-3 engineers).
 
 ---
 
@@ -582,7 +585,7 @@ Each facility has levels 1-10 with upgrades at increasing cost.
 
 ## 3.8 BUDGET MANAGEMENT & COST CAP
 
-### 3.8.1 $145M FIA Cost Cap Breakdown
+### 3.8.1 $135M FIA Cost Cap Breakdown
 
 | Category | Budget | % | Details |
 |----------|--------|-----|----------|

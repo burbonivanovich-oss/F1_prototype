@@ -40,7 +40,7 @@ Development Phase (Practical)
 
 ### 4.2.1 Phase Definitions
 
-#### **RESEARCH PHASE** (2-6 weeks typical)
+#### **RESEARCH PHASE** (4-10 weeks typical)
 **Purpose**: Explore technical concept, validate theoretical improvements, gather data
 
 **Activities**:
@@ -92,7 +92,7 @@ Output: Decision to develop new wing variant targeting 0.3 sec/lap improvement a
 
 ---
 
-#### **DEVELOPMENT PHASE** (3-8 weeks typical)
+#### **DEVELOPMENT PHASE** (6-12 weeks typical)
 **Purpose**: Build prototype, test, refine, deploy to race car
 
 **Activities**:
@@ -341,7 +341,7 @@ Gen 1.5 (Software Optimization, Week 1):
   - Engine code revisions, fuel mapping refinement
   - Research: $100K (simulation of combustion)
   - Development: $150K (dyno testing)
-  - Gain: +8 bhp (908 total)
+  - Gain: +4 bhp (908 total)
   - Performance: +0.08 sec/lap straight line
   - Reliability: No change (purely software)
   - Dyno hours: 20 hours
@@ -351,7 +351,7 @@ Gen 2 (Mechanical Tweaks, Weeks 2-5):
   - Valve timing adjustment, turbo boost optimization
   - Research: $300K
   - Development: $400K
-  - Gain: +18 bhp (918 total)
+  - Gain: +10 bhp (918 total)
   - Performance: +0.18 sec/lap straight line
   - Reliability: -0.2% (higher combustion pressure)
   - Dyno hours: 60 hours
@@ -361,7 +361,7 @@ Gen 3 (Pushing Homologation Limits, Weeks 6-10):
   - Maximum allowable boost, exotic fuel blends, advanced ignition timing
   - Research: $500K
   - Development: $600K
-  - Gain: +28 bhp (928 total)
+  - Gain: +12 bhp (928 total)
   - Performance: +0.28 sec/lap straight line
   - Risk: Dangerously close to reliability edge, -0.5% DNF probability
   - Dyno hours: 100 hours
@@ -639,123 +639,9 @@ Gen 2 (Advanced Braking System, Weeks 3-5):
 
 ---
 
-## 4.4 TECHNOLOGY TOKEN SYSTEM
-
-### 4.4.1 Token Allocation Overview
-
-**Annual Token Budget**: 8-10 tokens per season
-
-**Token Cost by Component Type:**
-
-| Component | Token Cost | Typical Impact | Risk Level |
-|-----------|-----------|---------------|---------  |
-| **Minor aero tweak** | 0.5 tokens | +0.02-0.05 sec/lap | Low |
-| **Major aero update** | 1-2 tokens | +0.10-0.25 sec/lap | Medium |
-| **Engine evolution** | 1 token | +0.05-0.15 sec/lap | Low |
-| **Suspension redesign** | 1-2 tokens | +0.05-0.20 sec/lap | Medium |
-| **Weight reduction** | 1-1.5 tokens | +0.02-0.08 sec/lap | Low |
-| **Reliability upgrade** | 0.5-1 token | -0.1-0.5% DNF | Low |
-| **Breaking innovation** | 2-3 tokens | +0.20-0.50 sec/lap | **High** |
-
-### 4.4.2 Token Strategy Examples
-
-**STRATEGY 1: CONSERVATIVE (Safe Approach)**
-```
-8 Tokens Available
-Allocation:
-  - Aero Minor tweaks: 1 token (3 tweaks)
-  - Engine evolution: 2 tokens (Gen 1.5 + Gen 2)
-  - Suspension: 1 token (1 medium update)
-  - Weight reduction: 1 token (light optimization)
-  - Reliability: 1.5 tokens (redundancy improvements)
-  - Contingency: 1.5 tokens (unused, for mid-season fixes)
-
-Expected Performance Gain: +0.30-0.40 sec/lap total
-Risk Level: LOW
-Outcome: Incremental improvement, safe season, competitive but not championship-winning
-```
-
-**STRATEGY 2: AGGRESSIVE (Gamble on Breakthrough)**
-```
-8 Tokens Available
-Allocation:
-  - Aero Gen 3 (Floor): 2.5 tokens (push for breaking innovation)
-  - Engine Gen 3: 2 tokens (aggressive power path)
-  - ERS Gen 2: 1 token
-  - Reliability Gen 2: 1 token
-  - Contingency: 1.5 tokens
-
-Expected Performance Gain: +0.50-0.70 sec/lap (if Gen 3 succeeds)
-Risk Level: HIGH (Gen 3 uncertain, reliability tight)
-Outcome: Potential category-defining advantage, OR significant DNF issues if Aero Gen 3 fails
-```
-
-**STRATEGY 3: BALANCED (Mid-Risk Approach)**
-```
-8 Tokens Available
-Allocation:
-  - Aero Gen 2 (Floor): 1.5 tokens (solid improvement)
-  - Engine Gen 2: 1.5 tokens (safe power gains)
-  - ERS Gen 2: 1 token (supporting power)
-  - Suspension Gen 2: 1 token
-  - Reliability Gen 1.5: 0.5 tokens
-  - Weight Gen 1: 0.5 tokens
-  - Contingency: 1 token
-
-Expected Performance Gain: +0.40-0.50 sec/lap
-Risk Level: MEDIUM
-Outcome: Solid competitive car, balanced development, room for mid-season corrections
-```
-
-### 4.4.3 Token Spending Mechanics
-
-**Quarterly Token Budget Review:**
-
-```
-Q1 (Races 1-6): Typically 2-3 tokens spent
-  - Early season priorities (aero, engine, suspension)
-  - Gen 1.5 rapid improvements (weeks 1-2)
-  - Gen 2 projects begin research phase
-
-Q2 (Races 7-12): Typically 2.5-3 tokens spent
-  - Gen 2 projects complete development, deploy
-  - Mid-season token spending rate is highest
-  - Flexibility for unexpected needs (reliability fixes)
-
-Q3 (Races 13-18): Typically 1.5-2 tokens spent
-  - Later gen projects (3+) begin if pursued
-  - More conservative spending (less time for corrections)
-
-Q4 (Races 19-24): Typically 1-1.5 tokens spent
-  - Final tweaks only
-  - Most tokens committed by this point
-  - Risk of running out if unforeseen issues
-```
-
-**Mid-Season Token Reallocation:**
-
-```
-Scenario: By mid-season, aggressive Engine path (Gen 3) has failed diagnostics
-  - Engine Gen 3: 2 tokens spent, project scrapped due to reliability risk
-  - Available tokens: 8 - (spent so far) = 3 tokens remaining
-
-Options:
-A) Pivot to Aero Gen 3 instead (use salvaged tokens)
-   - Need 2.5 tokens, can do it with remaining 3
-   - Timeline: Still possible for deployment Race 18+
-
-B) Boost reliability (Gen 3 redundancy)
-   - Cost: 2.5 tokens, very safe allocation
-   - Ensures no DNFs, points finisher every race
-
-C) Split remaining tokens (hybrid approach)
-   - Aero Gen 2.5: 1.5 tokens
-   - Reliability Gen 2: 1 token
-   - Contingency: 0.5 tokens
-   - Balanced approach, less dramatic gain
-```
-
 ---
+
+## 4.5---
 
 ## 4.5 MANUFACTURING CONSTRAINTS & DEPLOYMENT
 
