@@ -213,7 +213,10 @@ Generation 2.1 (High-Downforce Variant, Weeks 2-4):
   - Increased floor complexity
   - Target: +0.15 lateral G (1.25 G total)
   - Research: $200K, Development: $400K, Total: $600K
-  - Performance gain: +0.15 sec/lap (handling-limited track)
+  - Performance gain: TRACK-DEPENDENT
+    * Technical tracks (Barcelona, Singapore): +0.18-0.20 sec/lap (high downforce matters)
+    * Medium circuits (Silverstone, Suzuka): +0.12-0.15 sec/lap
+    * High-speed tracks (Monza, Spa): +0.08-0.10 sec/lap (downforce penalty in straights)
   - Reliability risk: Structural stress, -0.1% failure probability
   - Timeline: Deploy Race 4 (Monaco)
   - Wind tunnel cost: 8 hours
@@ -222,7 +225,10 @@ Generation 2.2 (Alternative: Low-Drag Variant, Weeks 2-4):
   - Smaller wing angles, reduced floor
   - Target: -0.05 lateral G, but 15 km/h top speed gain
   - Research: $200K, Development: $400K, Total: $600K
-  - Performance gain: +0.25 sec/lap (top speed-limited track like Monza)
+  - Performance gain: TRACK-DEPENDENT
+    * High-speed tracks (Monza, Spa): +0.25-0.30 sec/lap (straight-line dominant)
+    * Medium circuits (Silverstone, Suzuka): +0.15-0.18 sec/lap
+    * Technical tracks (Monaco, Singapore): +0.05-0.08 sec/lap (high-speed benefit limited)
   - Reliability improvement: Lighter structure, +0.05% reliability bonus
   - Timeline: Deploy Race 14 (Monza)
   - Wind tunnel cost: 8 hours
@@ -313,10 +319,17 @@ Strategic Value:
 | **Floor** | 3 | $500K | $800K | Week 12 | +0.35 sec | High | 16h |
 | **DRS** | 2 | $150K | $250K | Week 3 | +0.02 sec | Low | 3h |
 
-**Total Aerodynamics Budget**: $18-22M/year
+**Total Aerodynamics Budget**: $25-30M/year (part of $215M Cost Cap)
+**ATR Constraints** (Aerodynamic Testing Resources per championship position):
+- 1st place: 70% of base allocation (56 wind tunnel hrs/year, 1120 CFD units/year)
+- 2nd place: 75% (60 hrs, 1200 units)
+- 3rd place: 80% (64 hrs, 1280 units)
+- 4th-6th: 85-95%
+- 7th-10th: 100-115% (catch-up bonus)
+
 **Strategic Allocation Decision**: How much to each path?
 - Conservative: 50% downforce, 40% floor, 10% DRS
-- Aggressive: 20% downforce, 60% floor (chase Gen 3 breakthrough), 20% DRS
+- Aggressive: 20% downforce, 60% floor (chase major update), 20% DRS
 - Balanced: 35% downforce, 45% floor, 20% DRS
 
 ---
@@ -376,48 +389,52 @@ Strategic Decision:
   - Can only afford Gen 3 if Reliability team fully backstops it
 ```
 
-#### **PATH B: ERS (Energy Recovery System) EFFICIENCY**
+#### **PATH B: ERS (ENERGY RECOVERY SYSTEM) - 2026 REGULATIONS**
 ```
-MGU-K (Motor-Generator Unit, Kinetic) and MGU-H (Thermal) optimization
-Current limitation: 160 kW power available, but efficiency varies
+2026 ARCHITECTURE (Major Change):
+- MGU-H (Motor-Generator Unit, Thermal): REMOVED ENTIRELY
+- MGU-K (Motor-Generator Unit, Kinetic): Upgraded to 350 kW (from 120 kW)
+- Battery capacity: Increased to support 350 kW deployment
+- Deployment strategy: More dynamic control of MGU-K energy
 
-Baseline (Race 1):
-  - Standard ERS deployment, 120 kW average available per lap
-  - Heat recovery: 50 kW captured
+Baseline (Race 1, 2026):
+  - MGU-K capacity: 350 kW (massive upgrade from 2025)
+  - Standard deployment: 280 kW average per lap
+  - Heat recovery: N/A (MGU-H removed)
 
-Gen 1.5 (MGU-K Optimization, Week 1):
-  - Better kinetic energy capture during braking
+Gen 1.5 (MGU-K Deployment Tuning, Week 1):
+  - Better kinetic energy capture strategy, optimized deployment mapping
   - Research: $80K
   - Development: $120K
-  - Gain: +10 kW (130 kW available)
-  - Performance: +0.10 sec/lap (better acceleration out of corners)
-  - Reliability: No change
+  - Gain: +15 kW effective (295 kW available per lap)
+  - Performance: +0.08 sec/lap (corner exit acceleration)
+  - Reliability: No change (conservative deployment)
   - Timeline: Ready Race 2
 
-Gen 2 (MGU-H Thermal Recovery, Weeks 2-5):
-  - Improved heat exchanger, better thermal energy capture
+Gen 2 (Battery Management Optimization, Weeks 2-5):
+  - Improved battery thermal management, faster charge/discharge cycles
   - Research: $200K
   - Development: $300K
-  - Gain: +15 kW from heat (145 kW available per lap)
-  - Performance: +0.15 sec/lap
-  - Reliability: -0.1% (higher thermal stress)
+  - Gain: +25 kW effective (320 kW available per lap)
+  - Performance: +0.12 sec/lap
+  - Reliability: -0.05% (higher thermal stress on battery)
   - Timeline: Ready Race 6
 
-Gen 3 (Hybrid System Breakthrough, Weeks 7-12):
-  - New battery chemistry, improved power delivery algorithm
+Gen 3 (Advanced Battery Chemistry, Weeks 7-12):
+  - New battery chemistry, superior energy density
   - Research: $400K
   - Development: $600K
-  - Gain: +20 kW (160 kW available, peak efficiency)
-  - Performance: +0.20 sec/lap
-  - Reliability: -0.15% (new battery technology risk)
-  - Risk: If battery fails, no ERS for that race = -0.5 sec/lap penalty
+  - Gain: +35 kW effective (350 kW available at peak)
+  - Performance: +0.18 sec/lap (full power deployment)
+  - Reliability: -0.10% (new chemistry risk, thermal management critical)
+  - Risk: If battery fails, severe performance penalty (-0.4+ sec/lap)
   - Timeline: Ready Race 14 (mid-season)
 
 Strategic Advantage:
-  - ERS improvements affect acceleration (corner exit) = consistent lap time gain
-  - Unlike engine power which only helps top-speed circuits
-  - Fewer reliability risks than engine path
-  - Recommended: Pursue both Gen 1.5 (fast, safe) and Gen 2 (steady gain)
+  - ERS is now THE dominant power source (50% of 1000 bhp total)
+  - Unlike 2025, can't hide development delays behind MGU-H improvements
+  - MGU-K optimization more critical than ever
+  - Recommended: Pursue Gen 1.5 (fast, safe) + Gen 2 (steady gain) simultaneously
 ```
 
 **Power Unit Summary:**
@@ -431,11 +448,19 @@ Strategic Advantage:
 | **ERS** | 2 | $200K | $300K | Week 5 | +0.15 | Low | - |
 | **ERS** | 3 | $400K | $600K | Week 14 | +0.20 | Medium | - |
 
-**Total Power Unit Budget**: $20-25M/year
+**Total Power Unit Budget**: $28-32M/year (part of $215M Cost Cap, manufacturers only)
+
+**2026 REGULATIONS UPDATE**:
+- MGU-H (Motor-Generator Unit, Thermal) REMOVED entirely from new regulations
+- MGU-K increased to 350 kW (from 120 kW in 2025)
+- Total power: ~1000 bhp (50% electric-derived) vs. previous 900 bhp
+- Minimum weight: 768 kg (down from 798 kg, 30 kg reduction)
+- Sustainable fuel: 100% required (no more traditional fuel options)
+
 **Strategic Question**: How aggressive on reliability vs. power?
-- Conservative: Gen 1.5 both paths only = +0.18 sec/lap, safe
-- Aggressive: Gen 3 engine + Gen 2 ERS = +0.43 sec/lap, but DNF risk
-- Balanced: Gen 2 engine + Gen 3 ERS = +0.33 sec/lap, medium risk
+- Conservative: Gen 1.5 both paths = safer, 50-70% adoption
+- Aggressive: Maximize power development = higher DNF risk, 80%+ adoption
+- Balanced: Gen 1.5 + selective Gen 2 = medium risk, 60-70% adoption
 
 ---
 
@@ -476,13 +501,18 @@ Gen 3 (Cutting-Edge Suspension, Weeks 8-12):
   - Timeline: Ready Race 14
 ```
 
-#### **PATH B: WEIGHT REDUCTION**
+#### **PATH B: WEIGHT REDUCTION & BALANCE**
 ```
-Every 1 kg weight reduction = ~0.01 sec/lap
+2026 REGULATIONS: Minimum weight reduced to 768 kg (30 kg reduction from 2025)
+
+Weight distribution is now critical:
+- Optimal center of gravity affects cornering balance and tire wear
+- Poor distribution = tire degradation +5-10%, even if light
+- Every 1 kg weight reduction = ~0.01 sec/lap
 
 Baseline:
-  - 798 kg minimum (FIA regulated)
-  - Already at limit, can only optimize material distribution
+  - 768 kg minimum (FIA regulated for 2026)
+  - Weight distribution can be optimized independently (affects handling)
 
 Gen 1.5 (Material Substitution, Week 2):
   - Replace aluminum with carbon fiber in non-critical areas
@@ -534,57 +564,61 @@ Gen 3 (Exotic Materials, Weeks 8-12):
 ```
 Add backup systems for critical failures
 
-Baseline:
-  - Single hydraulic pump, single electrical system, single cooling circuit
-  - DNF risk: 0.5% hydraulic, 0.3% electrical, 0.2% cooling
+**2026 Reliability Baseline** (significantly improved from 2025):
+  - Single hydraulic pump: 0.2% DNF per race
+  - Single electrical system: 0.15% DNF per race
+  - Cooling circuit: 0.1% DNF per race
+  - **Total baseline DNF risk: 0.45% per race** (~1 DNF per 22 races per team)
+
+Modern F1 reliability is extremely high: aim for <0.5% DNF baseline
 
 Gen 1 (Redundant Hydraulics, Week 2):
   - Backup hydraulic pump (switches if primary fails)
   - Research: $150K
   - Development: $200K
-  - Gain: -0.3% DNF (hydraulic failures nearly eliminated)
+  - Gain: -0.15% DNF (hydraulic failures nearly eliminated)
   - Cost: +$300K per car (extra pump, valves, tubing)
   - Timeline: Ready Race 3
-  - Weight impact: +2 kg (acceptable)
+  - Weight impact: +2 kg (within 768kg minimum)
 
 Gen 2 (Redundant Electronics, Weeks 4-6):
   - Backup ECU, redundant sensors
   - Research: $200K
   - Development: $300K
-  - Gain: -0.2% DNF (electrical failures drop to near-zero)
+  - Gain: -0.10% DNF (electrical failures drop to near-zero)
   - Cost: +$200K per car
   - Timeline: Ready Race 7
 
 Gen 3 (Full Redundancy, Weeks 7-10):
-  - Backup cooling circuit, redundant fuel systems
+  - Backup cooling circuit, redundant fuel systems (rare in 2026)
   - Research: $300K
   - Development: $500K
-  - Gain: -0.4% DNF (nearly all mechanical failures covered)
+  - Gain: -0.10% DNF (cooling/fuel already extremely reliable)
   - Cost: +$400K per car
   - Total reliability cost: $900K/car
   - Timeline: Ready Race 12
 ```
 
-**Realistic Impact Example:**
+**Realistic Impact Example (2026)**:
 ```
-Scenario: Gen 3 Redundancy fully deployed by Race 12
+Scenario: Team pursues full reliability redundancy by Race 12
 
-Before Gen 3 (Races 1-11):
-  - Average DNF probability: 2.0% per race
-  - Expected DNFs across 11 races: 0.22 DNFs = ~0.2 DNFs on average
-  - Lost points: 22 points
+Before Redundancy (Races 1-11):
+  - Average DNF probability: 0.45% per race (0.050 DNFs across 11 races)
+  - Expected results: Nearly always finish (very rare DNF)
+  - Lost points to DNF: 1-2 points over 11 races
 
-After Gen 3 (Races 12-24):
-  - Average DNF probability: 1.2% per race
-  - Expected DNFs across 13 races: 0.16 DNFs = ~0.2 DNFs on average
-  - Lost points: 10 points
+After Redundancy (Races 12-24):
+  - Average DNF probability: 0.10% per race (0.013 DNFs across 13 races)
+  - Expected results: Almost never DNF
+  - Lost points to DNF: 0-1 points over 13 races
 
-Net improvement: 12 points saved over final 13 races
+Net improvement: ~1-2 points saved (small effect in modern F1)
 Cost: $900K per car ($1.8M fleet)
-Cost/point: $150K per point
+Cost/point: $900K per point
 
-Return on investment: If saved points move from 4th to 3rd in championship = +$5M prize money
-→ High ROI if reliability is critical issue
+Return on investment: Only worthwhile if reliability issues are specific target
+→ Better use of budget: Pursue performance development over marginal reliability gains
 ```
 
 ---
@@ -710,54 +744,106 @@ Example Decision:
      Morale: Driver #1 gets first opportunity (motivates #2)
 ```
 
+### 4.5.3 Parc Fermé Regulations & Deployment Restrictions
+
+**FIA Regulation (Real F1 Rule)**: Once Parc Fermé is closed (after Q1), both cars must run identical aero specs.
+
+**Game Implementation**:
+
+| Component Type | Parc Fermé Rule | Exception |
+|---------------|-----------------|-----------|
+| **Aerodynamic** | Must be IDENTICAL on both cars | FP1 only (Friday practice) |
+| **Suspension** | Must be IDENTICAL on both cars | FP1 only |
+| **Engine/Power Unit** | Can vary fuel mapping per driver | Allowed all race weekend |
+| **Brake Balance** | Can vary per driver setup | Allowed during FP1-FP3 |
+| **Tire Compounds** | Can be different per driver strategy | Allowed (see race simulation) |
+
+**Practical Impact**:
+```
+Example 1: Asymmetric Deployment BLOCKED
+  - Team wants to run Aero Gen 2.5 on Car #1, keep old spec on Car #2
+  - Parc Fermé closes after FP1
+  - RESULT: NOT ALLOWED - both cars must match for qualifying/race
+  - Decision: Either both get upgrade, or neither does
+
+Example 2: FP1 Testing ALLOWED
+  - Team tests new floor on Car #1 during FP1 (Friday)
+  - Can gather telemetry data without commitment
+  - After FP1 → Parc Fermé closed → must decide
+  - Car #1 either keeps upgrade (then Car #2 must match for race)
+  - Or reverts to old spec for qualifying
+  - RESULT: ALLOWED - FP1 is exempt from Parc Fermé
+
+Example 3: Engine Mapping Asymmetric (ALLOWED)
+  - Car #1 runs aggressive engine mapping (higher power, higher DNF risk)
+  - Car #2 runs conservative mapping (slightly lower power, safe)
+  - Different team strategies for different drivers
+  - RESULT: ALLOWED - engine settings are exception to Parc Fermé rule
+```
+
+**Strategic Implications**:
+- Cannot "test" new aero on one car during race weekend (except FP1)
+- Must deploy simultaneously to both cars OR not at all
+- Forces team decision: "Is this upgrade ready for BOTH cars?"
+- Reduces risk of deploying unproven tech, but delays potential gains
+
 ---
 
-## 4.6 ADUO - AERODYNAMIC DEVELOPMENT UPGRADE OPTION
+## 4.6 ADUO - ADDITIONAL DEVELOPMENT & UPGRADE OPPORTUNITIES (Power Unit Only)
 
 ### 4.6.1 Purpose & Mechanics
 
-**ADUO Eligibility**: Teams finishing championship 8th-10th place in previous season
+**ADUO Eligibility**: Exclusively for Power Unit manufacturers (Mercedes, Ferrari, Honda, Renault), not for aerodynamics
 
-**Rules**:
-- Allows extra 15 CFD units per week (permanent bonus for following season)
-- Allows extra 4 wind tunnel hours per year (+5% allocation)
-- Cannot exceed absolute cap (still limited by ATR rules, just higher ceiling)
+**Check Timing**: Three performance checks per season:
+- Check 1: After Race 6 (early season assessment)
+- Check 2: After Race 12 (mid-season review)
+- Check 3: After Race 18 (final opportunity)
+
+**Performance Deficit Determination**:
+- Baseline power unit established at season start (average of top manufacturers)
+- Measure deficit: Power output gap between team and reference engine
+
+**Upgrade Rules**:
+
+| Power Deficit | Upgrades Allowed | Timeline | Details |
+|---------------|------------------|----------|---------|
+| 2-4% | One (1) upgrade | 2-3 weeks dev | Software/tuning improvements only |
+| 4%+ | Two (2) upgrades | 3-4 weeks each | Software + mechanical tweaks allowed |
+| <2% | None | N/A | Team performing at competitive standard |
+
+**Example Scenario**:
+```
+Ferrari finishes Race 6, measured 3.2% power deficit vs. Mercedes reference
+
+Check 1 Result (Race 6):
+  - Deficit 3.2% → Qualifies for ONE upgrade
+  - Allowed development: Engine mapping + fuel optimization
+  - Timeline: 2-3 weeks, costs $400-600K from R&D budget
+  - Dyno hours: 40-60 hours
+  - Deployed: Ready for Race 8-9
+
+Check 2 Result (Race 12):
+  - If deficit still 2.5% → Qualifies for ONE more upgrade
+  - Allowed development: Turbo boost + exhaust optimization
+  - Previously used upgrade does NOT expire
+  - Cumulative benefit: +0.12-0.18 sec/lap by mid-season
+```
 
 **Strategic Impact**:
 ```
-Scenario: Your team finished 9th last season
-
-Season Start (Race 1):
-  - Normal ATR allocation: 1100 CFD units, 65 wind tunnel hours/year (mid-field pace)
-  - With ADUO: 1230 CFD units, 69 wind tunnel hours/year (+11% aero budget)
-  - Equivalent to: +$200K additional R&D spending
-
-Impact Over Season:
-  - Extra 15 CFD units/week × 22 weeks = 330 CFD units saved
-  - Extra 4 wind tunnel hours × 1 project = ability to do one more wind tunnel test
-  - Net effect: +0.05-0.10 sec/lap potential if invested strategically
+Teams with early-season reliability issues or design flaws can catch up mid-season
+Teams performing well do not benefit (no deficit = no upgrades)
+This prevents competitive imbalance from manufacturing quality issues
 ```
 
-### 4.6.2 ADUO vs. Spending Extra Money
+### 4.6.2 Non-Manufacturer Teams (Engine Suppliers)
 
-**Comparison:**
-
-```
-ADUO (Free Catch-Up):
-  - +15 CFD units/week automatically
-  - +4 wind tunnel hours/year
-  - Cost: $0 (earned through poor performance)
-  - Benefit: Mid-field team can catch mid-pack (3-5 sec/lap gain toward front)
-
-Extra Budget Spending:
-  - Hire additional engineers: +$500K = +1-2 FTE in one center
-  - Extended wind tunnel: +$300K = +6 wind tunnel hours
-  - CFD computing: +$100K = +150 CFD units
-  - Cost: $900K
-  - Benefit: Equivalent competitive boost as ADUO
-
-ADUO is essentially FIA's catch-up mechanism to prevent runaway gap between top and bottom teams
-```
+**Aston Martin, Alpine, Haas models**:
+- No ADUO eligibility (cannot develop own power unit)
+- Negotiate with current supplier for upgrade timing
+- Supplier may provide improvements if team reaches bonus performance targets
+- Cost: Paid from engine supply contract budget ($20-25M/year, outside Cost Cap)
 
 ---
 
@@ -781,32 +867,41 @@ ADUO is essentially FIA's catch-up mechanism to prevent runaway gap between top 
 - Exhaust design (within acoustic limits)
 - Cooling system efficiency
 
-**Practical Impact:**
+**2026 Architecture** (NEW):
+- Engine: 1.6L V6 turbocharged, 500 bhp (ICE component only)
+- MGU-K: 350 kW (upgraded from 120 kW in 2025)
+- MGU-H: REMOVED entirely (no longer part of regulations)
+- Total power: ~1000 bhp (500 ICE + 350 MGU-K + 150 other electrical)
+- Fuel: 100% sustainable fuel (mandatory)
+
+**Practical Impact (2026)**:
 ```
-Baseline Engine (Race 1): 900 bhp, 1.6 kg/lap fuel consumption
+Baseline Engine (Race 1): 1000 bhp total, 1.5 kg/lap fuel consumption
 
 Season-Long Development Potential:
-  - Q1: +8 bhp through software (Gen 1.5)
-  - Q2: +18 bhp through mechanical tweaks within limits (Gen 2)
-  - Q3: +28 bhp pushing absolute limits (Gen 3, risky)
+  - Gen 1.5 (Weeks 1-2): +4 bhp via software = 1004 bhp
+  - Gen 2 (Weeks 3-6): +10 bhp via tuning/MGU-K = 1014 bhp
+  - Gen 3 (Weeks 7-10): +12 bhp absolute maximum (high DNF risk) = 1026 bhp
   
-Total Potential: +54 bhp = 954 bhp (6% improvement)
+Total Potential: +26 bhp = 2.6% improvement (conservative vs. 2025's +6%)
 
-Limitation: After Race 1, cannot introduce fundamentally different engine
-  - Cannot swap to different cylinder count
-  - Cannot change displacement
-  - Cannot upgrade turbocharger type (only tune current)
-  
-Why? FIA balances cost control (can't change engine = can't spend unlimited to change spec)
+Why Lower? MGU-H removal reduces development headroom
+ADUO system unlocks power if manufacturer falls >2% behind reference
 ```
+
+**Season-Long Limitations**:
+- Cannot change MGU-K capacity or electrical architecture mid-season
+- Cannot modify sustainable fuel specification
+- Cannot swap engine types or manufacturers (locked at season start)
+- Early-season power deficits are harder to resolve (require ADUO checks at races 6, 12, 18)
 
 ### 4.7.2 Chassis Homologation
 
-**Lighter Restrictions than Engine:**
+**Lighter Restrictions than Power Unit:**
 - Can redesign suspension geometry
 - Can change material composition
 - Can upgrade electronics (within freeze date)
-- Weight distribution optimizable within 798 kg limit
+- Weight distribution optimizable within 768 kg minimum (2026 spec)
 
 **Strategic Advantage:**
 ```
@@ -839,17 +934,29 @@ Team with best engine supplier less advantage (homologation limits their upside)
 - Risky projects (Gen 3 technology trees)
 - Luck (random events)
 
-**Probability Calculation:**
+**Probability Calculation (CORRECTED FOR REALISM)**:
 ```
-Breakthrough per season: 5-15% chance
-  - Top-3 teams: ~12% (best engineers, most R&D funding)
-  - Mid-field: ~7% (limited funding, good engineers)
-  - Bottom teams: ~2% (minimal funding)
+Breakthrough per season: 1-3% chance overall (extremely rare)
+Distribution based on resources & engineer talent:
+  - Top-3 teams: ~2-3% (best engineers, most CFD iterations, detect anomalies first)
+  - Mid-field: ~1% (limited resources, fewer iterations to find anomalies)
+  - Bottom teams: ~0.5% (minimal funding, unlikely to discover novel concepts)
+
+Why Top Teams Have Higher Chance:
+  - More CFD iterations = more chances to find anomalies
+  - Better engineers spot subtle effects other teams miss
+  - More resources to pursue risky R&D paths
+  - Access to top wind tunnel facilities = better anomaly detection
+
+INFO LEAK MECHANIC:
+  - Competitor teams detect breakthrough within 2-4 races (telemetry, spying)
+  - Competitors can copy breakthrough within 4-8 races (reverse-engineer, similar performance)
+  - First-mover advantage: 2-6 races of exclusive competitive edge
 
 Impact if Breakthrough Occurs:
-  - Typical breakthrough: +0.20-0.40 sec/lap competitive edge
-  - Category-defining: +0.50+ sec/lap (happens once per 3-4 seasons)
-  - Duration: Until competitors reverse-engineer (2-4 races typically)
+  - Typical breakthrough: +0.30-0.60 sec/lap competitive edge
+  - Rare category-defining: +0.70+ sec/lap (happens once per 5-6 seasons)
+  - Duration: 2-4 races exclusive, then competitors catch within 4-8 races
 ```
 
 **Example Breakthrough:**
@@ -862,22 +969,24 @@ Season R&D Story:
   - Effect: +0.35 sec/lap potential compared to baseline
 
   Breakthrough Decision:
-  A) Pursue it: +3 tokens cost, 8 weeks development, extreme risk
+  A) Pursue it: $2.5M budget cost, 8 weeks development, extreme risk
   B) Ignore: Keep existing plan, miss advantage
   C) Study more: +2 weeks research, understand before committing
 
-  → Choose C: Spend Week 12-13 in deep research
-     Research output: Understand phenomenon, can manufacture it safely
+  → Choose C: Spend Week 12-13 in deep research ($300K CFD time)
+     Research output: CFD shows +0.35 sec/lap, but uncertain how it translates to track
+     Uncertainty margin: 10-15% (could be +0.30 or +0.40 on track)
   
-  → Deploy: Weeks 14-20 development, ready for deployment Race 17
+  → Deploy: Weeks 14-20 development ($2.5M), ready for deployment Race 17
      Week 17: Both cars get breakthrough floor
-     Week 17-24: 8-race advantage until competitors copy
+     Week 17-24: 4-8 race advantage until competitors reverse-engineer
      
-  Impact: 8 races with +0.35 sec/lap advantage
-  - Assuming 20-30 points/race from ~0.35 sec/lap advantage
-  - Total gained: 160-240 points
-  - Championship position: Moves from 5th to 3rd (example)
-  - Prize money: +$15-20M improvement
+  Impact: 4-8 races with potential +0.30-0.40 sec/lap advantage
+  - Actual track performance: TBD (gap between CFD and reality 10-15%)
+  - Assuming conservative 0.30 sec/lap = 15-25 points/race from advantage
+  - Total gained: 60-200 points depending on effectiveness and copy rate
+  - Championship position: Potentially +1-2 positions
+  - Prize money: +$5-15M improvement
 ```
 
 ---
@@ -912,21 +1021,24 @@ ACTIVE PROJECTS:
   
   ~ Aero Gen 3 (Floor Exotic)
     Status: Research Phase Week 2/4, UNCERTAIN
-    Outcome: CFD shows +0.40 sec/lap potential, but manufacturing doubtful
-    Decision Required: Abandon or commit 2.5 tokens for development?
+    Outcome: CFD shows +0.40 sec/lap potential (±12% uncertainty), but manufacturing doubtful
+    CFD-to-Track Gap: Historically 10-15% variance; actual track gain could be +0.34 to +0.46 sec/lap
+    Decision Required: Abandon or commit $2.5M for development?
+    Wind tunnel required: 20 hours (33% of annual allocation)
     Recommendation: Continue research, final go/no-go decision Week 4
 
   ✗ Suspension Gen 3
     Status: ABANDONED
     Reason: Complexity excessive, reliability concerns unsurmountable
-    Token Reallocation: 2.5 tokens freed, can be used for Aero Gen 3
+    Budget Reallocation: $1.2M freed, can be reassigned to Aero Gen 3 or contingency
     Cost Saved: $1.2M R&D budget preserved
 
-TOKEN BUDGET STATUS:
-  Available: 8 tokens
-  Spent: 2.5 tokens (Engine Gen 1.5 + start Gen 2 + Aero Gen 2)
-  Remaining: 5.5 tokens
-  Burn Rate: 0.4 tokens/race (on schedule)
+R&D BUDGET STATUS (within $215M Cost Cap):
+  Total R&D allocation: $45M (21% of Cost Cap)
+  Spent (Races 1-6): $8.2M
+  Remaining budget: $36.8M
+  Burn rate: $1.37M per race (on schedule)
+  ATR allocation: 72 wind tunnel hours/year, 60 hours used (17% consumed)
 
 COMPETITIVE INTELLIGENCE:
   - Ferrari deployed Floor Gen 2.5 (appears to be +0.15-0.20 sec/lap)
