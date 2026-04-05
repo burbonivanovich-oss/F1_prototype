@@ -50,15 +50,36 @@ RACE INTERFACE:
 
 ### 6.2.1 Tire Compounds & Degradation
 
-**Five Tire Compounds (C1-C5)** (mandatory in race):
+**Six Tire Compounds Available (C1-C6)** (three selected per race by Pirelli):
 
-| Compound | Grip Level | Durability | Optimal Window | Typical Life |
-|----------|-----------|-----------|----------------|-------------|
-| **Soft (Red)** | +0.25 sec/lap | 15-20 laps | Laps 1-5, 25-30 | 18 laps |
-| **Medium (Yellow)** | 0.0 sec/lap (baseline) | 25-35 laps | Laps 1-20, any time | 32 laps |
-| **Hard (White)** | -0.15 sec/lap | 40-50 laps | Laps 20+ | 45 laps |
+| Compound | Grip Level | Base Durability | Track Impact | Notes |
+|----------|-----------|----------------|--------------|-------|
+| **C6 (Soft Red)** | +0.30 sec/lap | 10-18 laps | High temp: +20% life, low temp: -30% life | Ultra-soft, rare |
+| **C5/Soft** | +0.25 sec/lap | 12-25 laps | Track-dependent (see below) | Standard soft |
+| **C4/Medium** | 0.0 sec/lap | 18-40 laps | Baseline reference | Standard medium |
+| **C3/Hard** | -0.15 sec/lap | 30-50 laps | Baseline reference | Standard hard |
+| **C2/Super Hard** | -0.20 sec/lap | 40-60 laps | Rare, very cold climates | Uncommon |
+| **C1/Ultra Hard** | -0.25 sec/lap | 50-70 laps | Extremely rare | Almost never used |
 
-**Mandatory Requirement**: At least one pit stop with different compound change (cannot race on same compound entire race)
+**Track-Specific Tire Life Examples**:
+```
+Monaco (high degradation): C5: 10-15 laps, C4: 20-25 laps, C3: 35-40 laps
+Monza (low degradation): C5: 25-30 laps, C4: 35-42 laps, C3: 55-65 laps
+Temperature effects:
+  - 15°C or below: All compounds -20% to -30% life (harder to heat)
+  - 35°C or above: All compounds +15% to +25% life (easier to heat, faster degrade)
+```
+
+**Temperature Optimal Windows** (each compound):
+```
+C5 Soft: Optimal 25-35°C, works 15-40°C, cold penalty 1.0+ sec, overheat breakdown
+C4 Medium: Optimal 20-32°C, works 10-38°C, more forgiving
+C3 Hard: Optimal 18-28°C, works 8-35°C, takes 2-3 laps to warm up
+```
+
+**Mandatory Requirement**: At least TWO DIFFERENT compounds must be used in dry race
+**Exception**: Wet/intermediate tires ONLY races don't require different compounds (Safety Car rule applies)
+**Minimum requirement exception**: In rain-only races, mandatory compound rule suspended
 
 ### 6.2.2 Tire Degradation Model
 
@@ -127,23 +148,30 @@ Pit Stop Timeline (Real-Time):
       Fuel added: 0.5-2.0 sec depending on amount
       Front wing adjustment (if needed): 1.0 sec
       
-    Total Pit Stop Time: 2.0-2.5 seconds (baseline, best teams)
+    Total Pit Stop Time: 1.9-2.5 seconds (realistic modern range)
     
-    Pit Stop Variance:
-      - Excellent execution (morale 85%+): 2.0-2.2 sec
-      - Normal execution (morale 70%): 2.3-2.5 sec
-      - Poor execution (morale <60%): 2.6-3.2 sec (equipment fumbles, tire mounting errors)
-      - Critical error (1% probability): 4-5 sec (dropped tire, unsafe release)
+    Pit Stop Variance (Team Morale Based):
+      - Perfect execution (morale 95%+): 1.82-1.95 sec (world record territory)
+      - Excellent execution (morale 85-94%): 1.95-2.1 sec (top teams typical)
+      - Normal execution (morale 70-84%): 2.2-2.5 sec (mid-field baseline)
+      - Poor execution (morale <70%): 2.8-4.0 sec (crew errors, fumbles)
+      - Critical error (0.5% probability): 4.0-6.0 sec (unsafe release, dropped tire, safety violation)
+    
+    Reference: Red Bull record 1.82 sec, top teams average 2.0-2.4 sec
   
   Lap N+1:
     - Car exits pit box
     - New tire compound installed and warming up
-    - Performance loss during lap 1 on new tires: Fresh tires cold
-      - Soft tires (fresh): -1.5 sec/lap Lap 1 only (cold tires)
-      - Medium tires (fresh): -1.2 sec/lap Lap 1
-      - Hard tires (fresh): -1.8 sec/lap Laps 1-2 (take longer to warm up)
+    - Performance loss during warm-up phase (COMPOUND-DEPENDENT):
+      - Soft tires (fresh): -1.0 sec/lap Lap 1 ONLY (warm fastest, ~2-3 full laps to peak grip)
+      - Medium tires (fresh): -1.5 sec/lap Lap 1 (warm slower, ~3-4 laps to peak)
+      - Hard tires (fresh): -2.0 sec/lap Lap 1, -1.0 sec/lap Lap 2 (warm very slowly, ~4-5 laps needed)
     
-    After tire warm-up (Lap 2+): Full grip available
+    Temperature Effects on Warm-up:
+      - Hot asphalt (>30°C): -20% warm-up time (faster to peak grip)
+      - Cold asphalt (<15°C): +30% warm-up time (slower to reach optimal window)
+    
+    After tire warm-up (Lap 2-5 depending on compound): Full grip available
 ```
 
 **Pit Stop Timing Decision:**
@@ -212,24 +240,36 @@ Decision: Pit Lap 6 (balanced between aggressive and defensive)
 
 ### 6.3.1 Fuel Consumption Model
 
-**Consumption Rate:**
+**Consumption Rate & Flow Limit:**
+
 ```
-Base Consumption: 1.6 kg/lap (average)
+FIA RULE: Maximum fuel flow 100 kg/hour at ANY moment (hard limit)
 
-Fuel Economy Modifiers:
-  + Slow lap (fuel-saving mode): -0.2 kg/lap (-12.5% consumption)
-  + Fast lap (aggressive): +0.1 kg/lap (+6% consumption)
-  + Engine Mode mapping: Standard vs Power vs Qualifying
-    - Qualifying mode: +0.3 kg/lap (maximum power)
-    - Standard race mode: 1.6 kg/lap
-    - Economy mode: 1.4 kg/lap (-12.5%)
-  + Temperature impact: Hot conditions +0.1 kg/lap, cold -0.05 kg/lap
-  + Tire compound (energy loss): Soft tires waste 0.05 kg/lap more energy
+Base Consumption: 1.6 kg/lap (average, varies by track)
 
-Track-Specific Consumption:
-  - High downforce, slow speed (Monaco, Singapore): 1.8 kg/lap
-  - Low downforce, high speed (Monza, Hungary): 1.4 kg/lap
-  - Average (most tracks): 1.6 kg/lap
+Track-Specific Base Consumption:
+  - High downforce, slow speed (Monaco, Singapore): 1.7-1.8 kg/lap
+  - Low downforce, high speed (Monza, Hungary): 1.3-1.4 kg/lap
+  - Average (most tracks): 1.5-1.6 kg/lap
+
+Consumption Modifiers (relative to base):
+  + Economy mode: -10% consumption (reduces power ~2-3%)
+  + Standard mode: Base consumption
+  + Power/Attack mode: +5% consumption (approaches 100 kg/h limit)
+  + Aggressive pushing (near power limit): Risk fuel cut-off if exceed 100 kg/h flow
+
+Temperature Impact:
+  - Hot conditions (>35°C): +8% consumption (more energy lost to heat)
+  - Cold conditions (<10°C): -12% consumption (less energy loss)
+
+Tire Compound Impact:
+  - Soft compound: +0.05 kg/lap (more rolling resistance)
+  - Medium compound: Baseline
+  - Hard compound: -0.05 kg/lap (less rolling resistance)
+
+Fuel Flow Risk:
+  - Exceeding 100 kg/h flow = Engine management cuts power temporarily
+  - Player must manage throttle/modes to stay within limit during aggressive driving
 ```
 
 ### 6.3.2 Fuel Strategy Decision
@@ -245,15 +285,14 @@ Load Options:
 
 Option A: Minimum Load (97-100 kg)
   Pros:
-    - Lighter car (1-2 kg lighter = +0.01 sec/lap)
-    - Lower fuel consumption rate
+    - Lighter car (3 kg lighter = +0.03-0.05 sec/lap average gain)
     - Requires precise pit stop scheduling
   Cons:
     - Zero margin for error (safety car, VSC, must pit exactly on time)
     - Cannot adjust fuel strategy mid-race
     - Risk: Running out of fuel before finish (DNF)
   
-  Result: Risky, suitable for dry weather, one-stop strategy only
+  Result: Risky, suitable for dry weather, precise one-stop strategy only
 
 Option B: Standard Load (105-107 kg)
   Pros:
@@ -261,21 +300,26 @@ Option B: Standard Load (105-107 kg)
     - Flexibility for 1-2 stops
     - Can adjust pit stops reactively
   Cons:
-    - Slightly heavier car (-0.02 sec/lap)
+    - Slightly heavier car (-0.02 to -0.03 sec/lap penalty)
     - Standard fuel consumption
   
-  Result: Recommended, safe, balanced
+  Result: Recommended, safe, balanced, reduces tire wear slightly due to weight
 
-Option C: Maximum Load (110 kg, refueling limit)
+Option C: Maximum Load (110 kg, regulatory limit)
   Pros:
     - Maximum flexibility (can pit late or skip second stop)
     - Extra fuel for safety car scenarios
   Cons:
-    - Heavy car (-0.1 sec/lap), significant performance penalty
-    - Wears tires faster under weight
-    - Waste fuel if don't need full amount
+    - Heavy car (-0.05 to -0.08 sec/lap penalty, 10kg loss = ~0.05 sec/lap)
+    - Wears tires faster under weight (+5-10% additional tire wear)
+    - Fuel management critical to avoid exceeding 100kg/h flow limit
   
-  Result: Defensive, suitable for uncertain weather, high DNF risk strategies
+  Result: Defensive, suitable for uncertain weather or variable strategy, some competitive cost
+
+Weight Penalty Formula:
+  Each additional kg of fuel ≈ 0.005 sec/lap
+  Therefore: 10 kg more fuel = ~0.05 sec/lap loss
+  Economy mode (power reduced 2-3%) = additional -0.08 to -0.12 sec/lap
 
 Decision: Load 105 kg
   - Provides 5-10 km safety margin
@@ -469,13 +513,23 @@ INSTRUCTION: "Defend Against [Car Number]"
   Duration: 3 laps
   Use case: Protecting position from faster car behind
 
-INSTRUCTION: "Push/Attack"
-  Effect: Driver maximizes pace, takes risks
-  Cost: -0.05 sec/lap (pushing hard increases risk)
-  Morale impact: +10% if overtake successful, -10% if crash
-  Reliability: +1% DNF probability from aggressive driving
-  Duration: 3 laps maximum (driver fatigue)
-  Use case: Attacking leader, attempting overtake
+INSTRUCTION: "Push/Attack" (NO TIME LIMIT)
+  Effect: Driver maximizes pace, takes risks, uses high fuel flow
+  Benefits: +0.2-0.3 sec/lap potential (varies by driver skill)
+  Costs:
+    - Fuel flow approaches 100 kg/hour limit (risk of power cut-off)
+    - Tire wear increases 10-15% per lap
+    - Driver fatigue accumulates: +10% per lap of sustained push
+  
+  Fatigue Mechanics:
+    - First 3 laps: No penalty (fresh driver)
+    - Laps 4-6: -0.05 sec/lap additional fatigue penalty
+    - Laps 7+: -0.10 sec/lap (compounding tiredness)
+    - Recovery: 5 laps of normal pace to reduce fatigue 50%
+  
+  Morale impact: +10% if overtake successful, -10% if DNF/error
+  DNF risk: +1% per lap of sustained attack (cumulative)
+  Use case: Attacking leader, attempting overtake, recovering from pit stop disadvantage
 
 INSTRUCTION: "Manage Fuel/Tires"
   Effect: Driver enters economy mode
@@ -588,16 +642,18 @@ THREE-STOP STRATEGY:
   Requires: Aggressive fuel management and pit timing
   
   Pros:
-    - Freshest tires possible
+    - Freshest tires possible (optimal for extreme degradation circuits)
     - Maximum pace consistency
     - Can recover from safety car scenarios
+    - Sometimes optimal (e.g., Singapore 2023 demonstrated 3-stop viability)
   
   Cons:
-    - Extra pit stops = massive time loss (3 × 2.5 sec = 7.5 seconds)
-    - Only worth if degradation is extreme
-    - Requires perfect execution
+    - Extra pit stops = time loss (3 × 2.5 sec ≈ 7.5 seconds total)
+    - Requires precise fuel and tire management
+    - Only competitive on high-degradation tracks (street circuits)
   
-  Risk: VERY HIGH (only viable in extreme conditions)
+  Risk: MEDIUM (viable on right track type with good execution)
+  Best for: Extreme degradation tracks (Singapore, Monaco, Mexico) or if leader already committed to 3-stop
 
 Team Radio Decision:
   Telemetry: "Based on fuel and tire modeling, recommend TWO-STOP. Soft 12, 
@@ -619,22 +675,29 @@ Decision: Two-stop strategy (standard, balanced risk)
 
 ### 6.7.1 Crash Mechanics
 
-**Crash Probability:**
+**Crash Probability (REALISTIC MODERN F1):**
 ```
-Per lap base: 0.5% per lap (if normal racing)
-Increases if:
-  - Wet weather: +2% probability
-  - Driver fatigue (late race): +1% probability
-  - "Attack" instruction active: +1% probability
-  - Aggressive car setup (aero): +0.5% probability
-  - Driver skill <60: +2% additional
+Per lap base: 0.1-0.2% per lap (if normal racing, realistic ~1 crash per 500-1000 laps)
+
+Modifiers (additive):
+  - Wet weather: +0.2% per lap (wet is safer than expected due to grip management)
+  - Heavy rain: +0.5% per lap
+  - Driver fatigue (late race Lap 40+): +0.15% per lap
+  - "Attack" instruction active: +0.3% per lap (accumulated fatigue, higher error rate)
+  - Aggressive car setup (high aero): +0.1% per lap
+  - Driver skill <60: +0.3% per lap (higher error proneness)
+  - Contact with another car: +0.5% (immediate increased risk)
+
+Maximum realistic crash probability: 2-3% per lap even in worst conditions
 
 Example: Driver pushes hard Lap 45 (tired), wet track
-  Base: 0.5%
-  Wet: +2%
-  Fatigue: +1%
-  Attack instruction: +1%
-  Total: 4.5% chance of crash this lap
+  Base: 0.15%
+  Wet: +0.2%
+  Fatigue: +0.15%
+  Attack instruction: +0.3%
+  Total: 0.8% chance of crash this lap (high risk, but not guaranteed)
+  
+Compared to reality: F1 2024 had ~10 DNF crashes total on 480 race starts = ~2% per race, or ~0.1% per lap
 ```
 
 **Crash Consequences:**
@@ -670,30 +733,46 @@ DNF Crash (Fatal):
   - Championship impact: Lost 25 potential points
 ```
 
-### 6.7.2 Mechanical Failures
+### 6.7.2 Mechanical Failures (2026 MODERN RELIABILITY)
 
 **DNF Probability During Race:**
 ```
-Engine failure: 0.3-1.5% per race (depends on power tuning aggressiveness)
-Hydraulic failure: 0.2-0.8% per race
-Electrical/ECU: 0.2-0.5% per race
-Suspension: 0.5-1.2% per race (depends on damage from curbs)
+MODERN F1 RELIABILITY (2025-2026):
+Modern F1 cars are extremely reliable. Average DNF rate: ~0.5-1% per race per team
 
-Total DNF risk: 1.2-3.5% per race (varies by team reliability investment)
+Baseline Mechanical Failure (per race):
+  - Engine failure: 0.1-0.3% per race (depends on aggressive power tuning)
+  - Hydraulic failure: 0.05-0.15% per race
+  - Electrical/ECU: 0.05-0.10% per race
+  - Suspension failure: 0.1-0.2% per race (only from major curb strikes/crashes)
+
+Total baseline DNF risk: 0.3-0.75% per race (realistic modern range)
+
+Modifiers (per reliability investment):
+  - Poor reliability (low investment): +0.5% total
+  - Standard reliability: Baseline only
+  - Excellent reliability (high investment): -0.2% total
+  
+Engine Resource Limit:
+  - Each power unit has 6-8 Grand Prix resource limit
+  - Risk increases sharply in Lap 6-8 of PU use (approaching new spec requirement)
+  - Teams typically deploy fresh PU before resource limit
 
 Example: Lap 35 (of 58)
-  Random event triggers: Engine failure check
-  Roll: 47 (out of 0-100)
-  Result: Engine fails if probability >47%
+  Engine resource check: 5/8 used (healthy)
+  Reliability roll: 75 (out of 0-100)
+  Result: Engine survives if DNF probability < 75%
   
-  If reliability investment adequate (DNF 0.5%): Engine survives
-  If reliability poor (DNF 2%): Engine fails, DNF Lap 35
+  If reliability standard (DNF 0.5%): Engine survives
+  If reliability poor (DNF 1.0%): Still survives (only 1% chance)
+  If reliability excellent (DNF 0.3%): Safe
   
-  Impact of DNF:
-    - Lost 23 laps remaining (potential 23 × $500K = $11.5M prize money)
+  Impact of DNF (extremely rare):
     - Championship points: 0
-    - Team morale: -20% (reliability failure anger)
-    - Sponsor morale: -10% (DNF hurts their KPIs)
+    - Loss of strategic position/momentum
+    - Team morale: -20% (reliability failure)
+    - Sponsor morale: -10% (DNF hurts KPIs)
+    - Note: Prize money impact minimal (paid at season-end based on final position)
 ```
 
 ---
@@ -722,32 +801,28 @@ Example: Lap 35 (of 58)
 10th:  1 point
 11th+: 0 points
 
-Fastest Lap Bonus: +1 point (available to any finisher, not just podium)
-Note: Fastest lap giver loses 1 point if overtaken late race (risk/reward)
+**Fastest Lap Bonus: ABOLISHED** (removed in 2025, no longer awards points)
+Note: Fastest lap is tracked for driver records/stats but provides no championship points
 ```
 
-### 6.8.2 Financial Distribution
+### 6.8.2 Prize Money Distribution
 
-**Prize Money Per Race:**
+**NO RACE-BY-RACE PAYOUTS** (Season-End Payout Only):
+
 ```
-Race distributes $25M total:
+Prize money is NOT distributed race-by-race in modern F1.
+Instead:
+  - Race results build your championship position
+  - Championship position (1st-10th) determines prize payout AT SEASON END
+  - Example: If you finish 4th in championship = $144M payout in December
+  
+Per-Race Impact:
+  - Each race result affects your current championship position
+  - Championship position affects sponsor KPI targets
+  - Driver morale (+bonus if podium/win, -penalty if DNF/low finish)
+  - Sponsor satisfaction (results toward contracted KPIs)
 
-1st place: $4M
-2nd place: $2.5M
-3rd place: $1.5M
-4th place: $1M
-5th place: $800K
-6th place: $600K
-7th place: $400K
-8th place: $300K
-9th place: $200K
-10th place: $100K
-
-Finishing position affects:
-  - Individual race payment (above)
-  - Constructor championship running total (affects season prize money)
-  - Driver morale (+bonus if podium/win, -penalty if missed expected finish)
-  - Sponsor KPI tracking (affects sponsor satisfaction)
+See Part 5 (Finance & Sponsorship) for complete prize distribution model
 ```
 
 ### 6.8.3 Post-Race Analysis
