@@ -81,7 +81,87 @@ C3 Hard: Optimal 18-28°C, works 8-35°C, takes 2-3 laps to warm up
 **Exception**: Wet/intermediate tires ONLY races don't require different compounds (Safety Car rule applies)
 **Minimum requirement exception**: In rain-only races, mandatory compound rule suspended
 
-### 6.2.2 Tire Degradation Model
+### 6.2.2 Track Temperature Effects Model
+
+**Track Temperature Impact on Tire Performance**:
+
+```
+Track Temperature Range & Tire Effects:
+
+COLD TRACK (<15°C):
+  - Tire warm-up: Requires 3-4 laps (not 1-2)
+  - Grip level: -15% (all compounds)
+  - Degradation: SLOWER (tires last longer in cold)
+  - Optimal window: Hard to reach, takes time
+  - Example: Monaco in winter (15°C)
+    * C5 Soft needs 3 laps to reach optimal grip
+    * Performance Lap 1: -1.5 sec vs optimal
+    * Performance Lap 2: -0.8 sec vs optimal
+    * Performance Lap 3: -0.4 sec vs optimal
+    * Performance Lap 4+: Optimal grip reached
+
+COOL TRACK (15-22°C):
+  - Tire warm-up: Requires 2 laps
+  - Grip level: -8% (medium penalty)
+  - Degradation: Normal
+  - Example: Silverstone Spring (18°C)
+    * C5 Soft needs 2 laps to warm
+    * C4 Medium needs 2-3 laps
+
+OPTIMAL TRACK (22-28°C):
+  - Tire warm-up: Requires 1 lap
+  - Grip level: Baseline (0%)
+  - Degradation: Normal
+  - Tire life: At design spec
+  - Example: Most summer races (24-26°C)
+    * Perfect conditions for tire strategy
+
+WARM TRACK (28-32°C):
+  - Tire warm-up: Immediate or Lap 1
+  - Grip level: +3% (slight improvement)
+  - Degradation: FASTER (+8-10% per lap)
+  - Tire life: Reduced (-2-3 laps vs baseline)
+  - Strategy impact: May need extra pit stop
+  - Example: Bahrain Spring (31°C)
+    * C5 Soft lasts 22-24 laps instead of 25
+
+HOT TRACK (>32°C):
+  - Tire warm-up: Immediate (Lap 1 same pace)
+  - Grip level: +5% (better grip)
+  - Degradation: VERY FAST (+12-15% per lap)
+  - Tire life: Significantly reduced (-4-6 laps)
+  - Strategy impact: Likely need 3 stops or harder compounds
+  - Example: Abu Dhabi (35°C+)
+    * C5 Soft lasts 18-20 laps instead of 25
+    * Force harder compound strategy
+
+EXTREME HEAT (>37°C):
+  - Degradation: Extreme (+18-20% per lap)
+  - Tire blistering risk: 2-5% chance per lap
+  - Blister penalty: -0.3 to -1.0 sec/lap
+  - Strategy: Must use harder compounds (C4, C3)
+  - Example: Abu Dhabi in peak summer (38°C)
+    * Softer compounds not viable for long stints
+```
+
+**Track Temperature Interaction with Weather**:
+
+```
+Rain reduces track temperature significantly:
+  - Heavy rain: Track drops 8-12°C instantly
+  - Light rain: Track drops 5-8°C
+  - Drying track: Temperature rises 2-3°C per lap as sun returns
+  
+Example: Was 30°C dry, heavy rain arrives
+  - Track temp: 30°C → 20°C (instantly)
+  - Tire warm-up: Now requires 2-3 laps again
+  - Intermediate tires: Much better in cold, less aggressive degradation
+  - Shift in strategy: Harder compounds become viable
+  
+This adds strategic layer: manage tires through temperature transitions
+```
+
+### 6.2.3 Tire Degradation Model
 
 **Degradation Formula:**
 ```
@@ -391,56 +471,151 @@ LIGHT RAIN:
   - Visibility: Reduced (80% of dry)
   - Tire performance: Intermediate tires required
   - Performance: All lap times -0.5 to -1.0 sec/lap slower
+  - Wet tire risks:
+    * Water depth <3mm: Intermediate tires safe (optimal choice)
+    * Water depth 3-5mm: Intermediate becoming risky, slicks still bad
+    * Water depth >5mm: Risk of aquaplaning on slicks (1-3% per lap)
   - Driver instruction change: "Be careful, wet sections appearing"
   - Pit stop decision: Switch from dry to intermediate tires
 
 HEAVY RAIN:
-  - Track temp: 5-15°C, heavy water layer
+  - Track temp: 5-15°C, heavy water layer (5-10mm+ standing water)
   - Air temp: 5-12°C
   - Visibility: 50% of dry (dangerous, simulation can be suspended)
-  - Tire performance: Wet tires required
+  - Tire performance: Wet tires required for safety
   - Performance: All lap times -1.5 to -2.5 sec/lap slower
+  - Aquaplaning risk mechanics:
+    * Water depth 5-8mm: Aquaplaning on intermediates possible (0.5-1% per lap)
+    * Water depth 8-12mm: Aquaplaning serious risk (1-2% per lap on int, 5-8% on slicks)
+    * Water depth >12mm: Aquaplaning critical on intermediates (3-5% per lap)
+    * Wet tires: Designed for water dispersion, <0.5% aquaplaning risk
   - Safety car likely deployed
   - Driver instruction: "Safety first, no risks"
   - Pit stop decision: Switch to wet tires or pause/pit early
 ```
 
-### 6.4.2 Weather Transitions
+**Aquaplaning Mechanics** (Wet weather hazard):
 
-**Rain Radar** (shown in race UI):
+```
+Definition: Loss of tire grip due to water layer between tire and track
+
+Aquaplaning Probability by Combination:
+  Intermediate tires + Light rain (3mm water):  0.5% per lap
+  Intermediate tires + Moderate rain (5mm):     1.5% per lap
+  Intermediate tires + Heavy rain (8mm+):       3-5% per lap
+  
+  Slick tires + Any rain (3mm+):                1-3% per lap (light)
+                                                5-8% per lap (moderate/heavy)
+  
+  Wet tires + Any rain:                         <0.5% per lap (designed for this)
+
+Aquaplaning Consequences:
+  Hydroplane Event (rare but happens):
+    - Sudden loss of grip for 1 corner
+    - Driver loses 0.5-1.0 sec
+    - Risk: 20% chance of light contact/damage (-0.1 sec/lap)
+    - Risk: 5% chance of serious crash (barrier hit, DNF probability)
+    - Recovery: Driver regains control after 1-2 corners
+  
+  Example scenario:
+    Lap 24, Eau Rouge (Spa), Heavy rain, Intermediate tires, 7mm water:
+    - Aquaplaning check: 3-5% chance this lap
+    - Random roll: 67 (out of 100) → No aquaplaning this lap
+    - Lap 25: Another aquaplaning check
+    - Random roll: 4 (out of 100) → AQUAPLANING EVENT!
+    - Impact: Loses grip in Turn 1, recovers Eau Rouge turn, +0.8 sec
+    - Minor damage risk: 20% chance → Failed (no damage)
+    - Result: Lap 25 time +0.8 sec slower, continue racing
+```
+
+### 6.4.2 Weather Forecasting System
+
+**Weather Forecast Accuracy** (90-95% realistic):
+
+```
+Real-world baseline: Modern F1 teams use satellite/radar with 85-95% accuracy
+Game mechanic: Forecast accuracy by lead time
+
+Forecast Confidence by Range:
+  0-2 laps ahead:    95% accuracy (almost certain)
+  2-5 laps ahead:    92% accuracy (very reliable)
+  5-10 laps ahead:   88% accuracy (good estimate)
+  10+ laps ahead:    82% accuracy (rough estimate)
+  
+  Example at Lap 10:
+    "Rain Lap 12-13: 95% confidence ±0 laps" (almost guaranteed)
+    "Rain Lap 15-17: 88% confidence ±1 lap" (likely but could shift)
+    "Rain Lap 20+: 82% confidence ±2 laps" (estimate only)
+```
+
+**Local Rain Surprise Mechanics** (Rare but possible):
+
+```
+Occasional random weather events catch teams unprepared:
+
+Surprise Rain (5% of races):
+  - Forecast said 88% dry, but local cell moves quickly
+  - Driver gets caught on dry tires in sudden downpour
+  - Scenario: Lap 22 (sunny), radar said rain Lap 28-30
+    → Lap 24: Small cloud appears, light rain Lap 25 (3 laps EARLY)
+    → Decision: Pit or risk 3 laps on degrading dry tires?
+    → Cost of miscalculation: 0.5-1.0 sec/lap performance loss
+  
+  Meteorological factor:
+    - Local thunderstorms can develop in 10-15 min window
+    - Model simulates these as rare deviations from forecast
+    - Players who follow forecast strictly can get caught
+
+Rain Window Extension (Rare):
+  - Forecast: Rain Lap 15-20 (high confidence)
+  - Actual: Rain continues Lap 15-35 (longer than forecast)
+  - Strategic impact: Early pit stop strategy now insufficient
+  - Must extend fuel/tire strategy mid-race
+
+Surprise Dry Spell (Rare):
+  - Forecast: Heavy rain all race
+  - Actual: Rain clears by Lap 30, track dries
+  - Advantage: Those who pit late for slicks gain advantage
+  - Disadvantage: Those who pitted early for wet tires are disadvantaged
+```
+
+**Rain Radar Display** (shown in race UI):
 
 ```
 Race Lap 10 (of 58):
-  - Current weather: Dry
+  - Current weather: Dry (Track temp 26°C)
   - Forecast (next 10 minutes / next 5 laps): Light rain approaching
-  - Confidence: 80% (likely)
-  - ETA: Lap 13-15
+  - Confidence: 92% (very reliable)
+  - ETA: Lap 13-14 (±0 laps)
+  - Intensity: Light → Moderate progression
+  - Duration estimate: 8-12 laps of wet conditions
 
 Strategic Question:
   - Pre-pit for intermediate tires now? (Preventive)
   - Wait and see? (Reactive)
-  - Risk getting caught out by sudden downpour
+  - Risk: With 92% confidence, very safe to pit
 
-Scenario A: Pre-pit at Lap 11
+Scenario A: Pre-pit at Lap 11 (RECOMMENDED)
   - Change to intermediate tires (soft compounds, only +0.5 sec/lap penalty)
-  - If rain doesn't arrive for 10 more laps: Wasted pit stop, lost time
+  - Probability rain arrives: 92% (very likely)
+  - If rain doesn't arrive (8% chance): Wasted pit stop, lost time
   - If rain arrives Lap 13: Already on correct tires, perfect!
-  - Decision: Gamble on forecast
+  - Decision: Mathematically sound (92% > 8% risk)
 
-Scenario B: Stay dry, pit only if rain comes
-  - Risk: If rain sudden (Lap 13), 3 laps on dry tires on wet track
+Scenario B: Stay dry, pit only if rain comes (RISKY)
+  - Risk: If rain arrives Lap 13, 3 laps on dry tires on wet track
     - Lap 13: -0.8 sec/lap (dry tires don't grip well)
-    - Lap 14: -0.9 sec/lap (even worse)
-    - Lap 15: -1.0 sec/lap (spinning risk!)
+    - Lap 14: -0.9 sec/lap (aquaplaning risk!)
+    - Lap 15: -1.0 sec/lap (spinning high probability)
   - Pit at Lap 15, switch to intermediate
-  - Cost: Lost 3 laps on slow tires, potentially in wrong position
-  - Decision: More risk, but saves pit stop if no rain
+  - Cost: Lost 3 laps on slow tires, risk of spin/crash
+  - Decision: 8% chance to save pit stop vs 92% chance to lose time
 
 Recommendation from Telemetry:
-  "Rain probability 80%, hit Lap 13-14. Pit Lap 12 to pre-empt. Cost: 0.5 
-   sec/lap for 1 lap, but save 5+ seconds if rain arrives."
+  "Rain confidence 92%, very reliable. Pit Lap 11 to pre-empt. Cost: 0.5 
+   sec/lap for 1 lap, but gain 5+ seconds when rain arrives."
 
-Decision: Pit Lap 12 for intermediate tires (proactive strategy)
+Decision: Pit Lap 11 for intermediate tires (optimal strategy)
 ```
 
 ### 6.4.3 Safety Car & VSC Dynamics
@@ -451,10 +626,69 @@ Triggered by: Crash, debris, severe weather
 
 Effect:
   - All cars line up behind safety car, single-file
-  - Speed: 60-80 km/h (controlled pace)
+  - Speed: 60-80 km/h (controlled pace, prevents relative time loss)
   - DRS disabled: Cannot overtake
-  - Pit stops still available (but risky, easy to lose position)
+  - Pit stops still available and STRATEGICALLY IMPORTANT
   - Duration: 3-8 laps typically
+  
+**Safety Car Pit Stop Mechanics** (Critical strategy moment):
+
+```
+Key advantage: NO TIME LOSS during pit stop
+  - Normal pit stop: Lose 15-30 seconds vs cars not pitting
+  - Safety car pit stop: NO RELATIVE TIME LOSS (everyone crawling at 60 km/h)
+  - Only lose pit stop duration vs staying out
+  
+Strategic Decisions During Safety Car:
+
+Decision Point: Should we pit under safety car?
+  Original plan: Pit stop at Lap 30
+  Current: Safety car deployed Lap 22
+  
+  PIT UNDER SAFETY CAR (LAP 23):
+    Advantages:
+      ✓ Get required pit stop done with zero relative loss
+      ✓ Fresh tires for race restart
+      ✓ Reset pit stop debt (no longer owe pit stop later)
+      ✓ If leader also pits, relative positions maintained
+      ✓ Tire life: ~25 laps left after restart (optimal)
+    
+    Disadvantages:
+      ✗ Lose 2.2-2.5 sec to stop itself (pit time)
+      ✗ Risk: If others don't pit, fall back in order
+      ✗ Front-of-pack advantage: Might pit from P5 → emerge P7 temporarily
+    
+    Outcome example:
+      Before pit: P5, 1.5s behind P4
+      Pit timing: Enter pit from P5, exit pit from P7
+      Damage: Lost 2.5s to pit execution, now 4.0s behind P4
+      BUT: Race restarts in 3 laps, competitors still in old-tire sequence
+      Resume racing: Fresh tires regain positions quickly
+  
+  DON'T PIT UNDER SAFETY CAR (LAP 25):
+    Advantages:
+      ✓ Keep current position order (no pit stop gap)
+      ✓ See where leaders pit first
+      ✓ Reactive strategy (respond to others)
+    
+    Disadvantages:
+      ✗ Still need pit stop later (debt remains)
+      ✗ When you pit Lap 30, lose 20-30 sec to competitors already raced ahead
+      ✗ Tire age: Will have 30+ laps on same tires by restart
+      ✓ Fresh tires advantage: Lost
+    
+    Outcome example:
+      Safety car ends Lap 25, racing resumes
+      You still in P5 with old tires (28 laps old)
+      Competitors: Some fresh, some old tires mixed
+      Lap 30: Finally pit, lose 25 sec to P4 who pit earlier
+      Result: Drop to P6 or lower
+
+Recommendation Framework:
+  IF pit debt < 3 laps → PIT under safety car (reset debt cheaply)
+  IF pit debt > 5 laps → WAIT for safety car to end (pit when everyone stops together)
+  IF pit debt 3-5 laps → DEPENDS on positions (aggressive teams pit, conservative wait)
+```
 
 Strategic Opportunity:
 ```
@@ -637,6 +871,46 @@ TWO-STOP STRATEGY:
   Risk: MEDIUM (safer, more flexible)
   Best for: Low degradation tracks where tire life is long (Monza-style)
 
+DOUBLE PIT-STOP STRATEGY (Variant of Two-Stop):
+  Plan: Medium 20 laps → Hard 18 laps → Medium 20 laps (pit stops Lap 20 & 38)
+  Alternative: Soft 8 laps → Hard 25 laps → Soft 25 laps (pit stops Lap 8 & 33)
+  Pit stop 1 size: 40-50 kg fuel
+  Pit stop 2 size: 35-40 kg fuel
+  
+  Concept: Two pit stops using similar/repeated compounds for psychological effect
+  or tire management optimization (avoid extreme wear from one compound).
+  
+  Example 1: "Undercut Double-Stop"
+    - Start: Soft (aggressive opening)
+    - Lap 8: Box → Hard (save tires)
+    - Lap 33: Box → Soft (fresh soft for final push)
+    - Lap 58: Finish on fresh Soft with good grip
+    - Advantage: Soft tires for start (pace) AND finish (overtaking)
+    - Risk: Lap 8-33 on Hards might lose position if competitors stay out longer
+  
+  Example 2: "Hard-Medium Sequence"
+    - Start: Medium (balanced)
+    - Lap 20: Box → Hard (preserve for final laps)
+    - Lap 38: Box → Medium (fresh rubber for late race)
+    - Advantage: Medium tires faster than Hard, fresher legs at end
+    - Risk: Medium degrades quickly after pit, may need aggressive pace early
+  
+  Pros:
+    - Flexibility: Can pit twice without 3-stop penalty
+    - Psychological: Fresh soft tires at finish (looks strong on camera)
+    - Tire management: Optimize which compound gets which duration
+    - Safety car friendly: Can adjust second stop timing if yellow appears
+  
+  Cons:
+    - Complexity: Four tire changes total (vs two in standard two-stop)
+    - Pit crew fatigue: More stops = higher mistake risk if morale low
+    - Time loss: Same 2 pit stops = 5 seconds total pit loss
+    - No advantage over standard two-stop (same number of stops)
+  
+  Risk: MEDIUM (same as two-stop, just different compound sequencing)
+  Best for: Tracks where mixing compounds is strategic (start with soft, finish with soft)
+            or mental edge (fresh tires on camera at finish)
+
 THREE-STOP STRATEGY:
   Plan: Soft 10 laps → Medium 20 laps → Hard 20 laps → Soft 8 laps (pit stops Lap 10, 30, 50)
   Requires: Aggressive fuel management and pit timing
@@ -731,6 +1005,66 @@ DNF Crash (Fatal):
   - Damage cost: $2-5M repair/replacement
   - Morale: Driver -50% (severe morale hit, may request trade)
   - Championship impact: Lost 25 potential points
+
+**Driver Injury System** (Post-crash medical evaluation):
+
+```
+Injury Probability by Crash Severity:
+
+Minor Crash → Injury Risk: <0.1% (almost never)
+Moderate Crash → Injury Risk: 0.5-1.5%
+Severe Crash → Injury Risk: 2-5%
+DNF Crash → Injury Risk: 5-15% (depending on speed/forces)
+
+Injury Miss Rate: <1% (modern F1 safety is excellent)
+  - Medical check happens immediately after crash
+  - FIA doctor evaluation: 99%+ catch rate for injuries
+  - Rare case (0.5%): Minor injury not detected until next day (sim resolves before next race)
+
+Medical Evaluation Process:
+
+Lap 45: Driver crashes barrier (Severe crash, -0.5 sec/lap damage)
+Immediate: Safety car deployed
+Lap 46: Driver in medical tent for evaluation
+  - Medical team assesses injuries
+  - Doctor questions: "Any pain? Vision OK? Head clear?"
+  - Physical checks: reflexes, responsiveness
+  - Potential outcomes:
+    * Fit to continue: No injury detected (99% of time)
+    * Light injury: Bruising, minor soreness (-5% morale penalty next race)
+    * Moderate injury: Muscle strain, possible missed next race (50% chance to miss 1 race)
+    * Severe injury: Concussion, bone fracture (definitely miss 1-2 races)
+
+Injury Types & Seasons Missed:
+
+Light Injury:
+  - Severity: 0.5-1.5% crash severity
+  - Symptoms: Bruising, muscle soreness
+  - Recovery: No races missed (races same weekend if available)
+  - Morale penalty: -5% next race ("sore, low confidence")
+  - Financial: Optional injury insurance covers salary continuation
+
+Moderate Injury:
+  - Severity: 1.5-3% crash severity
+  - Symptoms: Muscle strain, minor bone stress
+  - Recovery: Miss 1 race (50% chance) or 2 races (50% chance)
+  - Morale penalty: -15% when returning to racing
+  - Financial: Injury insurance CRITICAL (covers lost salary + bonuses)
+  - Impact: Must bring in reserve driver (skill 65-75)
+
+Severe Injury:
+  - Severity: >3% crash severity
+  - Symptoms: Concussion, bone fracture, internal assessment
+  - Recovery: Miss 2-3 races guaranteed
+  - Morale penalty: -25% when returning (confidence severely shaken)
+  - Financial: Without injury insurance, lose $2-5M in salary + bonuses
+  - With insurance: Covered but still morale hit
+  - Impact: Reserve driver stays for 2-3 races, might need external hire
+
+Championship Impact of Injury:
+  - Lose 25-75 points per missed race
+  - Reserve driver typically scores 0-10 points/race vs primary 15-25
+  - Season momentum lost (if missed race during good form)
 ```
 
 ### 6.7.2 Mechanical Failures (2026 MODERN RELIABILITY)
@@ -805,7 +1139,148 @@ Example: Lap 35 (of 58)
 Note: Fastest lap is tracked for driver records/stats but provides no championship points
 ```
 
-### 6.8.2 Prize Money Distribution
+### 6.8.2 Dynamic Driver Rating Updates
+
+**Post-Race Driver Development** (Ratings evolve based on performance):
+
+```
+Driver Ratings (5 Categories, 0-100 scale):
+
+1. PACE RATING (Raw speed):
+   - Change: ±0-3 points per race
+   - Factors:
+     * Matched winning pace closely? (+2-3)
+     * Lost to clearly slower car? (-1-2)
+     * Struggled relative to teammate? (-1)
+     * Clearly faster than field? (+2-3)
+   
+   Race example:
+     Before: Pace 88
+     Lap times: 0.1 sec/lap slower than winner
+     Assessment: Steady, no major gains/losses
+     After: Pace 88 (no change)
+
+2. RACECRAFT RATING (Overtaking, defense, strategy execution):
+   - Change: ±0-4 points per race
+   - Factors:
+     * Successful overtake? (+1 per overtake)
+     * Defended position well? (+2 if kept faster car behind)
+     * Made strategic error? (-2-3)
+     * Won crucial position battle? (+3-4)
+   
+   Race example:
+     Before: Racecraft 84
+     Performance: Won position at Lap 18, defended against attack Lap 32
+     After: Racecraft 88 (+4, two successful tactical moments)
+
+3. CONSISTENCY RATING (Reliable, no errors, clean driving):
+   - Change: ±0-2 points per race
+   - Factors:
+     * Clean race, no incidents? (+1-2)
+     * Off-track excursion? (-1)
+     * Collision with competitor? (-1-2)
+     * Multiple small mistakes? (-1)
+   
+   Race example:
+     Before: Consistency 82
+     Performance: Completely clean race, all apexes perfect
+     After: Consistency 84 (+2)
+
+4. ADAPTABILITY RATING (Handling weather, tire transitions, setups):
+   - Change: ±0-3 points per race
+   - Factors:
+     * Handled weather transition well? (+2-3)
+     * Struggled with new tire compound? (-2)
+     * Adapted to safety car perfectly? (+1)
+     * Couldn't manage fuel correctly? (-1-2)
+   
+   Race example:
+     Before: Adaptability 76
+     Performance: Weather changed Lap 25, driver quickly adapted to intermediate tires
+     After: Adaptability 79 (+3)
+
+5. MATURITY RATING (Decision-making, responding to team radio, morale):
+   - Change: ±0-3 points per race
+   - Factors:
+     * Accepted poor strategy gracefully? (+1)
+     * Argued with pit crew over radio? (-2)
+     * Made mature decisions under pressure? (+2-3)
+     * Gave up when behind? (-1-2)
+
+Example: Full Post-Race Rating Update
+
+DRIVER: Lewis (Car #1)
+═══════════════════════════════════════
+
+BEFORE RACE:
+  Pace: 92  Racecraft: 88  Consistency: 85  Adaptability: 80  Maturity: 87
+  
+RACE PERFORMANCE ASSESSMENT:
+
+Pace Rating: 92 → 92 (No change)
+  - Lap times: 1:47.3 avg, only 0.1 sec off winning pace
+  - Relative to leader: Matched pace, car limitation was limiting factor
+  - Assessment: World-class pace maintained
+  
+Racecraft Rating: 88 → 90 (+2)
+  - Lap 18: Won position from Red Bull through superior cornering
+  - Lap 32: Defended against aggressive Red Bull attack, maintained position
+  - Assessment: Two successful tactical moments, excellent racecraft display
+  
+Consistency Rating: 85 → 86 (+1)
+  - Track limits: 1 off-track excursion in Turn 12 (minor, corrected)
+  - Collisions: None
+  - Mistakes: One small error Lap 45 (minor, did not lose position)
+  - Assessment: Mostly clean race with only small errors
+  
+Adaptability Rating: 80 → 83 (+3)
+  - Tire transitions: Soft to Medium change Lap 12 handled perfectly (grip gained immediately)
+  - Weather: No major weather transition this race
+  - Strategy execution: Perfectly executed two-stop with optimal pit timing
+  - Assessment: Excellent execution of strategy and tire management
+  
+Maturity Rating: 87 → 89 (+2)
+  - Pit crew feedback: "Car was perfect today, great strategy" (positive)
+  - Response to instructions: Followed team radio suggestions perfectly
+  - Pressure handling: Remained calm when defending against Red Bull
+  - Assessment: Mature, professional responses throughout
+
+AFTER RACE:
+  Pace: 92  Racecraft: 90  Consistency: 86  Adaptability: 83  Maturity: 89
+  Overall Driver Rating: 88 → 90 (+2)
+
+MORALE CHANGE:
+  Before: 85%
+  After: 90% (+5%)
+  Reason: Podium finish, excellent racecraft display, team approval
+  
+LONG-TERM IMPACT:
+  - Rating improvements: Drivers with consistent gains become more valuable
+  - Championship impact: Higher rated drivers attract better sponsors/teams
+  - Reserve driver development: Training shows improvements over time
+  - Contract negotiation: Improved ratings can justify salary increases
+```
+
+**Rating Distribution** (across team):
+
+```
+Primary Driver (Pace 90+):
+  - Develops most (±2-4 per race)
+  - Can improve toward 95+ by season-end
+  - Market value increases significantly
+
+Secondary Driver (Pace 80-85):
+  - Develops slower (±0-2 per race)
+  - Unlikely to reach 90+ unless major breakthrough
+  - May improve specific weaknesses (racecraft, adaptability)
+
+Reserve Driver (Pace 65-75):
+  - Develops quickly when racing (±2-3 per race substitute race)
+  - Can reach 78-80 by end of season if races frequently
+  - Better chance of securing seat next year with improvements
+```
+
+### 6.8.3 Prize Money Distribution
 
 **NO RACE-BY-RACE PAYOUTS** (Season-End Payout Only):
 
