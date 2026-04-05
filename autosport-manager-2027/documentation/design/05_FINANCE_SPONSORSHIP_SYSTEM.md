@@ -53,20 +53,20 @@ Q4 (Races 19-24, 8 weeks)
 ```
 Sponsor: Oracle (fictional replacement, similar to real Red Bull deal)
 Contract Length: 3 years (2027-2029)
-Total Value: $65M/year (significantly higher than 2024)
+Total Value: $90M/year for top teams (Mercedes, Red Bull, Ferrari)
 
 Payment Schedule:
-  - Q1 (March): $16.25M
-  - Q2 (June): $16.25M
-  - Q3 (September): $16.25M
-  - Q4 (December): $16.25M
+  - Q1 (March): $22.5M
+  - Q2 (June): $22.5M
+  - Q3 (September): $22.5M
+  - Q4 (December): $22.5M
 
 Performance KPIs:
   1. Team Championship Position
-     - Top-3 finish: Full sponsor payment ($65M)
-     - 4-6 finish: 85% payment ($55.25M)
-     - 7-10 finish: 60% payment ($39M)
-     - Below 10: 40% payment ($26M, minimum)
+     - Top-3 finish: Full sponsor payment ($90M)
+     - 4-6 finish: 85% payment ($76.5M)
+     - 7-10 finish: 60% payment ($54M)
+     - Below 10: 40% payment ($36M, minimum)
   
   2. Podium Count
      - Bonus: +$1.2M per podium (up to 12 podiums = +$14.4M)
@@ -88,15 +88,15 @@ Performance KPIs:
      - Penalty if targets not met: -$1.2M
 
 Year-End Calculation Example (Q4 Payment):
-  - Base: $16.25M
-  - Championship adjustment: Team finished 4th = 85% = $13.8M
+  - Base: $22.5M
+  - Championship adjustment: Team finished 4th = 85% = $19.125M
   - Podium bonus: 8 podiums (target 5) = +$3.6M
   - Win bonus: 2 wins = +$5M
   - Brand exposure: 82% (above 75%) = 0 penalty
   - Social KPI: Met = 0 penalty
-  - Q4 payment: $22.4M
+  - Q4 payment: $27.725M
 
-Total Year 1: $65M + ~$8.6M bonuses - potential malus = $65M-$73.6M actual
+Total Year 1: $90M + ~$8.6M bonuses - potential malus = $90M-$98.6M actual
 ```
 
 #### **MINOR SPONSOR CONTRACT** (Typical)
@@ -118,21 +118,50 @@ No performance bonuses (typical for smaller sponsors)
 
 ### 5.2.2 Sponsorship Total Portfolio (2026 UPDATED)
 
-**Example Top Team Portfolio (e.g., Mercedes, Red Bull):**
+**TIER 1: Top Team Portfolio (e.g., Mercedes, Red Bull, Ferrari):**
 
 | Sponsor | Category | Annual Value | KPI Type |
 |---------|----------|------------|----------|
-| Oracle/Petronas | **TITLE** | $65M+ | Championship, podiums, brand exposure |
-| BWT/Finance Co | MAJOR | $35M | Top-3 finish, media value |
-| Lubricant Supplier | MAJOR | $25M | Top-5 finish, technical KPIs |
-| Tech Partner | MAJOR | $20M | Innovation showcase, patents |
-| Automotive Co | Mid-tier | $12M | Top-8 finish |
-| Gaming/Entertainment | Mid-tier | $8M | Social engagement |
-| Various Hospitality | Minor | $15M | Event/VIP experiences |
+| Oracle/Petronas | **TITLE** | $80-100M | Championship, podiums, brand exposure |
+| BWT/Finance Co | MAJOR | $35-40M | Top-3 finish, media value |
+| Lubricant Supplier | MAJOR | $25-30M | Top-5 finish, technical KPIs |
+| Tech Partner | MAJOR | $20-25M | Innovation showcase, patents |
+| Automotive Co | Mid-tier | $12-15M | Top-8 finish |
+| Gaming/Entertainment | Mid-tier | $8-12M | Social engagement |
+| Various Hospitality | Minor | $15-20M | Event/VIP experiences |
 | Championship Series | Shared | $6.4M+ | Equal distribution + position bonus |
 
-**Total Sponsorship Portfolio**: $185M+/year
-**Range**: $140M (poor season) to $210M (championship season)
+**Total Sponsorship Portfolio (Top Teams)**: $210-260M/year
+**Range**: $180M (poor season) to $280M+ (championship season)
+
+**TIER 2: Mid-Field Team Portfolio (e.g., McLaren, Aston Martin, Alpine):**
+
+| Sponsor | Category | Annual Value | KPI Type |
+|---------|----------|------------|----------|
+| Automotive Partner | **TITLE** | $40-60M | Top-6 finish, podiums |
+| Energy/Fuel | MAJOR | $20-25M | Top-8 finish |
+| Finance/Banking | MAJOR | $15-20M | Mid-field consistency |
+| Tech Partner | Mid-tier | $10-15M | Innovation showcase |
+| Lifestyle Brand | Mid-tier | $8-12M | Brand exposure |
+| Gaming/Entertainment | Minor | $5-8M | Social engagement |
+| Championship Series | Shared | $6.4M+ | Equal distribution + position bonus |
+
+**Total Sponsorship Portfolio (Mid-Field Teams)**: $110-155M/year
+**Range**: $85M (poor season) to $155M (podium season)
+
+**TIER 3: Newcomer/Lower-Budget Team Portfolio (e.g., Cadillac 2026, new entrants):**
+
+| Sponsor | Category | Annual Value | KPI Type |
+|---------|----------|------------|----------|
+| Regional Partner | **TITLE** | $20-30M | Top-10 finish, brand building |
+| Local Automotive | MAJOR | $10-15M | Consistent points finishes |
+| Tech Startup | Mid-tier | $5-8M | Innovation, market access |
+| Regional Brand | Minor | $3-5M | Social media engagement |
+| Hospitality/VIP | Minor | $2-4M | Event sponsorship |
+| Championship Series | Shared | $6.4M+ | Equal distribution + position bonus |
+
+**Total Sponsorship Portfolio (Newcomers)**: $50-70M/year
+**Range**: $40M (challenging season) to $80M (breakthrough season)
 
 **MARKET GROWTH MECHANIC** (NEW):
 - Each season, sponsor market values increase 5-10% baseline
@@ -205,22 +234,22 @@ Mid-field teams: Optional (depends on driver market value)
 | **Heritage/Historical** | 20% ($320M) | Bonus for teams with titles, podiums, legacy (Ferrari, Mercedes, McLaren priority) |
 | **Ferrari Legacy Bonus** | 5% ($80M) | Fixed payment to Ferrari (FIA regulations) |
 
-**Championship Position Distribution (75% of $1.2B = $900M base):**
+**Championship Position Distribution (75% of $1.6B Pool = $1.2B Championship-Based Tier):**
 ```
 Championship Final Position Distribution:
-  1st:  14.0% = $168M
-  2nd:  13.5% = $162M
-  3rd:  13.0% = $156M
-  4th:  12.0% = $144M
-  5th:  11.0% = $132M
-  6th:  9.0% = $108M
-  7th:  8.0% = $96M
-  8th:  7.5% = $90M
-  9th:  7.0% = $84M
-  10th: 6.0% = $72M
+  1st:  14.5% of $1.2B = $174M
+  2nd:  13.5% of $1.2B = $162M
+  3rd:  13.0% of $1.2B = $156M
+  4th:  12.0% of $1.2B = $144M
+  5th:  11.0% of $1.2B = $132M
+  6th:  9.0% of $1.2B = $108M
+  7th:  8.0% of $1.2B = $96M
+  8th:  7.5% of $1.2B = $90M
+  9th:  7.0% of $1.2B = $84M
+  10th: 6.0% of $1.2B = $72M
   11th (2026+): 0% (new entrant, typically no share year 1)
 
-Total: 100% = $1.2B
+Total: 100% = $1.2B (Championship-based tier of $1.6B total pool)
 ```
 
 **Heritage Bonus Distribution (20% = $320M):**
@@ -665,7 +694,7 @@ CapEx (separate): $11.25M/year (facility upgrades)
 Strategy: Safe, sustainable, lower ambition, minimal franchise investment
 Expected Performance: Mid-field (6-8th championship finish)
 Expected Prize Money: $90-108M (per finishing position)
-Expected Sponsorship: $80-120M
+Expected Sponsorship: $110-155M (mid-tier team portfolio)
 Expected Net: Breakeven to +$20M profit (if 6th-7th place)
 ```
 
@@ -700,9 +729,9 @@ CapEx (separate): $11.25M/year (accelerated facility modernization)
 
 Strategy: Aggressive, championship-focused, high-risk, major owner investment
 Expected Performance: Top-3 finish (championship contender)
-Expected Prize Money: $144-168M (depending on 3rd vs. 1st place)
-Expected Sponsorship: $160-210M (top-tier teams attract premium sponsors)
-Expected Net: +$50M to +$130M profit (if top-3), -$30M loss (if 5th)
+Expected Prize Money: $144-174M (depending on 3rd vs. 1st place)
+Expected Sponsorship: $210-260M (top-tier team portfolio with championship bonuses)
+Expected Net: +$50M to +$150M profit (if top-3), -$20M loss (if 5th)
 ```
 
 ---
@@ -715,18 +744,18 @@ Expected Net: +$50M to +$130M profit (if top-3), -$30M loss (if 5th)
 FINANCIAL REPORT - Q2 (Races 7-12)
 ════════════════════════════════════════════════════════════════
 
-INCOME TRACKING (YTD):
-  Sponsorship Received: $95M / $185M target (51%)
-    - Titlesponsor Oracle: $32.5M (on track, bonuses pending)
-    - Major Partner (Finance): $32.5M (at risk, performance below target)
-    - Other: $30M (stable)
+INCOME TRACKING (YTD - Top Team Example):
+  Sponsorship Received: $110M / $235M target (47%)
+    - Titlesponsor Oracle: $45M (Q1+Q2 payments, on track, bonuses pending)
+    - Major Partner (Finance): $35M (on track, performance meeting targets)
+    - Other (Lubricant, Tech, etc.): $30M (stable)
   
   Prize Money Received: $0 (PAID AT SEASON END ONLY)
-    - Current forecast based on 4th place position: ~$132M (paid December)
+    - Current forecast based on 4th place position: ~$144M (paid December)
   
   Championship Series Sponsorships: $6.4M YTD (shared pool)
   
-  Total YTD (excluding season-end prizes): $101.4M
+  Total YTD (excluding season-end prizes): $116.4M
 
 EXPENSES YTD:
   Personnel: $22.5M / $45M budget (50%)
@@ -762,16 +791,16 @@ NET CASH POSITION:
 FORECAST TO SEASON END:
   If current performance continues (4th place finish in championship):
     - Championship Prize Money: $144M (4th place, paid December)
-    - Sponsorship adjusted: $160M (some bonuses lost due to non-top-3 finish)
+    - Sponsorship adjusted: $200M (some bonuses lost due to non-top-3 finish; normally $235M for top-3)
     - Championship Series bonus: $6.4M
-    - Total Income: $310.4M
+    - Total Income: $350.4M
     - Expenses: $215M (Cost Cap hard limit, plus excluded categories)
-    - Year-End: +$95.4M PROFIT
+    - Year-End: +$135.4M PROFIT
     - Status: POSITIVE if 4th place maintained
   
   Risk Scenarios:
-    - If finish 8th: Prize $90M, sponsorship drops to $120M → +$1.4M (tight)
-    - If finish 10th: Prize $72M, sponsorship $80M → -$62.6M (DEFICIT)
+    - If finish 8th: Prize $90M, sponsorship drops to $140M (mid-field rates) → +$31.4M (declining but stable)
+    - If finish 10th: Prize $72M, sponsorship $90M (lower tier) → -$20.6M (DEFICIT risk)
   
   Action Required: Must maintain top-6 position to avoid financial crisis
 
