@@ -40,123 +40,253 @@ Development Phase (Practical)
 
 ### 4.2.1 Phase Definitions
 
-#### **RESEARCH PHASE** (4-10 weeks typical)
+#### **RESEARCH PHASE** (4-8 weeks typical, realistic for major R&D)
 **Purpose**: Explore technical concept, validate theoretical improvements, gather data
 
+**Duration Breakdown**:
+- Small concept research: 2-4 weeks (simple aero tweak, minor suspension change)
+- Medium research: 4-6 weeks (moderate complexity)
+- Major research: 6-8 weeks (complex system, novel technology)
+
 **Activities**:
-- Literature review, competitor analysis (telemetry, lap times)
+- Literature review, competitor analysis (telemetry, lap times, teardown data)
 - CFD simulations (costs CFD units, no manufacturing yet)
 - CAD design and initial calculations
-- Wind tunnel allocation planning
+- Wind tunnel allocation planning (theoretical modeling)
 - Failure mode analysis (reliability perspective)
+- Technical risk assessment
 
 **Outputs**:
 - Research conclusion report (go/no-go decision)
-- Performance prediction model
+- Performance prediction model (with uncertainty range)
 - Manufacturing feasibility assessment
-- Risk analysis (reliability trade-offs)
+- Risk analysis (reliability trade-offs, cost impact)
+- Timeline projection for development phase
 
 **Costs**:
-- Engineering time: $50K-200K depending on complexity
-- CFD allocation: 50-300 CFD units per major research
-- Wind tunnel allocation: Not needed in research phase (just planning)
+- Engineering time: $100K-400K depending on complexity
+- CFD allocation: 100-500 CFD units per major research
+- External consulting: 0-200K for specialized expertise
+- Wind tunnel allocation: Planning only, no physical testing
 
 **Success Criteria**:
 - Predicted improvement identified (0.1-0.5 sec/lap typically)
-- Manufacturing feasibility confirmed
-- Reliability impact assessed (no unexpected surprises)
-- Team consensus on viability
+- Manufacturing feasibility confirmed with constraints documented
+- Reliability impact assessed with mitigation plan
+- Team consensus on viability and risk tolerance
+- Business case approved (cost vs. performance benefit)
 
-**Example - Aerodynamics Research (2 weeks)**:
+**Example - Aerodynamics Research (6 weeks, major upgrade)**:
 ```
-Goal: Explore new front wing design for Singapore (low downforce needed)
+Goal: Explore new floor design for entire season (major downforce architecture change)
 
-Week 1 (5 days):
-  - Study competitor telemetry from previous year's Singapore
-  - CAD modeling of 3 wing variants (conservative, medium, aggressive)
-  - Initial CFD runs (200 CFD units consumed)
-  - Cost: $80K engineer time + $100K CFD simulation = $180K
+Week 1 (5 days): Initial Assessment
+  - Competitor analysis: Collect telemetry, photo comparisons from all 2024 cars
+  - Study regulations: What's allowed vs. prohibited in new spec?
+  - Preliminary CAD concepts: 5 floor design variants
+  - Initial CFD screening: 300 CFD units (rule out bad concepts)
+  - Cost: $150K engineer time + $150K CFD simulation
 
-Week 2 (5 days):
-  - Detailed CFD analysis of most promising variant (100 CFD units)
-  - Manufacturing feasibility review (can be produced on schedule?)
-  - Reliability discussion (are new materials safe? Any risk?)
-  - Final decision: "Proceed to Development" vs. "Defer" vs. "Abandon"
-  - Cost: $50K engineer time + $50K CFD = $100K
+Week 2 (5 days): Detailed CFD Analysis
+  - Deep CFD analysis of 3 most promising variants (400 CFD units)
+  - Comparison matrix: downforce, drag, cost, manufacturability
+  - Reliability discussion: New materials (titanium? carbon?), stress points
+  - Cost: $100K engineer + $200K CFD
 
-Total Research Cost: $280K
-Total CFD Consumed: 300 units
-Time: 10 days
-Output: Decision to develop new wing variant targeting 0.3 sec/lap improvement at Singapore
+Week 3 (5 days): Wind Tunnel Feasibility
+  - Wind tunnel planning: What needs validation? (50 hours needed)
+  - Scaling models for tunnel testing
+  - Instrumentation planning
+  - Cost: $80K planning + $100K model prep
+
+Week 4 (5 days): Manufacturing Assessment
+  - Detailed feasibility review with manufacturing lead
+  - Identify production constraints, tooling complexity
+  - Cost estimates for prototype (preliminary)
+  - Risk assessment: Can this be made within timeline?
+  - Cost: $100K engineering assessment
+
+Week 5 (5 days): Reliability & Systems Integration
+  - FEA stress analysis of top 2 concepts (vibration, stress points)
+  - Integration with suspension, cooling systems
+  - Thermal modeling (will new floor affect cooling?)
+  - Cost: $120K reliability + FEA analysis
+
+Week 6 (5 days): Final Decision & Documentation
+  - Consolidate findings into formal research report
+  - Business case: Cost vs. performance benefit
+  - Final go/no-go decision with team consensus
+  - Timeline projection: Development would take 12-14 weeks
+  - Cost: $80K final documentation
+
+Total Research Cost: $1.22M (realistic for major upgrade)
+Total CFD Consumed: 1000+ CFD units
+Time: 6 weeks
+Output: Decision to develop new floor architecture targeting 0.4-0.6 sec/lap improvement
+
+Note: This is major research. Small aero tweaks (new endplate) would be 2-3 weeks, $200-300K.
 ```
 
 ---
 
-#### **DEVELOPMENT PHASE** (6-12 weeks typical)
+#### **DEVELOPMENT PHASE** (8-16 weeks typical, realistic for major upgrades)
 **Purpose**: Build prototype, test, refine, deploy to race car
 
+**Duration Breakdown**:
+- Small update (endplate, minor aero): 4-6 weeks
+- Medium component (suspension package): 8-10 weeks
+- Major upgrade (new floor, power unit spec): 12-16 weeks
+- Full car upgrade cycle: 16-24 weeks (rare, major regulation change)
+
 **Activities**:
-- Detailed design refinement (CAD iterations)
-- Manufacturing engineering (how to build it?)
-- Prototype production (first article manufacturing)
-- Dyno/wind tunnel testing of prototype
-- Reliability testing (stress testing, durability)
-- Simulator validation (drivers confirm setup works)
-- Final production tooling (if successful)
+- Detailed design refinement (CAD iterations, multiple revisions)
+- Manufacturing engineering (process planning, tooling design)
+- Prototype production (first article manufacturing, quality control)
+- Dyno/wind tunnel testing of prototype (multiple iterations)
+- Reliability testing (stress testing, durability, fatigue analysis)
+- Integration testing (component fit with rest of car systems)
+- Simulator validation (drivers confirm setup works, feedback cycles)
+- Final production tooling design and validation (if successful)
+- Manufacturing ramp-up planning
 
 **Outputs**:
 - Production-ready component or system
 - Assembly instructions and service manuals
 - Performance validation data (on dyno/sim, not yet on track)
-- Reliability margin assessment
-- Installation timeline and logistics
+- Reliability margin assessment with safety factors
+- Installation timeline and logistics plan
+- Risk mitigation plans for known issues
+- Updated manufacturing capacity requirements
 
-**Costs**:
-- Engineering time: $100K-300K depending on component complexity
-- Manufacturing prototype: $50K-200K (tooling, materials, labor)
-- Testing (wind tunnel, dyno, simulator): $200K-500K
-- Quality assurance: $50K-100K
+**Costs** (Major upgrade example):
+- Engineering time: $300K-800K depending on complexity
+- Prototype manufacturing: $300K-500K (tooling, materials, labor, iterations)
+- Testing (wind tunnel, dyno, simulator): $500K-1.5M (multiple sessions)
+- Reliability testing: $200K-500K (stress rigs, endurance testing)
+- Production tooling: $500K-1M one-time setup
+- Quality assurance: $100K-300K
 
 **Success Criteria**:
-- Prototype meets performance predictions (within 10%)
-- Reliability testing passes with margin
-- Can be manufactured within production timeline
-- Cost within budget allocation
-- Driver approves on simulator
+- Prototype meets performance predictions (within 5-10%)
+- Reliability testing passes with margin >20%
+- Can be manufactured within production capacity
+- Cost within budget allocation (with contingency)
+- Driver approves on simulator with confidence
+- Manufacturing timeline meets race deployment schedule
 
-**Example - Aerodynamics Development (4 weeks)**:
+**Example - Aerodynamics Development (12-14 weeks, major floor redesign)**:
 ```
-Following successful research, development of Singapore front wing variant
+Following successful 6-week research, development of new floor architecture
 
-Week 1 (5 days): Detailed CAD
-  - Refine wing geometry based on final CFD results
-  - Design mounting points, stress analysis (FEA)
-  - Specify materials, manufacturing tolerances
-  - Cost: $100K engineering + $50K FEA analysis = $150K
+PHASE 1: DETAILED DESIGN (Weeks 1-3)
 
-Week 2 (5 days): Prototype Manufacturing
-  - CNC machine prototype wing
-  - Hand-assembled with quality control
-  - Cost: $120K (materials + labor + tooling setup)
+Week 1: CAD Refinement
+  - Refine floor geometry based on CFD and wind tunnel planning
+  - Design all attachment points, carbon layup patterns
+  - Stress analysis (FEA) of main structure (vibration modes, crash loads)
+  - Thermal analysis (will cooling air path work?)
+  - Cost: $250K engineering + $150K FEA/CFD analysis
 
-Week 3 (5 days): Wind Tunnel Testing
-  - 6-hour wind tunnel session (uses 6 of allocated Singapore wind tunnel budget)
-  - Measure actual downforce/drag curves
-  - Compare to CFD predictions
-  - Refine if needed (adjust angles slightly)
-  - Cost: $150K (wind tunnel time + logistics)
+Week 2: Design Iteration
+  - Manufacturing feedback: Tooling costs, complexity assessment
+  - Design refinements based on manufacturability (radius, draft angles)
+  - Detailed material specifications (carbon prepreg, epoxy, weave pattern)
+  - Prototype part list and suppliers
+  - Cost: $150K engineering + $100K supplier coordination
 
-Week 4 (5 days): Production Design & Validation
-  - Finalize manufacturing drawings
-  - Full reliability testing (stress cycles, thermal cycling)
-  - Simulator validation (pilots confirm handling)
-  - Final approval for production
-  - Cost: $100K engineering + $80K testing = $180K
+Week 3: Final CAD Release
+  - Complete technical drawings for manufacturing
+  - Assembly manual drafts
+  - Quality control checklist
+  - Cost: $100K documentation + CAD support
 
-Total Development Cost: $600K
-Time: 20 days
-Wind Tunnel Used: 6 hours (out of 60-80 hour annual limit)
-Output: Production-ready front wing variant, ready for Singapore deployment
+Phase 1 Cost: $750K, Time: 15 days
+
+PHASE 2: PROTOTYPE MANUFACTURING (Weeks 4-6)
+
+Week 4: Tooling Design & Preparation
+  - Carbon layup tool design (molds for floor)
+  - Precision fixture design (mounting attachments)
+  - CNC programming for prototype
+  - Cost: $400K tooling prep + equipment setup
+
+Week 5: First Article Manufacturing
+  - Produce prototype floor component
+  - Hand layup and quality control
+  - Cure cycles, demolding, initial inspection
+  - Cost: $300K materials + labor + equipment
+
+Week 6: Initial Assembly & Fit Check
+  - Trial fit on test rig (check mounting points, clearances)
+  - Modification of mounting brackets if needed
+  - Final surface prep for testing
+  - Cost: $150K assembly + modifications
+
+Phase 2 Cost: $850K, Time: 15 days
+
+PHASE 3: TESTING & VALIDATION (Weeks 7-10)
+
+Week 7-8: Wind Tunnel Testing (2 weeks)
+  - 20 hours wind tunnel sessions (major resource)
+  - Measure downforce, drag, flow patterns
+  - Compare to CFD predictions (usually 5-10% variance)
+  - Initial refinements identified
+  - Cost: $500K wind tunnel rental + labor
+
+Week 9: FEA Validation & Reliability Testing
+  - Modal analysis (vibration modes match predictions?)
+  - Stress testing: Equivalent load cycles (10,000 cycles = 1 race equivalent)
+  - Thermal testing (heat soak validation)
+  - Material property verification
+  - Cost: $400K testing + lab time
+
+Week 10: Integration Testing
+  - Cooling system integration (air flow with new floor)
+  - Suspension mounting compatibility check
+  - Electrical/sensor routing check
+  - Cost: $200K system integration + diagnostics
+
+Phase 3 Cost: $1.1M, Time: 20 days
+
+PHASE 4: SIMULATOR & PRODUCTION PREP (Weeks 11-14)
+
+Week 11: Simulator Integration
+  - Update aero model in simulator
+  - Driver evaluation: Does new setup feel stable?
+  - Suspension setup optimization for new floor
+  - Feedback cycles with drivers (typically 2-3 iterations)
+  - Cost: $250K simulator work + engineer time
+
+Week 12: Manufacturing Process Validation
+  - Full production tooling finalization
+  - Dry runs: Produce 2-3 parts in full manufacturing process
+  - Quality procedure verification
+  - Cost: $400K tooling final setup + trial parts
+
+Week 13-14: Documentation & Logistics
+  - Final as-built documentation
+  - Service manuals and maintenance procedures
+  - Spare parts list and inventory planning
+  - Logistics: How to transport, store, install at track
+  - Cost: $200K documentation + logistics planning
+
+Phase 4 Cost: $850K, Time: 20 days
+
+TOTAL DEVELOPMENT:
+  Timeline: 14 weeks (98 days)
+  Total Cost: $3.45M (major aero package)
+  Wind Tunnel Hours: 20 (significant portion of annual budget)
+  
+  Breakdown:
+  - Engineering labor: $1.2M
+  - Manufacturing (prototype + tooling): $1.1M
+  - Testing & validation: $1.15M
+  
+Output: Production-ready floor design, ready for race deployment
+        Performance expectation: +0.4 sec/lap improvement
+
+Note: Smaller projects (endplate redesign) would be 4-6 weeks, $400-600K.
+      Each development cycle is approximately 16-40% of annual R&D budget for major component.
 ```
 
 ---
@@ -319,7 +449,7 @@ Strategic Value:
 | **Floor** | 3 | $500K | $800K | Week 12 | +0.35 sec | High | 16h |
 | **DRS** | 2 | $150K | $250K | Week 3 | +0.02 sec | Low | 3h |
 
-**Total Aerodynamics Budget**: $25-30M/year (part of $215M Cost Cap)
+**Total Aerodynamics Budget**: $45-55M/year (40-50% of R&D allocation, part of $215M Cost Cap)
 **ATR Constraints** (Aerodynamic Testing Resources per championship position):
 - 1st place: 70% of base allocation (56 wind tunnel hrs/year, 1120 CFD units/year)
 - 2nd place: 75% (60 hrs, 1200 units)
@@ -448,7 +578,7 @@ Strategic Advantage:
 | **ERS** | 2 | $200K | $300K | Week 5 | +0.15 | Low | - |
 | **ERS** | 3 | $400K | $600K | Week 14 | +0.20 | Medium | - |
 
-**Total Power Unit Budget**: $28-32M/year (part of $215M Cost Cap, manufacturers only)
+**Total Power Unit Budget**: $30-40M/year (30-35% of R&D allocation, manufacturers only, often has additional development OUTSIDE Cost Cap)
 
 **2026 REGULATIONS UPDATE**:
 - MGU-H (Motor-Generator Unit, Thermal) REMOVED entirely from new regulations
@@ -929,34 +1059,49 @@ Team with best engine supplier less advantage (homologation limits their upside)
 ### 4.8.2 Breakthrough Probability
 
 **Triggered by:**
-- High R&D spending (top 10% budget allocation)
-- Top-tier engineers (skill 85+) leading project
-- Risky projects (Gen 3 technology trees)
-- Luck (random events)
+- **Risky technology choice** (Gen 3 concepts, unproven materials, radical designs)
+- Deep R&D investment into high-risk/high-reward projects
+- Top-tier engineers (skill 85+) willing to pursue unconventional paths
+- High CFD/wind tunnel allocation for experimental research
+- Luck (random successful anomaly detection)
 
-**Probability Calculation (CORRECTED FOR REALISM)**:
+**KEY MECHANIC**: Breakthroughs are NOT tied to team budget size, but to RISK WILLINGNESS and TECHNOLOGY CHOICE
+
+**Probability Calculation (RISK-BASED, NOT BUDGET-BASED)**:
 ```
-Breakthrough per season: 1-3% chance overall (extremely rare)
-Distribution based on resources & engineer talent:
-  - Top-3 teams: ~2-3% (best engineers, most CFD iterations, detect anomalies first)
-  - Mid-field: ~1% (limited resources, fewer iterations to find anomalies)
-  - Bottom teams: ~0.5% (minimal funding, unlikely to discover novel concepts)
+Base Breakthrough Probability per Season: ~1-5% range depending on strategy
 
-Why Top Teams Have Higher Chance:
-  - More CFD iterations = more chances to find anomalies
-  - Better engineers spot subtle effects other teams miss
-  - More resources to pursue risky R&D paths
-  - Access to top wind tunnel facilities = better anomaly detection
+Distribution based on R&D strategy (NOT team size):
+  - High-Risk Strategy (pursuing Gen 3, experimental concepts):
+    * Frequency: Multiple breakthrough opportunities per season
+    * Per-project probability: 3-4% per major risky R&D project
+    * Bottom teams CAN match top teams if they pursue aggressive R&D
+    * Example: Smaller team invests heavily in radical floor concept
+    * Risk: High failure rates, wasted budget, DNF issues
+  
+  - Conservative Strategy (Evolution/Gen 2 iterations only):
+    * Frequency: Rare, 1-2% per season
+    * Top teams often follow this (already have performance lead)
+    * Lower risk, more predictable budget allocation
+    * Example: Mercedes refines existing aerodynamic advantage
+
+Why Risk Strategy Matters More Than Budget:
+  - A team with $45M aero budget pursuing safe updates: ~1-2% breakthrough chance
+  - A team with $35M aero budget pursuing radical Gen 3: ~3-4% breakthrough chance
+  - Smaller teams can "out-innovate" larger teams with bold R&D choices
+  - Top teams often have LESS breakthrough potential (defending position, not risk-taking)
 
 INFO LEAK MECHANIC:
-  - Competitor teams detect breakthrough within 2-4 races (telemetry, spying)
-  - Competitors can copy breakthrough within 4-8 races (reverse-engineer, similar performance)
-  - First-mover advantage: 2-6 races of exclusive competitive edge
+  - Competitor teams detect breakthrough within 2-4 races (telemetry, spying, video analysis)
+  - Competitors can copy breakthrough within 4-8 weeks of detection (reverse-engineer, similar materials)
+  - First-mover advantage: 2-4 races of exclusive edge if breakthrough works
+  - If breakthrough fails: 6-12 point deficit for pursuing risky path
 
 Impact if Breakthrough Occurs:
-  - Typical breakthrough: +0.30-0.60 sec/lap competitive edge
-  - Rare category-defining: +0.70+ sec/lap (happens once per 5-6 seasons)
-  - Duration: 2-4 races exclusive, then competitors catch within 4-8 races
+  - Successful breakthrough: +0.30-0.60 sec/lap competitive edge (2-4 races)
+  - Rare game-changing: +0.70+ sec/lap (1 per 5-6 seasons, immediately copied)
+  - Failed breakthrough: -0.05 to -0.15 sec/lap penalty (wasted R&D resources)
+  - Failed breakthrough DNF impact: +1-2% DNF rate if design flaw discovered mid-season
 ```
 
 **Example Breakthrough:**
