@@ -321,6 +321,71 @@ Risk: While team refines this component, competitors may deploy similar tech fro
 
 ---
 
+## 4.2.3 Learning Curve Effect (Development Experience)
+
+**Key Mechanic**: First-generation developments are expensive and slow. Subsequent iterations on proven concepts are 20-30% cheaper and faster.
+
+**Learning Curve Model**:
+
+```
+Generation 1 (NEW CONCEPT):
+  - Research time: 6-8 weeks (full exploration of new technology)
+  - Development time: 14-16 weeks (extensive testing, validation)
+  - Total cost: BASE COST ($1.5M for major aero)
+  - Risk: HIGH (unknowns in manufacturing, reliability)
+  - Example: Radical new floor design (first attempt)
+
+Generation 2 (PROVEN CONCEPT, REFINED):
+  - Research time: 4-5 weeks (-30% vs Gen 1)
+  - Development time: 10-12 weeks (-25% vs Gen 1)
+  - Total cost: -25% ($1.1M for major aero based on proven Gen 1)
+  - Risk: MEDIUM (manufacturing process known, refinements only)
+  - Example: Enhanced floor based on Gen 1 success
+
+Generation 3+ (MATURE CONCEPT):
+  - Research time: 2-3 weeks (-50% vs Gen 1)
+  - Development time: 6-8 weeks (-50% vs Gen 1)
+  - Total cost: -30% ($1.05M for major aero)
+  - Risk: LOW (fully proven, minor optimizations)
+  - Example: Incremental floor improvements
+
+Cost/Time Savings Example:
+
+PROJECT: Aerodynamic Floor Development Over Season
+
+Gen 1 (New Floor Concept, Race 2):
+  - Timeline: 6 weeks research + 14 weeks dev = 20 weeks
+  - Cost: $3.5M (design, tooling, extensive testing)
+  - Performance: +0.35 sec/lap (big risk, big reward)
+  - Risk: -1.5% DNF if design flaw discovered
+
+Gen 2 (Refined Floor Based on Gen 1, Race 10):
+  - Timeline: 4 weeks research + 11 weeks dev = 15 weeks
+  - Cost: $2.6M (-25% vs Gen 1, reuse tooling/knowledge)
+  - Performance: +0.25 sec/lap (incremental on proven concept)
+  - Risk: -0.5% DNF (proven design, minor tweaks)
+
+Gen 3 (Optimized Floor, Race 16):
+  - Timeline: 2 weeks research + 7 weeks dev = 9 weeks
+  - Cost: $2.4M (-30% vs Gen 1, fully optimized)
+  - Performance: +0.12 sec/lap (marginal gains on mature concept)
+  - Risk: +0.1% DNF (over-optimization risk)
+
+Seasonal Impact:
+- Total development cost: $8.5M for three iterations
+- Cumulative performance: +0.72 sec/lap by end of season
+- Early season disadvantage (Gen 1 risk) offset by mid/late season gains
+- Knowledge locked into team for next season
+```
+
+**Strategic Application**:
+- Early season: Safe, proven designs (avoid Gen 1 risk)
+- Mid-season: Introduce new concepts (Gen 1, accept risk for advantage)
+- Late season: Refine proven concepts (Gen 2/3, reliable gains)
+- Inter-season: Carry forward proven Gen 1 designs as "baseline" for next year
+
+---
+
 ## 4.3 EIGHT TECHNOLOGY TREES
 
 Each R&D center has distinct development pathways. Strategic choices determine season performance.
@@ -437,6 +502,92 @@ Strategic Value:
   - Can pursue in parallel with other aero projects
   - Low risk, low cost
 ```
+
+---
+
+### 4.3.1B Aerodynamic Component Costs (Realistic Manufacturing)
+
+**PROTOTYPE & MANUFACTURING COST BREAKDOWN** (Accurate for F1 2026):
+
+```
+FRONT WING COMPONENT:
+  Prototype manufacturing:
+    - CAD/FEA design: $50-80K
+    - Composite mold tooling: $100-150K
+    - First prototype production: $150-200K
+    - Wind tunnel testing (6 hours): $150K
+    - Total prototype: $450-630K (typically $500K)
+  
+  Production tooling (series manufacturing):
+    - Production molds for 200+ parts: $200-300K
+    - Quality control procedures: $50K
+    - Total production setup: $300-400K one-time
+
+FULL AERODYNAMIC PACKAGE (Floor + Wings):
+  Development cost (R&D + proto testing):
+    - Engineering time: $400-600K
+    - Prototype manufacturing: $800-1.2M
+    - Wind tunnel validation: $400K (20 hours)
+    - FEA and testing: $200-300K
+    - Simulator integration: $150K
+    - Total development: $2.0-2.6M
+  
+  Production tooling (multi-part):
+    - Floor molds (4-5 sections): $400-600K
+    - Wing molds (FW, RW, endplates): $300-400K
+    - Assembly fixtures and jigs: $200K
+    - Quality control setup: $100K
+    - Total production setup: $1.0-1.3M one-time
+  
+  Series manufacturing (per car):
+    - Materials (carbon, epoxy, aluminum): $200-300K per car
+    - Labor and overhead: $150-200K per car
+    - Total per-car cost: $350-500K per car
+
+REALISTIC TIMELINE & COST EXAMPLE:
+
+PROJECT: New Floor + Wing Package (Gen 1)
+
+Research Phase (6 weeks):
+  - Engineering: $300K
+  - CFD simulations: $150K
+  - Total: $450K
+
+Development & Prototype (14 weeks):
+  - Detailed CAD/FEA: $150K
+  - Prototype floor manufacturing: $600K
+  - Prototype wing manufacturing: $350K
+  - Wind tunnel testing (16 hours): $400K
+  - Testing & validation: $300K
+  - Simulator integration: $150K
+  - Total development: $1.95M
+
+Production Tooling (if green-lit):
+  - Floor production molds: $500K
+  - Wing production molds: $350K
+  - Fixtures/jigs: $200K
+  - Total tooling: $1.05M (one-time)
+
+Series Production (per car, if used for season):
+  - Materials + labor: $400K per car
+  - For 2-car team: $800K (materials only)
+
+TOTAL PROGRAM COST:
+  - Development: $450K (research) + $1.95M (dev) = $2.4M
+  - Production setup: $1.05M (one-time, amortized)
+  - Racing cost per car: $400K materials/season
+  - Total major package: $3.5-4.0M for full development + season use
+```
+
+**Why Costs Are High** (Realistic for modern F1):
+- Carbon fiber materials are expensive ($200+ per kg)
+- Precision molds require CNC machining (hours of machine time)
+- Wind tunnel time costs $20-30K per hour
+- Hand-finishing and quality control are labor-intensive
+- Failure/rework rates on prototypes (typically 10-20% parts scrapped)
+- Each prototype iteration 1-2 months manufacturing lead time
+
+---
 
 **Aerodynamics Summary Table:**
 
@@ -694,13 +845,22 @@ Gen 3 (Exotic Materials, Weeks 8-12):
 ```
 Add backup systems for critical failures
 
-**2026 Reliability Baseline** (significantly improved from 2025):
-  - Single hydraulic pump: 0.2% DNF per race
-  - Single electrical system: 0.15% DNF per race
-  - Cooling circuit: 0.1% DNF per race
-  - **Total baseline DNF risk: 0.45% per race** (~1 DNF per 22 races per team)
+**2026 Reliability Baseline** (realistic modern F1):
+  - Engine failures: 0.8-1.2% per race (power tuning, resource limits)
+  - Hydraulic system: 0.3-0.5% per race (high-pressure cycles)
+  - Electrical/ECU: 0.2-0.4% per race (sensor failures, thermal stress)
+  - Suspension (damage from curbing): 0.4-0.6% per race
+  - Cooling/thermal: 0.1-0.3% per race
+  - **Total baseline DNF risk: 2-3% per race** (realistic mechanical failures)
 
-Modern F1 reliability is extremely high: aim for <0.5% DNF baseline
+**DNF Risk Modifiers**:
+  - Aggressive power tuning: +1-2% additional DNF risk
+  - Conservative setup: -0.5% DNF reduction
+  - High-downforce circuit (Monaco): +0.5% brake/suspension risk
+  - Damage from crashes: +2-5% DNF risk
+  - Maximum realistic DNF: 5-7% per race (extreme aggression + bad luck)
+
+Modern F1 is much more reliable than 1980s, but 2-3% baseline reflects real mechanical complexity at 1000+ bhp
 
 Gen 1 (Redundant Hydraulics, Week 2):
   - Backup hydraulic pump (switches if primary fails)
@@ -731,25 +891,48 @@ Gen 3 (Full Redundancy, Weeks 7-10):
 
 **Realistic Impact Example (2026)**:
 ```
-Scenario: Team pursues full reliability redundancy by Race 12
+Scenario A: Aggressive Team (High Power Tuning)
+  Power mode: +20 bhp aggressive mapping
+  Baseline DNF: 2% per race
+  Aggressive modifier: +1.5% DNF
+  Total DNF risk: 3.5% per race
+  
+  Season expectation (24 races):
+    - Expected DNFs: 24 × 3.5% = 0.84 DNFs (~1 DNF per season)
+    - If DNF at crucial race: -25 points
+    - If DNF early season: -25 points + lost momentum
 
-Before Redundancy (Races 1-11):
-  - Average DNF probability: 0.45% per race (0.050 DNFs across 11 races)
-  - Expected results: Nearly always finish (very rare DNF)
-  - Lost points to DNF: 1-2 points over 11 races
+Scenario B: Conservative Team (Safe Power Tuning)
+  Power mode: +8 bhp safe mapping
+  Baseline DNF: 2% per race
+  Conservative modifier: -0.5% DNF
+  Total DNF risk: 1.5% per race
+  
+  Season expectation (24 races):
+    - Expected DNFs: 24 × 1.5% = 0.36 DNFs (~rare)
+    - More points secured, better championship position
 
-After Redundancy (Races 12-24):
-  - Average DNF probability: 0.10% per race (0.013 DNFs across 13 races)
-  - Expected results: Almost never DNF
-  - Lost points to DNF: 0-1 points over 13 races
+Scenario C: Reliability Redundancy Investment
+  Early season (no redundancy): 2.5% DNF baseline
+  After Race 12 (full redundancy installed):
+    - Hydraulic backup: -0.3% DNF
+    - Electronic backup: -0.2% DNF
+    - Cooling redundancy: -0.15% DNF
+    - New DNF baseline: 1.85% per race
 
-Net improvement: ~1-2 points saved (small effect in modern F1)
-Cost: $900K per car ($1.8M fleet)
-Cost/point: $900K per point
-
-Return on investment: Only worthwhile if reliability issues are specific target
-→ Better use of budget: Pursue performance development over marginal reliability gains
+  Cost: $900K per car ($1.8M fleet)
+  Benefit: ~0.7% DNF reduction per race
+  Races where installed: Races 12-24 (13 races)
+  Expected saved DNF: 13 × 0.7% = 0.091 DNFs (~saved 0-1 DNF)
+  Value of saved DNF: 15-25 points
+  ROI: Marginal but worthwhile if fighting for championship
 ```
+
+**Strategic Decision Tree**:
+- Budget-constrained team: Accept 2-3% DNF baseline, pursue performance R&D
+- Competitive team: Invest in reliability redundancy mid-season ($1-2M)
+- Championship contender: Full redundancy early (Race 6-8), minimize DNF risk
+- Risk-taker: Aggressive power tuning, accept 3.5-5% DNF for +0.3 sec/lap advantage
 
 ---
 
@@ -925,6 +1108,8 @@ Example 3: Engine Mapping Asymmetric (ALLOWED)
 
 **ADUO Eligibility**: Exclusively for Power Unit manufacturers (Mercedes, Ferrari, Honda, Renault), not for aerodynamics
 
+**What ADUO Provides**: **NEW HOMOLOGATION SPECIFICATION** (official FIA approval for new engine spec), NOT just development time
+
 **Check Timing**: Three performance checks per season:
 - Check 1: After Race 6 (early season assessment)
 - Check 2: After Race 12 (mid-season review)
@@ -934,38 +1119,56 @@ Example 3: Engine Mapping Asymmetric (ALLOWED)
 - Baseline power unit established at season start (average of top manufacturers)
 - Measure deficit: Power output gap between team and reference engine
 
-**Upgrade Rules**:
+**ADUO Development & Deployment Timeline**:
 
-| Power Deficit | Upgrades Allowed | Timeline | Details |
-|---------------|------------------|----------|---------|
-| 2-4% | One (1) upgrade | 2-3 weeks dev | Software/tuning improvements only |
-| 4%+ | Two (2) upgrades | 3-4 weeks each | Software + mechanical tweaks allowed |
-| <2% | None | N/A | Team performing at competitive standard |
+| Power Deficit | Upgrades Allowed | Development | Manufacturing & Testing | Total Timeline | Details |
+|---------------|------------------|-------------|------------------------|-----------------|---------|
+| 2-4% | One (1) new spec | 1-2 weeks R&D | 6-8 weeks manufacturing + dyno testing | 7-10 weeks total | Software/tuning improvements only |
+| 4%+ | Two (2) new specs | 2-3 weeks each | 8-10 weeks per spec | 10-13 weeks per spec | Software + mechanical tweaks allowed |
+| <2% | None | N/A | N/A | N/A | Team performing at competitive standard |
 
-**Example Scenario**:
+**Example Scenario (REALISTIC TIMELINE)**:
 ```
 Ferrari finishes Race 6, measured 3.2% power deficit vs. Mercedes reference
 
-Check 1 Result (Race 6):
-  - Deficit 3.2% → Qualifies for ONE upgrade
-  - Allowed development: Engine mapping + fuel optimization
-  - Timeline: 2-3 weeks, costs $400-600K from R&D budget
-  - Dyno hours: 40-60 hours
-  - Deployed: Ready for Race 8-9
-
+Check 1 Approval (Race 6):
+  - Deficit 3.2% → Qualifies for ONE new homologation
+  - R&D phase: Week 1-2 (simulation, design of new combustion chamber, valve timing)
+  - Cost: $400-600K from R&D budget
+  - FIA approves new specification by Week 2
+  
+Manufacturing & Testing Phase (6-8 weeks):
+  Week 3-4: Prototype engine construction
+  Week 5-6: Dyno testing and validation (40-60 hours dyno time, $500K)
+  Week 7-8: More dyno iterations, performance verification
+  Week 8: FIA final sign-off on new spec
+  Cost: $1.2-1.8M manufacturing + testing
+  
+Deployment:
+  - Earliest deployment: Race 10-12 (6-8 weeks after Race 6 approval)
+  - Cannot deploy immediately (requires manufacturing and validation)
+  - Expected performance gain: +0.15-0.25 sec/lap
+  - Dyno hours consumed: 60 from annual allocation
+  
 Check 2 Result (Race 12):
-  - If deficit still 2.5% → Qualifies for ONE more upgrade
-  - Allowed development: Turbo boost + exhaust optimization
-  - Previously used upgrade does NOT expire
-  - Cumulative benefit: +0.12-0.18 sec/lap by mid-season
+  - If deficit still 2.5% → Qualifies for ONE more new spec
+  - Timeline same: 2-3 weeks R&D + 6-10 weeks manufacturing/testing
+  - Could be ready for Race 19-21
 ```
+
+**Key Differences from Old Model**:
+- **NOT quick fixes**: ADUO requires 6-10 weeks manufacturing, not "2-3 weeks development"
+- **NEW SPECIFICATION**: FIA-approved new engine spec, must be homologated
+- **SIGNIFICANT COST**: $1.5-2.5M per spec (R&D + manufacturing + dyno testing)
+- **TIMING**: Mid-season upgrades take 2-3 months to deploy, not instant
+- **PERMANENT**: Once new spec approved, both cars must run it for rest of season
 
 **Strategic Impact**:
-```
-Teams with early-season reliability issues or design flaws can catch up mid-season
-Teams performing well do not benefit (no deficit = no upgrades)
-This prevents competitive imbalance from manufacturing quality issues
-```
+- Teams with early power deficit can catch up, but requires significant investment
+- Cannot deploy new spec until manufacturing phase complete
+- Manufacturers must plan R&D timeline to match ADUO check windows
+- Top teams rarely use ADUO (no deficit = no opportunity)
+- This prevents competitive imbalance from early design mistakes
 
 ### 4.6.2 Non-Manufacturer Teams (Engine Suppliers)
 
@@ -1133,6 +1336,207 @@ Season R&D Story:
   - Championship position: Potentially +1-2 positions
   - Prize money: +$5-15M improvement
 ```
+
+---
+
+## 4.8A ADVANCED R&D MECHANICS
+
+### 4.8A.1 Component Versioning System
+
+**Concept**: Each aerodynamic or mechanical component has an official version (v1, v2, v3, etc.). Teams can deploy, test, and rollback between versions strategically.
+
+**Version Tracking**:
+```
+FLOOR COMPONENT VERSIONS:
+
+Car #1 Race 1-5:  Floor v1 (baseline 2026)
+Car #1 Race 6-7:  Floor v2 (new design, +0.12 sec/lap expected)
+  - Telemetry Race 6-7: v2 performs -0.03 sec/lap worse than expected (reliability setup issues)
+  
+Car #1 Race 8:    Floor v1 (ROLLBACK DECISION - revert to proven spec)
+  - Cost: Logistics penalty only, 1 race delay to resolve v2 issues
+  - Trade-off: Lose 0.12 sec/lap advantage, but regain 0.10 sec/lap from better setup
+  - Net effect: Neutral, but buy time for v2 debugging
+
+Car #1 Race 9+:   Floor v2 (re-deployed after engineering fixes)
+  - Now performs as designed: +0.12 sec/lap gain
+
+WING VERSION EVOLUTION:
+
+Front Wing v1: Races 1-4 (baseline)
+Front Wing v2: Races 5-8 (midseason upgrade)
+  - If v2 fails reliability: Can rollback to v1 at any race (1-race logistics cost)
+  - Cannot go backwards further than 1 version (can't jump v2 → old 2025 spec)
+
+Rear Wing v1.5: Race 9 (minor update within v1 line)
+Rear Wing v2:   Race 15 (major revision)
+```
+
+**Rollback Rules**:
+- Can only rollback 1 version immediately (v2 → v1, not v2 → old 2025 spec)
+- Rollback takes 1 race for logistics/installation
+- Costs: Component inspection ($50K), logistics shipping ($30K), installation labor ($20K)
+- Total rollback cost: ~$100K + 1-race performance penalty while switching
+
+**Strategic Value**:
+- Allows aggressive development without permanent failure consequences
+- If Gen 3 fails mid-season, can rollback to proven Gen 2 quickly
+- Competitive advantage: "Test" new parts and rollback if poor, competitors copy only final proven version
+
+---
+
+### 4.8A.2 Backward Compatibility Risks (Hidden Performance Penalties)
+
+**Concept**: New components sometimes don't integrate well with existing systems, requiring unexpected R&D fixes.
+
+**Examples of Hidden Compatibility Issues**:
+```
+Scenario A: New Aerodynamic Floor
+  - Team develops radical floor with new airflow path
+  - Deployment: Race 8 test
+  - Issue discovered: New floor overheats cooling system (air intake blocked)
+  - Performance impact: Unexpected -0.15 sec/lap (engine power derating due to thermal throttle)
+  - Original promised gain: +0.35 sec/lap
+  - Actual measured gain: +0.20 sec/lap (lost 0.15 to cooling issue)
+  - Required fix: 2-3 weeks R&D to redesign cooling ducts ($400K)
+  - Resolution: Race 11 (3 races of suboptimal performance)
+
+Scenario B: New Suspension Geometry
+  - Team develops updated suspension for better corner entry
+  - Expected gain: +0.10 sec/lap
+  - Integration issue: New mounting points interfere with fuel tank access
+  - Consequence: Cannot fuel-pump the car at track
+  - Required workaround: Custom fuel logistics, loss of pit stop flexibility
+  - Performance cost: Hidden -0.08 sec/lap from forced pit stop strategy changes
+  - Actual gain: +0.02 sec/lap net
+
+Scenario C: New Brake System Components
+  - New carbon-ceramic brake pads with higher performance
+  - Expected: +0.08 sec/lap braking advantage
+  - Issue: Brake balance software not compatible with new pads
+  - Problem: Excessive brake dust clogs cooling ducts
+  - Cost: $200K aerodynamic redesign to add brake dust extractors
+  - Timeline: 6 weeks
+  - Actual performance: +0.02 sec/lap (blocked by cooling limitations)
+```
+
+**Integration Testing**:
+- During development phase, must test new components on full car system
+- If only tested in isolation: 25-30% chance of hidden compatibility issue
+- Full integration testing: Reduces risk to 5-10%
+- Integration testing cost: +$200-300K per major component (adds 2-3 weeks to development)
+
+**Strategic Approach**:
+- Conservative teams: Full integration testing (cost: high, risk: low)
+- Aggressive teams: Minimal integration testing (cost: low, risk: high hidden penalties)
+- Risk tolerance: Do we deploy with certainty, or gamble on quick delivery?
+
+---
+
+### 4.8A.3 Espionage & Information Security (R&D Secrecy Levels)
+
+**Concept**: Teams can invest in R&D security. Higher secrecy delays competitor copying but costs budget.
+
+**Secrecy Levels**:
+```
+LEVEL 1: NO SECURITY (Low Cost, Fast Competitor Copy)
+  - Cost: $0 (baseline, transparent)
+  - Competitor detection: 1-2 races
+  - Competitor copy time: 2-4 weeks
+  - Example: Deploy new aero Race 5 → Competitor copies by Race 7-8
+  - Risk: Advantage disappears quickly
+
+LEVEL 2: STANDARD SECURITY (Moderate Cost, Normal Copy Time)
+  - Cost: +10% to R&D project budget (e.g., +$150K for $1.5M project)
+  - Competitor detection: 2-3 races (spying via telemetry, photos)
+  - Competitor copy time: 4-8 weeks
+  - Example: Deploy Race 5 → Competitor copies by Race 9-10
+  - Risk: Some advantage window maintained
+
+LEVEL 3: HIGH SECURITY (High Cost, Slow Competitor Copy)
+  - Cost: +20% to R&D project budget (e.g., +$300K for $1.5M project)
+  - Competitor detection: 3-4 races (later detection through superior reverse-engineering)
+  - Competitor copy time: 8-12 weeks
+  - Example: Deploy Race 5 → Competitor copies by Race 11-12
+  - Measures: Secure manufacturing, limited photo access, encrypted design files, non-disclosure agreements
+  - Risk: Extended competitive advantage
+
+LEVEL 4: EXTREME SECURITY (Very High Cost, Competitor Reverse-Engineering Only)
+  - Cost: +30-35% to R&D project budget (e.g., +$450-525K for $1.5M project)
+  - Competitor detection: 4-5 races (extreme reverse-engineering effort)
+  - Competitor copy time: 12-16 weeks
+  - Measures: Restricted facility access, secure machining, classified component parts
+  - Risk: Breakthrough component could give 6+ race advantage
+
+INFORMATION LEAK MECHANIC:
+  - Low morale teams: Random chance of leak (+0.5% per low-morale engineer per month)
+  - Leak effect: Automatically drops secrecy level 1 tier (Level 3 → Level 2)
+  - Disgruntled engineer selling blueprints to rivals (realistic threat)
+```
+
+**Strategic Decisions**:
+- Early season risky project: Use Level 1-2 (fast copy acceptable, focus on first-mover edge)
+- Mid-season breakthrough: Use Level 3-4 (extend advantage window as long as possible)
+- Budget-constrained: Accept Level 1 (save $300K+ per project)
+- Championship fight: Use Level 3 on critical updates
+
+**Espionage Counter-Measures**:
+- None available (espionage is passive, only defense is secrecy investment)
+- Maintain high engineer morale to prevent information leaks
+
+---
+
+### 4.8A.4 Engineer Workload Impact on R&D Quality
+
+**Mechanic**: Linked to workload system from file 03, high engineer workload increases error probability in R&D specifications.
+
+**Workload Effect on R&D Quality**:
+```
+ENGINEER WORKLOAD (from 03_TEAM_MANAGEMENT.md):
+  - Light (1 project): 2% error rate in R&D specification
+  - Moderate (2 projects): 3% error rate (+1%)
+  - Heavy (3 projects): 4% error rate (+2%)
+  - Overloaded (4+ projects): 6% error rate (+4%)
+
+ERROR CONSEQUENCES IN R&D:
+  - Specification error (e.g., wrong material thickness)
+    * Probability: Workload-dependent error rate
+    * Cost: Component rework, $100-500K depending on severity
+    * Timeline: 1-3 weeks delay in development phase
+    * Example: Floor carbon layup spec error → wrong stiffness → aerodynamic failure mid-season
+  
+  - Design flaw in documentation
+    * Probability: Workload-dependent error rate × 0.5
+    * Cost: Minor rework, $50-200K
+    * Timeline: A few days to correct
+    * Example: Cooling duct dimensions off by 5mm → minor thermal issue, small R&D fix
+  
+  - Critical design failure (caught too late)
+    * Probability: Overloaded workload (4+ projects) × 2%
+    * Cost: Severe, $500K-2M (full redesign)
+    * Timeline: 2-4 weeks delay, possible mid-season problem
+    * Example: Suspension mounting point analysis error → structural failure risk, must redesign
+
+IMPACT EXAMPLES:
+
+Team A: Well-staffed R&D (1-2 projects per engineer)
+  - Aero floor development: 2% error probability
+  - Power unit development: 2% error probability
+  - Expected rework: Minimal, within contingency budget
+  - Timeline: On schedule
+
+Team B: Under-staffed R&D (overloaded engineers, 4+ projects each)
+  - Aero floor development: 6% error probability
+  - Power unit development: 6% error probability
+  - Expected rework: Likely 1 error per 2 major projects, costs $200-500K in rework
+  - Timeline: Risk of 1-3 week delay per major project
+  - Championship impact: Delayed R&D deployment = lost competitive advantage window
+```
+
+**Strategic Implication**:
+- Hiring more engineers reduces workload errors (prevents costly R&D failures)
+- Under-staffing saves salary budget but risks R&D failures ($500K+ rework costs)
+- Optimal: Balanced hiring to keep engineers at 1-2 projects each during active R&D seasons
 
 ---
 
