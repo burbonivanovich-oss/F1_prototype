@@ -60,37 +60,39 @@ The game supports **two realistic weekend formats** that alternate throughout th
     - **PARC FERMÉ RULE ACTIVE**: After Q1, when car enters qualifying, car is sealed. No setup changes until race day (except tire pressure/brake balance within strict limits)
     - Consequence: If setup is wrong in Q2, you're stuck with it until warm-up laps Sunday
   
-**Sunday**Sunday - Race Day**:
-- **RACE**- **RACE** (90-120 minutes simulated, but plays in **20-30 minutes** at 1x speed with acceleration options):
+**Sunday - Race Day**:
+- **Formation Lap** (30 min before race start): Cars exit pit lane and align on grid, no overtaking allowed
+- **RACE** (90-120 minutes simulated, but plays in **20-30 minutes** at 1x speed with acceleration options):
   - See section 2.1.4 for detailed race mechanics
   - **Speed options**: 1x / 2x / 5x / 10x / 20x
   - Average player race experience: 15-20 minutes at 1x (first lap, pit stops, finish) + 5-10 min accelerated (mid-race)
 
 ---
 
-### FORMAT B: SPRINT (8 races per season - Friday qualifying, Saturday sprint, Sunday race)
+### FORMAT B: SPRINT (6 races per season - Friday qualifying, Saturday sprint, Sunday race)
 
-**Introduced 2024 in real F1, now alternates with traditional format in our game.**
+**Real F1 2026**: Only 6 sprint weekends per season (down from 8 in 2025, up from original 3).
 
 **Friday**:
 - **FP1** (60 min): Single practice session
-- **Qualifying** (60 min, compressed Q1/Q2/Q3): Determines grid for Saturday sprint
+- **Qualifying** (60 min, compressed Q1/Q2/Q3): Determines grid for Sunday main race
   - **PARC FERMÉ** activated: No changes until sprint Saturday
 
 **Saturday - Sprint Day**:
-- **Sprint Qualifying** (30 min): MANDATORY qualifying session for sprint grid (not in our game, simplified)
+- **Sprint Qualifying** (30 min): MANDATORY qualifying session for sprint grid
+  - Determines who starts the sprint race (separate grid from Sunday)
 - **Sprint Race** (17-21 laps, ~25 minutes real time):
   - Shorter race, 8-10 points available (1st=8pts, 2nd=7pts, 3rd=6pts, etc.)
   - Aggressive driving, high risk of collisions
   - Limited pit stops (usually 1 required)
   - **PARC FERMÉ RESET**: After sprint, teams can make setup changes for Sunday race
-  - Fastest Lap bonus: +1 point (if finish in top 8 on sprint)
+  - **No Fastest Lap bonus** (removed 2025)
 
 **Sunday**:
 - **Race** (56 laps, ~90 minutes real time, plays in 20-30 min):
   - Full championship points (25-1 for 1st-10th)
   - Standard strategy
-  - Fastest Lap bonus: +1 point (if finish in top 10 on race)
+  - **No Fastest Lap bonus** (removed 2025)
   - **Total points available that weekend**: Sprint (8pts) + Race (25pts) = 33pts max
 
 **Strategic Impact**:
@@ -197,41 +199,47 @@ Position    Points    Example: P1 Driver
 8th         4         
 9th         2         
 10th        1         
-Fastest Lap +1        (only if P1-P10)
 DNF         0         (Did Not Finish)
 ```
+
+**Note**: Fastest Lap bonus point was **removed in 2025**. No additional points for fastest lap in either sprint or main race.
 
 **Dual Championships**:
 - **Drivers' Championship**: Individual points accumulate
 - **Constructors' Championship**: Both drivers' points combined
 
-### Financial Rewards (Realistic Prize Money)
+### Financial Rewards (Annual Prize Pool Distribution)
 
-Prize money in real F1 depends on:
-1. **Race finishing position** (primary)
-2. **Constructors' Championship final standing** (at season end, bonus pool distribution)
-3. **"Sporting income"** (appearance fees, historical payouts - Ferrari, Mercedes get extra %)
+**Changed for 2026**: Prize money now distributed **annually by final championship position** (not per-race), with mid-season advances.
 
-**Game Simplification** (acceptable for playability):
+**Annual Prize Pool** (approximately $450M total from FIA):
 
-Per-race prize money structure:
+| Position | Annual Amount | Details |
+|----------|--------------|---------|
+| **1st Constructor** | ~$100M | 1st place in Constructors' Championship |
+| **2nd Constructor** | ~$80M | |
+| **3rd Constructor** | ~$60M | |
+| **4th Constructor** | ~$45M | |
+| **5th Constructor** | ~$35M | |
+| **6th Constructor** | ~$25M | |
+| **7th Constructor** | ~$18M | |
+| **8th Constructor** | ~$12M | |
+| **9th Constructor** | ~$8M | |
+| **10th Constructor** | ~$5M | |
 
-| Position | Base Reward | Team with Good Reputation | Team in Crisis |
-|----------|-------------|-------------------------|-----------------|
-| **1st** | $5M | $5.5M | $4.5M |
-| **2nd** | $3.5M | $3.75M | $3.25M |
-| **3rd** | $2.5M | $2.75M | $2.25M |
-| **4th** | $1.5M | $1.75M | $1.25M |
-| **5th** | $1M | $1.2M | $0.8M |
-| **6-10th** | $500K | $600K | $400K |
-| **Fastest Lap Bonus** | $200K | $200K | $200K |
+**Mid-Season Advances**:
+- Every 6 races: $5M advance payment to all teams (improves cash flow)
+- Sprint race bonuses: $50-100K per 1st place finish (additional)
 
-**End-of-Season Bonus Pool** (distributed based on Constructors' Championship position):
-- 1st place constructor: +$15M bonus
-- 2nd: +$10M
-- 3rd: +$8M
-- 4th: +$5M
-- 5th-10th: +$1-2M
+**Driver Bonuses** (from team's annual pool):
+- Win bonus: $500K per race win
+- Podium bonus: $250K per podium finish
+- Championship bonus: Additional % if top 3 finishers
+
+**Heritage Bonus** (for applicable teams):
+- Ferrari: $70-100M/year (historical contribution)
+- Mercedes: $25-35M/year
+- McLaren: $15-25M/year
 
 **HOME RACE BONUS** (if applicable):
 - +$500K bonus
@@ -240,49 +248,73 @@ Per-race prize money structure:
 
 ---
 
-## 2.1.6 COST CAP SYSTEM ($135M Limit)
+## 2.1.6 COST CAP SYSTEM ($215M Limit - 2026 and onwards)
 
-**Critical Realism Element**: In real F1, teams operate under a **$135 million annual budget cap** (2024), strictly enforced by FIA.
+**Critical Realism Element**: In real F1 2026, the budget cap was increased to **$215 million annually**, strictly enforced by FIA. The cap also adjusts based on calendar size (+$1.8M per race beyond 21 races).
 
 ### Cost Cap Breakdown (Realistic Distribution)
 
-**Total Budget**: $135M per team
+**Total Budget**: $215M per team (base, adjustable by calendar)
+- **Base**: $215M for 21 races
+- **Additional**: +$1.8M per race beyond 21 races
+- **2026 Season**: 24 races = $215M + (3 × $1.8M) = **$220.4M maximum**
 
 | Category | Amount | % | Details |
 |----------|--------|---|---------|
-| **Personnel Costs** | $45M | 31% | Driver salaries, engineers, staff |
-| **Power Unit (Engine)** | $20M | 14% | Engine supply, cooling, MGU-K/MGU-H development |
-| **Chassis Development** | $30M | 21% | Aero, suspension, carbon manufacturing |
-| **Operations & Logistics** | $20M | 14% | Transport, facilities, pit crew |
-| **Contingency & Reserves** | $20M | 14% | Damage repairs, emergency upgrades, reserves |
-| **IT & Infrastructure** | $10M | 7% | Software, simulators, CFD computers |
+| **R&D & Development** | $65M | 30% | Aero, chassis, suspension development (IN CAP) |
+| **Power Unit** | $35M | 16% | Engine supply, integration, dyno testing (IN CAP for client teams) |
+| **Manufacturing & Operations** | $55M | 26% | Factory, production, assembly, tooling (IN CAP) |
+| **Team Personnel** | $40M | 19% | Technical staff, engineers, mechanics (IN CAP) |
+| **Contingency & Reserves** | $20M | 9% | Emergency repairs, upgrades, reserves (IN CAP) |
 
-### Cost Cap Penalties (Realistic)
+### Cost Cap EXCLUSIONS (NOT counted toward limit):
 
-If team exceeds $135M:
+The following major expenses are **excluded from Cost Cap**:
+- **Driver Salaries** (2 main drivers): Unlimited
+- **Technical Director Salary**: Unlimited
+- **Marketing & Commercial**: Unlimited
+- **Legal Services & FIA Fees**: Unlimited
+- **Logistics (Flights, Hotels)**: Unlimited
+- **Support Staff Salaries** (some categories): Can be up to 25% of team personnel budget outside cap
+
+**Impact on Game**: Player focuses on controllable development costs, not unlimited salary spending.
+
+### Cost Cap Penalties (Realistic - 2026)
+
+If team exceeds $215M cap:
 
 | Overage Amount | Penalty |
 |----------------|---------|
-| **<5% ($7.25M)** | Financial fine ($10M penalty, reduction in next season budget) |
-| **5-10% ($14.5M)** | Fine + wind tunnel time reduction (-10 hours/week for 1 month) |
-| **>10% ($14.5M)** | Fine + severe wind tunnel cut + potential points deduction (10-25 pts) + reduced CFD allocation |
-| **Systematic Fraud** | Team exclusion from season / Super License revocation of key staff |
+| **<5% (~$11M)** | Financial fine + warning (FIA can recommend reduction in next season) |
+| **5-10% (~$11-21M)** | Fine ($5-15M) + wind tunnel/CFD reduction (5-10% cut) |
+| **>10% (>$21M)** | Major fine + wind tunnel reduction (20%) + potential points deduction (10-25 pts) |
+| **Systemic Breach** | Team exclusion from season / Constructors' Cup disqualification |
+
+Note: FIA applies discretion based on circumstances. Minor technical breaches treated differently from willful overspend.
 
 ### Cost Cap Mechanics in Game
 
 **Player Management**:
-- Weekly budget tracker showing spending vs $135M cap
-- Real-time alerts: "You're at $138M spent, $7M remaining"
-- Restrictions trigger when approaching cap:
-  - Can't hire new engineers (except free agency)
-  - Can't upgrade facilities
-  - Can't pay signing bonuses
-  - Can't invest in reserve driver development
+- Weekly budget tracker showing spending vs $215M cap (adjusted for calendar)
+- Real-time alerts: "You're at $165M spent, $55M remaining" 
+- Four quarterly audits (after races 6, 12, 18, 24) verify spending
+- Restrictions when exceeding ~90% of cap:
+  - Can't hire new engineers
+  - Can't upgrade manufacturing facilities
+  - Can't pay large signing bonuses
+  - Must reduce discretionary spending
 
 **Strategic Decisions**:
-- Spend aggressively early season → limited flexibility later
-- Spend conservatively → miss development opportunities
-- Mid-season crises (parts failures, injuries) → must manage emergency fund carefully
+- Heavy early investment in R&D → limited flexibility later season
+- Conservative spending → miss competitive window
+- Mid-season crises (crashes, parts failures) → must manage reserves carefully
+- Multi-season planning: overspend this year = reduced next season budget
+
+**Audit System**:
+- Q1 Audit (Race 6): Check for issues early
+- Q2 Audit (Race 12): Mid-season adjustment period
+- Q3 Audit (Race 18): Final opportunity to adjust
+- Final Audit (Race 24): End-of-season settlement
 
 ---
 
@@ -292,16 +324,27 @@ If team exceeds $135M:
 
 ### ATR Basics
 
-**Aerodynamic Testing** includes:
-- Wind tunnel runs (physical aerodynamic tests)
-- CFD computing hours (computational fluid dynamics)
-- On-track aero measurement (goniometers, pressure sensors)
+**Aerodynamic Testing Resources** include:
+- **Wind Tunnel Hours**: Physical aerodynamic testing
+- **CFD Units**: Computational fluid dynamics computing hours
+- **Dyno Hours**: Engine dynamometer testing (Power Unit development)
+- **On-track Testing**: Pre-season tests and practice sessions
 
-**Regulation (2024 F1)**:
-- Limits vary by championship position
-- Champ team: 56 wind tunnel hours/year (baseline: 224 runs or ~56 hours)
-- 10th place team: ~80 hours/year (15% more)
-- CFD: Similar proportional distribution (~1120-1840 units of computer hours)
+**Regulation (2026 F1) - Sliding Scale**:
+The ATR system uses a "sliding scale" based on championship position:
+- **1st Place Team**: 70% of baseline (most restricted, rewards success)
+- **2nd Place Team**: 80% of baseline
+- **10th Place Team**: 115% of baseline (most resources, rewards lower teams)
+- **Linear scale**: Every position changes by ~4-5% increments
+
+**Baselines**:
+- Wind Tunnel: 80 hours/year (baseline)
+- CFD: 1840 units/year (baseline)
+
+**Examples**:
+- Championship leader: 80 hrs × 70% = 56 hours wind tunnel
+- 10th place team: 80 hrs × 115% = 92 hours wind tunnel
+- Your 3rd place team: 80 hrs × 87% = 69.6 hours wind tunnel
 
 ### Game Implementation
 
@@ -310,22 +353,24 @@ If team exceeds $135M:
 ```
 AERODYNAMIC RESEARCH BUDGET (2027 Season)
 ═════════════════════════════════════════
-Based on 2026 Constructor Standing: 3rd Place → 90% of baseline
+Based on 2026 Constructor Standing: 3rd Place → 87% of baseline
 
 Wind Tunnel Allocation:
-- Baseline (56 hrs/yr): 56 hours
-- Your allocation (90%): 50.4 hours/year
-- Remaining: 45.2 hours (80.7% used)
-- Per week average: 0.97 hours/week (need to prioritize)
+- Baseline: 80 hours/year
+- Your allocation (87%): 69.6 hours/year
+- Used to date: 28.5 hours
+- Remaining: 41.1 hours (39.6% remaining)
+- Per week average: 0.79 hours/week
 
 CFD Allocation:
-- Baseline (1120 units/yr): 1120 units
-- Your allocation (90%): 1008 units/year
-- Remaining: 897 units (89% used)
-- Current week: 19.4 units available
-
-Next week resets: Check back Monday for new allocation
+- Baseline: 1840 units/year
+- Your allocation (87%): 1600.8 units/year
+- Used to date: 720 units
+- Remaining: 880.8 units (55% remaining)
+- Current week: 16.9 units available
 ```
+
+**Strategic Impact**: Higher championship position = LESS development budget = must prioritize carefully
 
 ### ATR Impact on R&D Speed
 
@@ -423,39 +468,45 @@ FIA might issue mid-season technical directives:
 - Teams lagging in development get 2-week grace period (ADUO advantage)
 - Dominant teams must conform immediately (BoP penalty equivalent)
 
-#### EDUO SYSTEM (Engine Development Upgrade Option Development Upgrade Option)
+#### EDUO SYSTEM (Engine Development Upgrade Option - Real F1 Mechanism)
 
-**Real F1 Mechanism**: If engine supplier lags by >2% power, FIA allocates extra development hours.
+**Real F1 2026 Mechanism**: FIA checks power deficit THREE TIMES per season (every 6 races). If engine supplier lags by 2%+ power, FIA allocates extra development hours. Allocation depends on deficit magnitude.
 
 **Game Implementation**:
 
-1. **Power Assessment** (calculated at mid-season):
-   - Compare your powertrain to championship leader
-   - If you're >2% behind: Eligible for ADUO
-   
-2. **ADUO Benefits** (if qualified):
-   - +20-30% engine dyno hours allocation for next 8 weeks
-   - +15% CFD allocation for next 8 weeks
-   - +$5M emergency development budget
-   - Catch-up opportunity (realistic)
+**Three Power Checks**:
+1. **Check 1** (Race 6): First assessment
+2. **Check 2** (Race 12): Mid-season evaluation
+3. **Check 3** (Race 18): Final check
 
-3. **Teams Already Leading**:
-   - No ADUO (can't use it to go further ahead)
-   - Slight wind tunnel reduction (-5%) to slow dominance (non-punitive BoP)
+**EDUO Eligibility & Benefits by Deficit**:
+
+| Power Deficit | EDUO Eligibility | Dyno Hour Bonus | Duration |
+|---------------|------------------|-----------------|----------|
+| **2.0-4.0%** | 1 authorized PU upgrade | +20% dyno hours | Until next check |
+| **4.0%+** | 2 authorized PU upgrades | +30% dyno hours | Until next check |
+| **0-2.0%** | No EDUO (not eligible) | None | N/A |
+
+**Important Restrictions**:
+- Upgrades must be completed BEFORE next official engine homologation freeze
+- No financial compensation (only development resource bonus)
+- Upgrades must be applied to the engine (not chassis or aero)
+- Teams already leading: No EDUO access
 
 **Example Scenario**:
 ```
-Mid-Season Power Check (Race 12, July 15):
-══════════════════════════════════════════
-Leader power: 1050 hp (Mercedes-style engine)
-Your power: 1022 hp
-Gap: 28 hp = 2.67%
+Check 1 (After Race 6):
+Leader power: 1050 hp
+Your team: 1005 hp
+Gap: 45 hp = 4.3% → EDUO ACTIVATED
 
-Result: ADUO ACTIVATED
-- Wind tunnel: +50.4 hrs → 60.5 hrs (10% bonus)
-- CFD: +1008 units → 1159 units (15% bonus)
-- Special fund: +$5M development budget (expires end of season)
-- Catch-up window: Next 8 races (through September)
+You get: 2 authorized PU upgrades + 30% dyno hour bonus
+Must complete both before Check 2 (Race 12)
+
+Check 2 (After Race 12):
+Your team: 1028 hp
+Gap: 22 hp = 2.1% → No longer eligible
+EDUO expires (even if didn't use all upgrades)
 ```
 
 ---
@@ -544,7 +595,7 @@ Examples:
 
 | Event | Base % | Modifier | Example |
 |-------|--------|----------|---------|
-| **Driver Injury** | 0.8%/race | -0.3% if aggressive tactics | Rare but impacts season |
+| **Driver Injury** (Serious) | 0.1%/race | +0.1% per aggressive instruction per race | Extremely rare, linked to recklessness |
 | **Reliability DNF** | 1.5%/race | +1% if aggressive R&D | Every 15-20 races |
 | **Aero Breakthrough** | 0.5%/week | +0.2% if high R&D budget | 1-2 per season |
 | **Sponsor Ultimatum** | 2%/month | +1% if poor results | Negotiation needed |
