@@ -40,7 +40,7 @@ Development Phase (Practical)
 
 ### 4.2.1 Phase Definitions
 
-#### **RESEARCH PHASE** (2-6 weeks typical)
+#### **RESEARCH PHASE** (4-10 weeks typical)
 **Purpose**: Explore technical concept, validate theoretical improvements, gather data
 
 **Activities**:
@@ -92,7 +92,7 @@ Output: Decision to develop new wing variant targeting 0.3 sec/lap improvement a
 
 ---
 
-#### **DEVELOPMENT PHASE** (3-8 weeks typical)
+#### **DEVELOPMENT PHASE** (6-12 weeks typical)
 **Purpose**: Build prototype, test, refine, deploy to race car
 
 **Activities**:
@@ -212,7 +212,7 @@ Generation 2.1 (High-Downforce Variant, Weeks 2-4):
   - Bigger rear wing endplates
   - Increased floor complexity
   - Target: +0.15 lateral G (1.25 G total)
-  - Research: $200K, Development: $400K, Total: $600K
+  - Research: $200K, Development: $1.2M, Total: $600K
   - Performance gain: +0.15 sec/lap (handling-limited track)
   - Reliability risk: Structural stress, -0.1% failure probability
   - Timeline: Deploy Race 4 (Monaco)
@@ -221,7 +221,7 @@ Generation 2.1 (High-Downforce Variant, Weeks 2-4):
 Generation 2.2 (Alternative: Low-Drag Variant, Weeks 2-4):
   - Smaller wing angles, reduced floor
   - Target: -0.05 lateral G, but 15 km/h top speed gain
-  - Research: $200K, Development: $400K, Total: $600K
+  - Research: $200K, Development: $1.2M, Total: $600K
   - Performance gain: +0.25 sec/lap (top speed-limited track like Monza)
   - Reliability improvement: Lighter structure, +0.05% reliability bonus
   - Timeline: Deploy Race 14 (Monza)
@@ -243,30 +243,30 @@ Generation 1 (Baseline):
   - Cost: $0
   - Performance: Baseline 
 
-Generation 1.5 (Engineering Tweak, Week 1):
+Generation 1.5 – Evolution (Engineering Tweak, Week 1):
   - Adjust floor angle, add small vortex generator
-  - Research: $100K, Development: $150K
+  - Research: $250K, Development: $450K
   - Gain: +0.05 sec/lap
   - Timeline: Fast, ready Race 2
-  - Wind tunnel: 2 hours
+  - Wind tunnel: 5 hours
 
-Generation 2 (Advanced Floor, Weeks 3-6):
+Generation 2 – Major Update (Advanced Floor, Weeks 3-6):
   - Complex undercarriage with multiple diffuser sections
-  - Research: $300K, Development: $600K
+  - Research: $600K, Development: $1.8M
   - Gain: +0.20 sec/lap
   - Risk: Manufacturing complexity (higher reject rate)
   - Reliability: -0.2% (more moving parts, more failures)
   - Timeline: Ready Race 7
-  - Wind tunnel: 12 hours
+  - Wind tunnel: 30 hours
   
-Generation 3 (Cutting-Edge Floor, Weeks 8-12):
+Generation 3 – Major Update (Cutting-Edge Floor, Weeks 8-12):
   - Exotic floor concept, multi-element diffuser
-  - Research: $500K, Development: $800K
+  - Research: $1M, Development: $2.4M
   - Gain: +0.35 sec/lap (potentially category-defining innovation)
   - Risk: Massive manufacturing challenge, 25% chance component delayed
   - Reliability: -0.3% (experimental design)
   - Timeline: Ready Race 15 (mid-season)
-  - Wind tunnel: 16 hours
+  - Wind tunnel: 40 hours
   - Budget impact: $1.3M total = 2.3% of annual Aero budget
 
 Strategic Consideration:
@@ -289,11 +289,11 @@ Gen 1 (Baseline):
   - Top speed gain: 8 km/h in DRS zones
 
 Gen 2 (Optimized DRS, Weeks 2-3):
-  - Research: $150K (study competitor deployments)
-  - Development: $250K (optimize angle, improve actuator)
+  - Research: $350K (study competitor deployments)
+  - Development: $700K (optimize angle, improve actuator)
   - Gain: +2 km/h top speed (+10 total = 10 km/h)
   - Fast timeline: Deploy Race 3
-  - Wind tunnel: 3 hours
+  - Wind tunnel: 8 hours
 
 Strategic Value:
   - Small gain, but fast deployment
@@ -339,30 +339,30 @@ Baseline (Race 1):
 
 Gen 1.5 (Software Optimization, Week 1):
   - Engine code revisions, fuel mapping refinement
-  - Research: $100K (simulation of combustion)
-  - Development: $150K (dyno testing)
-  - Gain: +8 bhp (908 total)
-  - Performance: +0.08 sec/lap straight line
+  - Research: $250K (simulation of combustion)
+  - Development: $450K (dyno testing)
+  - Gain: +4 bhp (904 total)
+  - Performance: +0.04 sec/lap straight line
   - Reliability: No change (purely software)
   - Dyno hours: 20 hours
   - Timeline: Ready Race 2
 
 Gen 2 (Mechanical Tweaks, Weeks 2-5):
   - Valve timing adjustment, turbo boost optimization
-  - Research: $300K
-  - Development: $400K
-  - Gain: +18 bhp (918 total)
-  - Performance: +0.18 sec/lap straight line
+  - Research: $600K
+  - Development: $1.2M
+  - Gain: +10 bhp (910 total)
+  - Performance: +0.10 sec/lap straight line
   - Reliability: -0.2% (higher combustion pressure)
   - Dyno hours: 60 hours
   - Timeline: Ready Race 6
 
 Gen 3 (Pushing Homologation Limits, Weeks 6-10):
   - Maximum allowable boost, exotic fuel blends, advanced ignition timing
-  - Research: $500K
-  - Development: $600K
-  - Gain: +28 bhp (928 total)
-  - Performance: +0.28 sec/lap straight line
+  - Research: $1M
+  - Development: $1.8M
+  - Gain: +12 bhp (912 total)
+  - Performance: +0.12 sec/lap straight line
   - Risk: Dangerously close to reliability edge, -0.5% DNF probability
   - Dyno hours: 100 hours
   - Timeline: Ready Race 11
@@ -397,7 +397,7 @@ Gen 1.5 (MGU-K Optimization, Week 1):
 Gen 2 (MGU-H Thermal Recovery, Weeks 2-5):
   - Improved heat exchanger, better thermal energy capture
   - Research: $200K
-  - Development: $300K
+  - Development: $850K
   - Gain: +15 kW from heat (145 kW available per lap)
   - Performance: +0.15 sec/lap
   - Reliability: -0.1% (higher thermal stress)
@@ -405,8 +405,8 @@ Gen 2 (MGU-H Thermal Recovery, Weeks 2-5):
 
 Gen 3 (Hybrid System Breakthrough, Weeks 7-12):
   - New battery chemistry, improved power delivery algorithm
-  - Research: $400K
-  - Development: $600K
+  - Research: $800K
+  - Development: $1.8M
   - Gain: +20 kW (160 kW available, peak efficiency)
   - Performance: +0.20 sec/lap
   - Reliability: -0.15% (new battery technology risk)
@@ -433,7 +433,7 @@ Strategic Advantage:
 
 **Total Power Unit Budget**: $20-25M/year
 **Strategic Question**: How aggressive on reliability vs. power?
-- Conservative: Gen 1.5 both paths only = +0.18 sec/lap, safe
+- Conservative: Gen 1.5 both paths only = +0.10 sec/lap, safe
 - Aggressive: Gen 3 engine + Gen 2 ERS = +0.43 sec/lap, but DNF risk
 - Balanced: Gen 2 engine + Gen 3 ERS = +0.33 sec/lap, medium risk
 
@@ -461,7 +461,7 @@ Gen 1.5 (Spring Rate Variants, Week 1):
 Gen 2 (Adaptive Suspension Concept, Weeks 3-6):
   - Variable anti-roll bars, adjustable ride height
   - Research: $250K
-  - Development: $400K
+  - Development: $1.2M
   - Gain: +0.15 sec/lap (huge setup flexibility)
   - Risk: Complexity, -0.15% DNF (more moving parts)
   - Timeline: Ready Race 7
@@ -469,7 +469,7 @@ Gen 2 (Adaptive Suspension Concept, Weeks 3-6):
 Gen 3 (Cutting-Edge Suspension, Weeks 8-12):
   - Semi-active dampers (electronically controlled), active suspension aspects
   - Research: $450K
-  - Development: $700K
+  - Development: $2.1M
   - Gain: +0.25 sec/lap (best-in-class handling)
   - Risk: -0.3% DNF (electronic systems complex)
   - Reliability concern: Requires perfect telemetry center support
@@ -486,8 +486,8 @@ Baseline:
 
 Gen 1.5 (Material Substitution, Week 2):
   - Replace aluminum with carbon fiber in non-critical areas
-  - Research: $100K
-  - Development: $150K
+  - Research: $250K
+  - Development: $450K
   - Gain: -2 kg (within weight limit, distributed better)
   - Performance: +0.02 sec/lap
   - Cost: +$200K per car (carbon fiber expensive)
@@ -495,8 +495,8 @@ Gen 1.5 (Material Substitution, Week 2):
 
 Gen 2 (Structural Redesign, Weeks 4-7):
   - Lighter chassis structure through re-engineering
-  - Research: $300K
-  - Development: $500K
+  - Research: $600K
+  - Development: $1.5M
   - Gain: -5 kg redistribution (better balance)
   - Performance: +0.05 sec/lap (cornering)
   - Cost: +$500K per car
@@ -504,8 +504,8 @@ Gen 2 (Structural Redesign, Weeks 4-7):
 
 Gen 3 (Exotic Materials, Weeks 8-12):
   - Graphene, advanced composites, titanium
-  - Research: $500K
-  - Development: $800K
+  - Research: $1M
+  - Development: $2.4M
   - Gain: -8 kg with better properties
   - Performance: +0.08 sec/lap
   - Cost: +$1.5M per car (experimental materials)
@@ -540,7 +540,7 @@ Baseline:
 
 Gen 1 (Redundant Hydraulics, Week 2):
   - Backup hydraulic pump (switches if primary fails)
-  - Research: $150K
+  - Research: $350K
   - Development: $200K
   - Gain: -0.3% DNF (hydraulic failures nearly eliminated)
   - Cost: +$300K per car (extra pump, valves, tubing)
@@ -550,15 +550,15 @@ Gen 1 (Redundant Hydraulics, Week 2):
 Gen 2 (Redundant Electronics, Weeks 4-6):
   - Backup ECU, redundant sensors
   - Research: $200K
-  - Development: $300K
+  - Development: $850K
   - Gain: -0.2% DNF (electrical failures drop to near-zero)
   - Cost: +$200K per car
   - Timeline: Ready Race 7
 
 Gen 3 (Full Redundancy, Weeks 7-10):
   - Backup cooling circuit, redundant fuel systems
-  - Research: $300K
-  - Development: $500K
+  - Research: $600K
+  - Development: $1.5M
   - Gain: -0.4% DNF (nearly all mechanical failures covered)
   - Cost: +$400K per car
   - Total reliability cost: $900K/car
@@ -601,8 +601,8 @@ Baseline:
 
 Gen 1.5 (Duct Optimization, Week 1):
   - Better brake cooling ducts, optimized radiator placement
-  - Research: $100K
-  - Development: $150K
+  - Research: $250K
+  - Development: $450K
   - Gain: -50°C peak brake temperature
   - Performance: +0.05 sec/lap on brake-heavy tracks
   - Timeline: Ready Race 2
@@ -632,130 +632,16 @@ Gen 1.5 (Balance Optimization, Week 1):
 Gen 2 (Advanced Braking System, Weeks 3-5):
   - Regenerative braking optimized for specific circuits
   - Research: $200K
-  - Development: $300K
+  - Development: $850K
   - Gain: +0.08 sec/lap (less brake fade, better consistency)
   - Timeline: Ready Race 6
 ```
 
 ---
 
-## 4.4 TECHNOLOGY TOKEN SYSTEM
-
-### 4.4.1 Token Allocation Overview
-
-**Annual Token Budget**: 8-10 tokens per season
-
-**Token Cost by Component Type:**
-
-| Component | Token Cost | Typical Impact | Risk Level |
-|-----------|-----------|---------------|---------  |
-| **Minor aero tweak** | 0.5 tokens | +0.02-0.05 sec/lap | Low |
-| **Major aero update** | 1-2 tokens | +0.10-0.25 sec/lap | Medium |
-| **Engine evolution** | 1 token | +0.05-0.15 sec/lap | Low |
-| **Suspension redesign** | 1-2 tokens | +0.05-0.20 sec/lap | Medium |
-| **Weight reduction** | 1-1.5 tokens | +0.02-0.08 sec/lap | Low |
-| **Reliability upgrade** | 0.5-1 token | -0.1-0.5% DNF | Low |
-| **Breaking innovation** | 2-3 tokens | +0.20-0.50 sec/lap | **High** |
-
-### 4.4.2 Token Strategy Examples
-
-**STRATEGY 1: CONSERVATIVE (Safe Approach)**
-```
-8 Tokens Available
-Allocation:
-  - Aero Minor tweaks: 1 token (3 tweaks)
-  - Engine evolution: 2 tokens (Gen 1.5 + Gen 2)
-  - Suspension: 1 token (1 medium update)
-  - Weight reduction: 1 token (light optimization)
-  - Reliability: 1.5 tokens (redundancy improvements)
-  - Contingency: 1.5 tokens (unused, for mid-season fixes)
-
-Expected Performance Gain: +0.30-0.40 sec/lap total
-Risk Level: LOW
-Outcome: Incremental improvement, safe season, competitive but not championship-winning
-```
-
-**STRATEGY 2: AGGRESSIVE (Gamble on Breakthrough)**
-```
-8 Tokens Available
-Allocation:
-  - Aero Gen 3 (Floor): 2.5 tokens (push for breaking innovation)
-  - Engine Gen 3: 2 tokens (aggressive power path)
-  - ERS Gen 2: 1 token
-  - Reliability Gen 2: 1 token
-  - Contingency: 1.5 tokens
-
-Expected Performance Gain: +0.50-0.70 sec/lap (if Gen 3 succeeds)
-Risk Level: HIGH (Gen 3 uncertain, reliability tight)
-Outcome: Potential category-defining advantage, OR significant DNF issues if Aero Gen 3 fails
-```
-
-**STRATEGY 3: BALANCED (Mid-Risk Approach)**
-```
-8 Tokens Available
-Allocation:
-  - Aero Gen 2 (Floor): 1.5 tokens (solid improvement)
-  - Engine Gen 2: 1.5 tokens (safe power gains)
-  - ERS Gen 2: 1 token (supporting power)
-  - Suspension Gen 2: 1 token
-  - Reliability Gen 1.5: 0.5 tokens
-  - Weight Gen 1: 0.5 tokens
-  - Contingency: 1 token
-
-Expected Performance Gain: +0.40-0.50 sec/lap
-Risk Level: MEDIUM
-Outcome: Solid competitive car, balanced development, room for mid-season corrections
-```
-
-### 4.4.3 Token Spending Mechanics
-
-**Quarterly Token Budget Review:**
-
-```
-Q1 (Races 1-6): Typically 2-3 tokens spent
-  - Early season priorities (aero, engine, suspension)
-  - Gen 1.5 rapid improvements (weeks 1-2)
-  - Gen 2 projects begin research phase
-
-Q2 (Races 7-12): Typically 2.5-3 tokens spent
-  - Gen 2 projects complete development, deploy
-  - Mid-season token spending rate is highest
-  - Flexibility for unexpected needs (reliability fixes)
-
-Q3 (Races 13-18): Typically 1.5-2 tokens spent
-  - Later gen projects (3+) begin if pursued
-  - More conservative spending (less time for corrections)
-
-Q4 (Races 19-24): Typically 1-1.5 tokens spent
-  - Final tweaks only
-  - Most tokens committed by this point
-  - Risk of running out if unforeseen issues
-```
-
-**Mid-Season Token Reallocation:**
-
-```
-Scenario: By mid-season, aggressive Engine path (Gen 3) has failed diagnostics
-  - Engine Gen 3: 2 tokens spent, project scrapped due to reliability risk
-  - Available tokens: 8 - (spent so far) = 3 tokens remaining
-
-Options:
-A) Pivot to Aero Gen 3 instead (use salvaged tokens)
-   - Need 2.5 tokens, can do it with remaining 3
-   - Timeline: Still possible for deployment Race 18+
-
-B) Boost reliability (Gen 3 redundancy)
-   - Cost: 2.5 tokens, very safe allocation
-   - Ensures no DNFs, points finisher every race
-
-C) Split remaining tokens (hybrid approach)
-   - Aero Gen 2.5: 1.5 tokens
-   - Reliability Gen 2: 1 token
-   - Contingency: 0.5 tokens
-   - Balanced approach, less dramatic gain
-```
-
 ---
+
+## 4.5---
 
 ## 4.5 MANUFACTURING CONSTRAINTS & DEPLOYMENT
 
@@ -904,7 +790,7 @@ Season-Long Development Potential:
   - Q2: +18 bhp through mechanical tweaks within limits (Gen 2)
   - Q3: +28 bhp pushing absolute limits (Gen 3, risky)
   
-Total Potential: +54 bhp = 954 bhp (6% improvement)
+Total Potential: +26 bhp = 926 bhp (6% improvement)
 
 Limitation: After Race 1, cannot introduce fundamentally different engine
   - Cannot swap to different cylinder count
@@ -1008,7 +894,7 @@ ACTIVE PROJECTS:
   ✓ Aero Gen 2 (Floor)
     Status: Development Phase Week 4/6, on schedule
     Wind tunnel: 8/16 hours allocated, used
-    Expected deployment: Race 8 (+0.18 sec/lap gain)
+    Expected deployment: Race 8 (+0.10 sec/lap gain)
     Risk: LOW (conservative design)
   
   ✓ Engine Gen 1.5

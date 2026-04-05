@@ -38,6 +38,14 @@
 - Minimalist iconography (clear, recognizable)
 - Smooth transitions (400-600ms animation duration)
 
+
+**Note**: UI references updated for new game mechanics:
+- Technology Tokens system removed (replaced with Evolution/Major Update)
+- Personnel structure simplified (7 key department heads instead of 52 individual employees)
+- Aero/Power Unit development uses Evolution/Major Update designation (no Gen 1.5/2/3)
+- Prize money distributed annually (not per-race)
+- Cost Cap: $135M (down from $145M)
+
 ---
 
 ## 7.2 MAIN DASHBOARD
@@ -68,19 +76,18 @@
 │                                                                   │
 │  QUICK ACTIONS:                                                  │
 │  ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐ │
-│  │  TEAM MANAGEMENT │ │  R&D PLANNING    │ │  BUDGET REVIEW   │ │ (Action shortcuts)
-│  │  Morale: 72%     │ │  Tokens: 3.5/8   │ │  Q3: $45M spent  │ │
-│  │  15 Personnel    │ │  Aero: In Dev    │ │  Reserve: $8.2M  │ │
+│  │  TEAM MANAGEMENT │ │  R&D PLANNING    │ │  Aero: Evolution Dev │ │  Q3: $45M spent  │ │
+│  │  7 Key Leads (Abstract team structure)    │ │  Aero: In Dev    │ │  Reserve: $8.2M  │ │
 │  │  [MANAGE]        │ │  [PLAN]          │ │  [DETAILS]       │ │
 │  └──────────────────┘ └──────────────────┘ └──────────────────┘ │
 │                                                                   │
 ├─────────────────────────────────────────────────────────────────┤
 │  RECENT EVENTS:                                                  │
-│  ├─ Race 7 Podium: 3rd place (EXCELLENT) +$1.5M prize money    │
+│  ├─ Race 7 Podium: 3rd place (EXCELLENT) - Contributes to annual distribution    │
 │  ├─ Driver #2 morale low (62%) - MONITOR                        │
-│  ├─ Aero Gen 2 deployment confirmed for Race 8                  │
+│  ├─ Aero Evolution deployment confirmed for Race 8                  │
 │  ├─ TechCorp sponsor checking in on performance (85% satisfied)  │
-│  └─ Engine Gen 2 development 60% complete, on track             │
+│  └─ Engine Major Update development 60% complete, on track             │
 │                                                                   │
 ├─────────────────────────────────────────────────────────────────┤
 │  ALERTS & NOTIFICATIONS:                                         │
@@ -165,7 +172,7 @@
 │                      │ ├─ Experience: 15 years (F1 veteran)      │
 │                      │ ├─ Specializations: Aerodynamics (primary)│
 │                      │ │                   Telemetry (secondary) │
-│                      │ ├─ Recent Projects: Aero Gen 2 (success)  │
+│                      │ ├─ Recent Projects: Aero Evolution (success)  │
 │                      │ └─ Retention Risk: MEDIUM (Ferrari offer) │
 │                      │                                             │
 │                      │ [PROMOTE] [RAISE SALARY] [RETAIN BONUS]  │
@@ -262,14 +269,14 @@
 │                                                                  │
 │ ACTIVE PROJECTS:                                               │
 │                                                                  │
-│ 📊 AERODYNAMICS - Aero Gen 2 (Floor Package)                   │
+│ 📊 AERODYNAMICS - Aero Evolution (Floor Package)                   │
 │    Status: DEVELOPMENT (Week 4 of 6)  |  Cost: 1.5 tokens      │
 │    Research: ✓ Complete               |  Budget: $600K         │
 │    Development: ████████░░ 80% done   |  Wind tunnel: 8/16h   │
 │    Expected Deployment: Race 8        |  Gain: +0.18 sec/lap   │
 │    Risk: LOW (conservative design)    |  [DETAILS] [ADJUST]    │
 │                                                                  │
-│ ⚙️ POWER UNIT - Engine Gen 2                                     │
+│ ⚙️ POWER UNIT - Engine Major Update                                     │
 │    Status: DEVELOPMENT (Week 2 of 4)  |  Cost: 1.0 tokens      │
 │    Research: ✓ Complete               |  Budget: $400K         │
 │    Development: ██████░░░░ 60% done   |  Dyno: 20/60 hours    │
@@ -301,7 +308,7 @@
 
 ### 7.4.2 R&D Project Detail Screen
 
-**When clicking on a project (e.g., "Aero Gen 2"):**
+**When clicking on a project (e.g., "Aero Evolution"):**
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
@@ -528,7 +535,7 @@
 │ Total Income Projection: $111M                                 │
 │ (Sponsorship adjusted for position: $75M, Prizes: $30M, TV: $6M)│
 │                                                                  │
-│ Total Expense Limit: $145M (Cost Cap hard limit)              │
+│ Total Expense Limit: $135M (Cost Cap hard limit)              │
 │                                                                  │
 │ PROJECTED SHORTFALL: -$34M ⚠️ ACTION REQUIRED                  │
 │                                                                  │

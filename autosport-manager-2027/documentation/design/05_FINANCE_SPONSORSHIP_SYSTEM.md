@@ -130,7 +130,7 @@ No performance bonuses (typical for smaller sponsors)
 | Casual Gaming | Minor | $1.5M | Social engagement |
 | Various Small | Minor | $3M | Minimal KPIs |
 
-**Total Sponsorship**: $78M/year (54% of $145M Cost Cap)
+**Total Sponsorship**: $78M/year (54% of $135M Cost Cap)
 **Range of Outcomes**: $65M (poor season) to $85M (championship-winning season)
 
 ### 5.2.3 Sponsorship Crisis Mechanics
@@ -199,6 +199,15 @@ Example: 1st place championship
   - Total: $125M
 ```
 
+## Historical Heritage Bonus
+Teams with significant F1 heritage receive annual bonuses:
+- **Ferrari**: $70-100M/year (oldest team, unique brand value)
+- **Mercedes**: $25-35M/year (dominant constructor history)
+- **McLaren**: $15-25M/year (historic midfield/championship success)
+- **Other teams**: $0 (redistributed from historical pool)
+
+This represents FIA recognition of historical contributions and maintains balance.
+
 **Race-by-Race Distribution** (each race distributes $25M):
 ```
 Race Result Payment (per $25M race distribution):
@@ -256,7 +265,7 @@ Your Team Q2 TV Revenue:
 
 ### 5.3.1 Cost Cap Breakdown (Revisited with Detail)
 
-Total Annual Budget: $145M
+Total Annual Budget: $135M
 
 | Category | Budget | Monthly Rate | Notes |
 |----------|--------|------------|--------|
@@ -374,7 +383,7 @@ DECEMBER (Q4 + Off-Season):
 
 ANNUAL SUMMARY:
   Total Income: $120M (sponsorship) + $30M (prize) + $6M (TV) = $156M
-  Total Expenses: $145M (Cost Cap hard limit)
+  Total Expenses: $135M (Cost Cap hard limit)
   Net Profit: +$11M (best case scenario with top-3 finish)
 ```
 
@@ -454,7 +463,7 @@ Financial Crisis:
     Q3: $0 sponsorship (TechCorp still paying), -$4M from other sponsors = -$4M net
     Q4: Recovery to $10M from remaining sponsors
     
-  Total seasonal impact: -$25M income, $145M fixed expenses = IMPOSSIBLE BUDGET
+  Total seasonal impact: -$25M income, $135M fixed expenses = IMPOSSIBLE BUDGET
   
   Survival Actions Required:
   1. Emergency cost reduction: -$15M (across all departments)
@@ -523,8 +532,8 @@ Sponsorship: $50M (many sponsors cancelled due to poor results)
 
 Total income: $60M
 Loan repayment: -$5M (year 1 principal + interest)
-Cost Cap: $145M
-Available for operations: $60M - $145M = -$85M DEFICIT
+Cost Cap: $135M
+Available for operations: $60M - $135M = -$85M DEFICIT
 
 Team is INSOLVENT, faces bankruptcy, enters administration (FIA takeover)
 ```
@@ -569,7 +578,7 @@ Expected Net: -$10M loss (operating at loss, requires external investment)
 ### 5.6.2 Aggressive Budget (Championship Contender)
 
 ```
-Annual Budget: $145M (at Cost Cap ceiling)
+Annual Budget: $135M (at Cost Cap ceiling)
 
 Allocation:
   Personnel: $45M (31%)
@@ -657,9 +666,10 @@ FORECAST TO SEASON END:
   If current performance continues (4th place average):
     - Total Prize Money: $30M (24 races × $1.25M avg)
     - Sponsorship adjusted: $75M (TechCorp reduced 15% due to position)
-    - TV Rights: $6M
-    - Total Income: $111M
-    - Expenses: $145M (Cost Cap hard limit)
+    - TV Rights Distribution: $40-50M per team annually
+- 50% equal split among all teams
+- 30% by Constructors Championship position
+- 20% by television ratings/audience engagement
     - Year-End: -$34M SHORTFALL
   
   Status: CONCERNING
@@ -790,7 +800,7 @@ Example Scenario (Off-Season, December):
 **Every Season Start (January):**
 
 ```
-Player decides: How to allocate $145M Cost Cap?
+Player decides: How to allocate $135M Cost Cap?
 
 Option A: Conservative
   - Personnel: 32% ($46.4M)

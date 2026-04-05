@@ -57,20 +57,16 @@ The game supports **two realistic weekend formats** that alternate throughout th
   
   - **Q3** (12 min): Top 10 fighters
     - Player decision: Qualify on race fuel or light fuel?
-    - **PARC FERMÉ RULE ACTIVE**: After Q2 ends, car is sealed. No setup changes until race day (except tire pressure/brake balance within strict limits)
-    - Consequence: If setup is wrong in Q2, you're stuck with it until warm-up laps Sunday
+    - **PARC FERMÉ RULE ACTIVE**: After Q1 (when car enters qualifying), car setup is sealed. No major setup changes until race day (only tire pressure/brake balance micro-adjustments within strict limits allowed)
+    - Consequence: If setup is wrong in Q1-Q3, you're stuck with it for the race
   
-- **FP4** (60 minutes): Final chance before race
-  - Limited setup changes allowed (within parc fermé constraints)
-  - Race simulation: Full fuel load, race pace
-  - Driver feedback: "Tire deg heavier than expected"
-  - Decision: Conservative race strategy or aggressive?
-
 **Sunday - Race Day**:
-- **Warm-Up** (30 min): Last chance before green light
-  - Final setup micro-adjustments
-  - Tire heating procedure
-  - Driver briefing with engineer
+- **Formation Lap & Grid**: 30 minutes before race start
+  - Cars exit pit lane and align on grid
+  - Tire/brake warm-up procedures
+  - Driver briefing
+  - No overtaking allowed on formation lap
+  - Any off-track excursion = pit lane restart penalty
   
 - **RACE** (90-120 minutes simulated, but plays in **20-30 minutes** at 1x speed with acceleration options):
   - See section 2.1.4 for detailed race mechanics
@@ -85,11 +81,14 @@ The game supports **two realistic weekend formats** that alternate throughout th
 
 **Friday**:
 - **FP1** (60 min): Single practice session
-- **Qualifying** (60 min, compressed Q1/Q2/Q3): Determines grid for Saturday sprint
-  - **PARC FERMÉ** activated: No changes until sprint Saturday
+- **Qualifying** (60 min, compressed Q1/Q2/Q3): Determines grid for Sunday MAIN race (not sprint!)
+  - **PARC FERMÉ** activated: Car sealed until Sunday race
 
 **Saturday - Sprint Day**:
-- **Sprint Qualifying** (30 min): Optional qualifying session for sprint grid (not in our game, simplified)
+- **Sprint Qualifying** (30 min): MANDATORY qualifying session for sprint grid
+  - Condensed format: SQ1 (all cars, 3 eliminated), SQ2 (remaining, 2 eliminated), SQ3 (top drivers)
+  - Determines Saturday sprint grid (different from Sunday race grid!)
+  - **PARC FERMÉ RESET**: After sprint qualifying, teams can adjust setup for sprint
 - **Sprint Race** (17-21 laps, ~25 minutes real time):
   - Shorter race, 8-10 points available (1st=8pts, 2nd=7pts, 3rd=6pts, etc.)
   - Aggressive driving, high risk of collisions
@@ -251,13 +250,20 @@ Per-race prize money structure:
 
 ---
 
-## 2.1.6 COST CAP SYSTEM ($145M Limit)
+## 2.1.6 COST CAP SYSTEM ($135M Limit)
 
-**Critical Realism Element**: In real F1, teams operate under a **$145 million annual budget cap** (2024), strictly enforced by FIA.
+**Critical Realism Element**: In real F1, teams operate under a **$135 million annual budget cap** (2024-2025), strictly enforced by FIA.
 
 ### Cost Cap Breakdown (Realistic Distribution)
 
-**Total Budget**: $145M per team
+**Total Budget**: $135M per team
+
+**Cost Cap Exclusions** (NOT counted toward limit):
+- Driver salaries (2 main drivers)
+- Technical Director salary
+- Marketing & hospitality expenses
+- Legal services & FIA fees
+- Young driver programs (VLN, F2 sponsorship)
 
 | Category | Amount | % | Details |
 |----------|--------|---|---------|
@@ -270,19 +276,19 @@ Per-race prize money structure:
 
 ### Cost Cap Penalties (Realistic)
 
-If team exceeds $145M:
+If team exceeds $135M:
 
 | Overage Amount | Penalty |
 |----------------|---------|
-| **<5% ($7.25M)** | Financial fine ($10M penalty, reduction in next season budget) |
-| **5-10% ($14.5M)** | Fine + wind tunnel time reduction (-10 hours/week for 1 month) |
-| **>10% ($14.5M)** | Fine + severe wind tunnel cut + potential points deduction (10-25 pts) + reduced CFD allocation |
-| **Systematic Fraud** | Team exclusion from season / Super License revocation of key staff |
+| **<5% ($6.75M)** | Financial fine + 5-10% ATR reduction (wind tunnel/CFD cut) |
+| **5-10% ($6.75-13.5M)** | Fine + 10-20% ATR reduction + possible 10-25 point deduction |
+| **>10% ($13.5M+)** | Season exclusion from championship OR complete point deduction |
+| **Systematic Fraud** | Team exclusion + Super License revocation of leadership |
 
 ### Cost Cap Mechanics in Game
 
 **Player Management**:
-- Weekly budget tracker showing spending vs $145M cap
+- Weekly budget tracker showing spending vs $135M cap
 - Real-time alerts: "You're at $138M spent, $7M remaining"
 - Restrictions trigger when approaching cap:
   - Can't hire new engineers (except free agency)
@@ -380,13 +386,16 @@ If team exceeds allocated wind tunnel/CFD:
 **Actions**:
 - Driver contract confirmation
 - Base setup review (carry over from last season)
-- Pre-season testing (3 days in February, optional but recommended):
+- **Pre-season testing (3 days in February, MANDATORY for all teams)**:
+  - Three consecutive days at designated test track
+  - Can be split as 3+3 days with 1-week break if needed
   - Run 100+ laps per car
   - Test 2027 car reliability
   - Gather baseline setup data
-  - Driver morale boost (+5% for each test)
+  - Driver morale boost (+5% for each day completed)
+  - **FIA PENALTY for skipping**: -$500K budget + -10% morale + -5% R&D speed
 - Facility check (all operational?)
-- Budget allocation review (ensure <$145M)
+- Budget allocation review (ensure <$135M)
 - ATR planning (which projects fit in wind tunnel/CFD allocation?)
 
 **Outcomes**:
@@ -402,7 +411,7 @@ If team exceeds allocated wind tunnel/CFD:
 **RACE WEEK**:
 - Friday: FP1 (60 min) + FP2 (60 min) + FP3 (45 min) - player active
 - Saturday: Qualifying (60 min, 3 sessions) - player active
-- Sunday: Warm-up (30 min) + Race (90-120 min real, 15-25 min game) - player very active
+- Sunday: Formation Lap (30 min before race) + Race (90-120 min real, 15-25 min game) - player very active
 
 **OFF-WEEK (1-3 races between each weekend)**:
 - Team management (1-2 hours gameplay):
@@ -434,39 +443,38 @@ FIA might issue mid-season technical directives:
 - Teams lagging in development get 2-week grace period (ADUO advantage)
 - Dominant teams must conform immediately (BoP penalty equivalent)
 
-#### ADUO SYSTEM (Aerodynamic Development Upgrade Option)
+#### ADUO SYSTEM (Aerodynamic Development Upgrade Option) → Renamed: EDUO (Engine Development Upgrade Option)
 
-**Real F1 Mechanism**: If engine supplier lags by >2% power, FIA allocates extra development hours.
+**Real F1 Mechanism**: If engine supplier lags by >2% power, FIA allocates extra engine dyno hours.
 
 **Game Implementation**:
 
 1. **Power Assessment** (calculated at mid-season):
-   - Compare your powertrain to championship leader
-   - If you're >2% behind: Eligible for ADUO
+   - Compare your power unit to championship leader
+   - If you're >2% behind in peak power: Eligible for EDUO
    
-2. **ADUO Benefits** (if qualified):
-   - +10% wind tunnel allocation for next 8 weeks
-   - +15% CFD allocation for next 8 weeks
-   - +$5M emergency development budget
-   - Catch-up opportunity (realistic)
+2. **EDUO Benefits** (if qualified):
+   - +20-30% extra engine dyno hours for remainder of season
+   - No aero or financial bonuses
+   - Power unit development only
+   - Window: Available until next homologation freeze
 
 3. **Teams Already Leading**:
-   - No ADUO (can't use it to go further ahead)
-   - Slight wind tunnel reduction (-5%) to slow dominance (non-punitive BoP)
+   - No EDUO (can't use it to further increase lead)
+   - Slight dyno hour reduction (-10%) to slow dominance
 
 **Example Scenario**:
 ```
 Mid-Season Power Check (Race 12, July 15):
 ══════════════════════════════════════════
 Leader power: 1050 hp (Mercedes-style engine)
-Your power: 1022 hp
+Your power: 1022 hp (client team with engine contract)
 Gap: 28 hp = 2.67%
 
-Result: ADUO ACTIVATED
-- Wind tunnel: +50.4 hrs → 60.5 hrs (10% bonus)
-- CFD: +1008 units → 1159 units (15% bonus)
-- Special fund: +$5M development budget (expires end of season)
-- Catch-up window: Next 8 races (through September)
+Result: EDUO ACTIVATED
+- Engine dyno hours: +30 hours (20% bonus)
+- Window: Next 8 races for development testing
+- Can focus on MGU-K optimization, combustion efficiency, thermal management
 ```
 
 ---

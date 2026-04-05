@@ -12,7 +12,7 @@
 PRE-RACE (2 hours before race):
   - Final setup adjustments (suspension, aero, engine mode)
   - Driver briefing (weather forecast, strategy outline)
-  - Pit crew preparation (tire selection, fuel loading)
+  - Pit crew preparation (tire selection)
   - Team radio checks
 
 RACE START (Time = 0:00):
@@ -50,15 +50,17 @@ RACE INTERFACE:
 
 ### 6.2.1 Tire Compounds & Degradation
 
-**Three Tire Compounds** (mandatory in race):
+**Five Tire Compounds Available** (three selected per race weekend):
 
 | Compound | Grip Level | Durability | Optimal Window | Typical Life |
 |----------|-----------|-----------|----------------|-------------|
-| **Soft (Red)** | +0.25 sec/lap | 15-20 laps | Laps 1-5, 25-30 | 18 laps |
-| **Medium (Yellow)** | 0.0 sec/lap (baseline) | 25-35 laps | Laps 1-20, any time | 32 laps |
-| **Hard (White)** | -0.15 sec/lap | 40-50 laps | Laps 20+ | 45 laps |
+| **C1 (Hard)** | -0.20 sec/lap | 45-55 laps | Laps 30+ | 50 laps |
+| **C2 (Medium)** | -0.10 sec/lap | 35-45 laps | Laps 15-35 | 40 laps |
+| **C3 (Soft)** | 0.0 sec/lap (baseline) | 25-35 laps | Laps 1-20 | 30 laps |
+| **C4 (Softer)** | +0.15 sec/lap | 15-25 laps | Laps 1-10 | 20 laps |
+| **C5 (Softest)** | +0.25 sec/lap | 10-18 laps | Laps 1-5 | 15 laps |
 
-**Mandatory Requirement**: At least one pit stop with different compound change (cannot race on same compound entire race)
+**Compound Rules**: Minimum two different compounds must be used per race. Can use same compound twice if separated by another compound. Example: C5→C3→C5 allowed, but C5→C5 not allowed.
 
 ### 6.2.2 Tire Degradation Model
 
@@ -139,9 +141,9 @@ Pit Stop Timeline (Real-Time):
     - Car exits pit box
     - New tire compound installed and warming up
     - Performance loss during lap 1 on new tires: Fresh tires cold
-      - Soft tires (fresh): -0.3 sec/lap Lap 1 only (cold tires)
-      - Medium tires (fresh): -0.2 sec/lap Lap 1
-      - Hard tires (fresh): -0.4 sec/lap Laps 1-2 (take longer to warm up)
+      - Soft tires (fresh): -1.5 sec/lap Lap 1 (cold tires, requires active warm-up)
+      - Medium tires (fresh): -1.2 sec/lap Lap 1
+      - Hard tires (fresh): -1.8 sec/lap Laps 1-2 (take longer to warm up)
     
     After tire warm-up (Lap 2+): Full grip available
 ```
@@ -206,6 +208,32 @@ Recommendation from Telemetry Team:
 Decision: Pit Lap 6 (balanced between aggressive and defensive)
 ```
 
+
+
+
+## 6.X DRS (Drag Reduction System)
+- **Activation**: Within 1-second gap to car ahead
+- **Disabled**: First 2 laps after start/restart, in rain, under safety car
+- **Effect**: +8-12 km/h top speed
+- **Zone-based**: Different zones per track with FIA-defined activation points
+
+## 6.X PENALTY SYSTEM
+- **5-second penalty**: Applied at pit stop or added to final time
+- **Drive-through**: One lap through pit lane, no stop required
+- **Stop-and-go**: Mandatory pit stop for 10 seconds
+- **Offenses**: Speeding pit lane, false start, unsafe release, forcing off track, collision
+
+## 6.X FORMATION LAP
+- 30 minutes before race start
+- No overtaking allowed
+- Any off-track excursion = pit lane start penalty
+- Cars return to pit lane after formation lap
+
+## 6.X CRASH PROBABILITY MODEL
+- Non-linear based on: skill, tire condition, track state, aggression level
+- Max 2-3% per lap even in worst conditions
+- Weather, fatigue, and equipment failure contribute separately
+
 ---
 
 ## 6.3 FUEL MANAGEMENT
@@ -219,8 +247,8 @@ Base Consumption: 1.6 kg/lap (average)
 Fuel Economy Modifiers:
   + Slow lap (fuel-saving mode): -0.2 kg/lap (-12.5% consumption)
   + Fast lap (aggressive): +0.1 kg/lap (+6% consumption)
-  + Engine Mode mapping: Standard vs Power vs Qualifying
-    - Qualifying mode: +0.3 kg/lap (maximum power)
+  + Engine Mode mapping: Standard vs Fuel Save vs Attack (ERS-based)
+    - Standard mode: Normal fuel consumption (baseline)
     - Standard race mode: 1.6 kg/lap
     - Economy mode: 1.4 kg/lap (-12.5%)
   + Temperature impact: Hot conditions +0.1 kg/lap, cold -0.05 kg/lap

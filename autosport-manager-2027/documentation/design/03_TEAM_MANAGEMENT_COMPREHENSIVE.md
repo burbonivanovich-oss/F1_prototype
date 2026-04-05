@@ -12,8 +12,8 @@
 |-----------|---------|
 | **Personnel** | 45-60 employees (drivers, engineers, mechanics, administration) |
 | **R&D Centers** | 8 specialized departments |
-| **Base Facilities** | 6 core subsystems (wind tunnel, simulator, maintenance, assembly, data, operations) |
-| **Annual Budget** | $145M (FIA Cost Cap hard limit) |
+| **Base Facilities** | Wind Tunnel, Simulator, Manufacturing (level 1-5 only) |
+| **Annual Budget** | $135M (FIA Cost Cap hard limit) |
 | **Management Cycle** | Weekly, intensifies during inter-race windows |
 | **Critical Events** | Driver injuries, key staff departures, morale crises, poaching attempts |
 
@@ -37,7 +37,7 @@
 | **Workshop Manager** | 1 | Equipment & logistics lead | $150K - $200K |
 | **HR Manager** | 1 | Contracts & personnel management | $100K - $150K |
 
-**Total annual personnel budget**: $31M - $45M (45% of Cost Cap)
+**Total annual personnel budget**: $25M - $35M (35% of Cost Cap)
 
 ### 3.2.2 Decision-Making Hierarchy
 
@@ -574,7 +574,7 @@ Each facility has levels 1-10 with upgrades at increasing cost.
 - **Upgrade Cost**: $800K-1.5M per level
 - **Operational Cost**: $80K/month
 - **Logistics Impact**: Level 1 = 15% delay risk, Level 10 = 1% delay risk
-- **Budget Efficiency**: Level 10 saves $5.8M/year in administrative overhead
+- **Budget Efficiency**: Higher Team Base level (1-100) reduces operational overhead (up to 10% savings at max level) in administrative overhead
 
 **Total Baseline Operational Cost**: ~$1.4M/month ($16.8M/year)
 
@@ -582,7 +582,7 @@ Each facility has levels 1-10 with upgrades at increasing cost.
 
 ## 3.8 BUDGET MANAGEMENT & COST CAP
 
-### 3.8.1 $145M FIA Cost Cap Breakdown
+### 3.8.1 $135M FIA Cost Cap Breakdown
 
 | Category | Budget | % | Details |
 |----------|--------|-----|----------|
