@@ -48,53 +48,55 @@ Q4 (Races 19-24, 8 weeks)
 
 **Sponsorship Structure**: 3-5 major sponsors + 5-10 minor sponsors
 
-#### **MAJOR SPONSOR CONTRACT** (Typical)
+#### **MAJOR SPONSOR CONTRACT** (Top Team Example - UPDATED)
 
 ```
-Sponsor: TechCorp Energy (fictional)
+Sponsor: Oracle (fictional replacement, similar to real Red Bull deal)
 Contract Length: 3 years (2027-2029)
-Total Value: $30M/year
+Total Value: $65M/year (significantly higher than 2024)
 
 Payment Schedule:
-  - Q1 (March): $7.5M
-  - Q2 (June): $7.5M
-  - Q3 (September): $7.5M
-  - Q4 (December): $7.5M
+  - Q1 (March): $16.25M
+  - Q2 (June): $16.25M
+  - Q3 (September): $16.25M
+  - Q4 (December): $16.25M
 
 Performance KPIs:
   1. Team Championship Position
-     - Top-3 finish: Full sponsor payment ($30M)
-     - 4-6 finish: 85% payment ($25.5M)
-     - 7-10 finish: 60% payment ($18M)
-     - Below 10: 40% payment ($12M, minimum)
+     - Top-3 finish: Full sponsor payment ($65M)
+     - 4-6 finish: 85% payment ($55.25M)
+     - 7-10 finish: 60% payment ($39M)
+     - Below 10: 40% payment ($26M, minimum)
   
   2. Podium Count
-     - Bonus: +$500K per podium (up to 12 podiums = +$6M)
-     - Malus: -$250K per podium missed vs. 5 podium target
+     - Bonus: +$1.2M per podium (up to 12 podiums = +$14.4M)
+     - Malus: -$600K per podium missed vs. 5 podium target
   
   3. Win Count
-     - Bonus: +$1M per win (up to 3 wins = +$3M)
-     - If 0 wins: -$1.5M penalty
+     - Bonus: +$2.5M per win (up to 3 wins = +$7.5M)
+     - If 0 wins: -$3M penalty
   
-  4. Brand Visibility
-     - Broadcast logo presence measured
-     - Penalty if visibility <75% targeted level: -$1M
+  4. Brand Exposure Value (Media Worth)
+     - Broadcast logo presence and engagement measured by media value
+     - Target: $80M media value equivalent
+     - Penalty if <75% target: -$2M
   
   5. Social Media Engagement
-     - Team social posts mentioning sponsor: Minimum 20/season
-     - Influencer posts: Minimum 10/season
-     - Penalty if not met: -$500K
+     - Team social posts mentioning sponsor: Minimum 40/season
+     - Influencer posts: Minimum 20/season
+     - Engagement target: 2M combined followers interaction
+     - Penalty if targets not met: -$1.2M
 
 Year-End Calculation Example (Q4 Payment):
-  - Base: $7.5M
-  - Championship adjustment: Team finished 4th = 85% = $6.375M
-  - Podium bonus: 8 podiums (target 5) = +$400K
-  - Win bonus: 2 wins = +$2M
-  - Brand visibility: 82% (above 75%) = 0 penalty
+  - Base: $16.25M
+  - Championship adjustment: Team finished 4th = 85% = $13.8M
+  - Podium bonus: 8 podiums (target 5) = +$3.6M
+  - Win bonus: 2 wins = +$5M
+  - Brand exposure: 82% (above 75%) = 0 penalty
   - Social KPI: Met = 0 penalty
-  - Q4 payment: $8.775M
+  - Q4 payment: $22.4M
 
-Total Year 1: $30M + ~$2.5M bonuses - $1M malus = $31.5M actual
+Total Year 1: $65M + ~$8.6M bonuses - potential malus = $65M-$73.6M actual
 ```
 
 #### **MINOR SPONSOR CONTRACT** (Typical)
@@ -114,159 +116,205 @@ Simple KPIs:
 No performance bonuses (typical for smaller sponsors)
 ```
 
-### 5.2.2 Sponsorship Total Portfolio
+### 5.2.2 Sponsorship Total Portfolio (2026 UPDATED)
 
-**Example Team Portfolio:**
+**Example Top Team Portfolio (e.g., Mercedes, Red Bull):**
 
-| Sponsor | Category | Annual Value | KPI Risk |
+| Sponsor | Category | Annual Value | KPI Type |
 |---------|----------|------------|----------|
-| TechCorp Energy | **MAJOR** | $30M | Championship position, podiums |
-| FinanceBank | MAJOR | $20M | Podiums, brand visibility |
-| MotorOil Co | MAJOR | $15M | Top-8 finish |
-| AutoParts Inc | Minor | $3M | Top-8 finish |
-| Fuel Supplier | Minor | $2M | Non-DNF reliability |
-| Aerospace Corp | Minor | $2M | Championship position |
-| Electronics Firm | Minor | $1.5M | Visibility metrics |
-| Casual Gaming | Minor | $1.5M | Social engagement |
-| Various Small | Minor | $3M | Minimal KPIs |
+| Oracle/Petronas | **TITLE** | $65M+ | Championship, podiums, brand exposure |
+| BWT/Finance Co | MAJOR | $35M | Top-3 finish, media value |
+| Lubricant Supplier | MAJOR | $25M | Top-5 finish, technical KPIs |
+| Tech Partner | MAJOR | $20M | Innovation showcase, patents |
+| Automotive Co | Mid-tier | $12M | Top-8 finish |
+| Gaming/Entertainment | Mid-tier | $8M | Social engagement |
+| Various Hospitality | Minor | $15M | Event/VIP experiences |
+| Championship Series | Shared | $6.4M+ | Equal distribution + position bonus |
 
-**Total Sponsorship**: $78M/year (54% of $135M Cost Cap)
-**Range of Outcomes**: $65M (poor season) to $85M (championship-winning season)
+**Total Sponsorship Portfolio**: $185M+/year
+**Range**: $140M (poor season) to $210M (championship season)
 
-### 5.2.3 Sponsorship Crisis Mechanics
+**MARKET GROWTH MECHANIC** (NEW):
+- Each season, sponsor market values increase 5-10% baseline
+- Championship winners: Can negotiate +15-20% increases in next season
+- Mid-field teams: +5-8% market growth
+- New entrants (like Cadillac 2026): Start at lower base, ramp up over 3 years
+- Real-world reference: Sponsorship market grew $677M → $2.04B (2024), projected +8-10%/year through 2026
 
-**Scenario: Injury Crisis in Q2**
+### 5.2.3 Injury Crisis & Insurance Mechanics (REVISED)
+
+**Primary Impact: Next Season Prize Money** (not immediate cash loss)
 
 ```
 Situation: Driver #1 injured for 4 races (Races 7-10), team championship position slides
 
-Q2 Sponsorship Impact:
-  - Pre-injury: Team was 3rd in standings, on track for +$35M sponsorship
-  - Post-injury: Team slides to 5th in standings
+Current Season Impact (Direct):
+  - Reserve driver salary: +$2-3M new cost
+  - Lost podium bonuses: ~$2-3M foregone
+  - Sponsor KPI miss: Potential -$5-10M if championship position degrades significantly
+  - Immediate season cash impact: -$7-15M
   
-Sponsor Reaction (Week 3 of absence):
-  - TechCorp Energy: Reviews contract, sees championship slipping
-  - Contract review: "If we finish 7-10, payment drops to 60%"
-  - Decision point: Negotiate adjustment or accept penalty?
+Next Season Impact (Indirect):
+  - Team finishes 5th instead of projected 3rd
+  - Year 2 prize money: Drops from $156M to $132M
+  - Lost prize money: -$24M across next season
+  - TOTAL impact: $7-15M (current) + $24M (next year) = $31-39M opportunity cost
 
-Negotiation Options:
-  A) Accept penalty: -$6M from TechCorp (30% → 18% of $30M)
-     Cost: $6M loss, but avoids conflict
-     
-  B) Propose amendment: "Injury force majeure, review after mid-season"
-     Cost: $0, but strains sponsor relationship
-     Risk: Sponsor may demand contract termination
-     
-  C) Propose performance bonus pool: "Extra $2M if top-6 by season end"
-     Cost: +$2M if successful, zero if fail
-     Gamble: Incentivizes both team and sponsor to push harder
+Sponsor Reaction (Current Season):
+  - Most sponsors: Maintain payments (injury is covered by insurance clauses)
+  - Some sponsors: May renegotiate Q3-Q4 if team clearly out of contention
+  - Rare: Contract termination if explicit performance requirement breached
+```
+
+**INJURY INSURANCE OPTION** (NEW):
+
+```
+Players can purchase injury insurance for drivers:
+
+Cost: $2-3M per season per driver
+Coverage: Covers salary during absence + lost bonus pool
+
+Without Insurance (Team Bears All Risk):
+  - Driver #1 injury 4 races:
+    Costs: Salary (+$2M) + bonuses lost (-$3M) + prize shortfall (-$4M) = -$9M
+    + Next year impact: -$24M
+    TOTAL IMPACT: -$33M
+
+With Insurance ($2.5M/season):
+  - Driver #1 injury 4 races:
+    Costs: Insurance premium ($2.5M) + minimal disruption
+    Recovery: Insurance pays salary + covers 75% of bonus loss
+    TOTAL IMPACT: -$2.5M + partial recovery = -$1M
+    + Next year impact: Reduced to -$10M (better prepared with backup driver)
+    
+Recommendation: Top teams with championship ambitions ALWAYS carry insurance
+Mid-field teams: Optional (depends on driver market value)
 ```
 
 ---
 
-### 5.2.4 Prize Money Distribution
+### 5.2.4 Prize Money Distribution (2026 REGULATIONS)
 
-**FIA Prize Pool**: $600M distributed across all 10 teams
+**FIA Prize Pool**: $1.6B distributed across 10-11 teams (2026 has Cadillac entry)
+
+**Three-Tier Distribution Formula**:
+
+| Tier | % of Pool | Distribution Method |
+|------|-----------|-------------------|
+| **Championship-Based** | 75% ($1.2B) | Distributed by final Constructor Championship position |
+| **Heritage/Historical** | 20% ($320M) | Bonus for teams with titles, podiums, legacy (Ferrari, Mercedes, McLaren priority) |
+| **Ferrari Legacy Bonus** | 5% ($80M) | Fixed payment to Ferrari (FIA regulations) |
+
+**Championship Position Distribution (75% of $1.2B = $900M base):**
+```
+Championship Final Position Distribution:
+  1st:  14.0% = $168M
+  2nd:  13.5% = $162M
+  3rd:  13.0% = $156M
+  4th:  12.0% = $144M
+  5th:  11.0% = $132M
+  6th:  9.0% = $108M
+  7th:  8.0% = $96M
+  8th:  7.5% = $90M
+  9th:  7.0% = $84M
+  10th: 6.0% = $72M
+  11th (2026+): 0% (new entrant, typically no share year 1)
+
+Total: 100% = $1.2B
+```
+
+**Heritage Bonus Distribution (20% = $320M):**
+```
+Teams receiving historical bonus (based on all-time achievements):
+  Ferrari:      +$80M (most titles, legacy)
+  Mercedes:     +$60M (recent dominance 2014-2020)
+  McLaren:      +$40M (many podiums, world champions)
+  Williams:     +$30M (7 constructor titles)
+  Lotus/Renault: +$25M (world champions, wins)
+  Red Bull:     +$40M (recent success 2009-2024)
+  Other teams:  $45M combined (minimal historical bonus)
+
+Total: $320M
+```
+
+**Example Season Prize Calculation (2026, finished 3rd):**
+```
+Championship-Based (75% tier): 13.0% of $1.2B = $156M
+Heritage Bonus (if applicable): $0-40M depending on team history
+Ferrari Legacy: Only Ferrari receives this $80M
+Total Prize Money: $156M-$196M per team
+```
+
+**CRITICAL CHANGE: No Race-by-Race Distribution**
+- Prizes are NOT distributed per individual race
+- All prize money paid at END OF SEASON based on final championship position
+- This creates significant mid-season cash flow challenges for teams
+
+### 5.2.5 Championship-Level Sponsorships (NEW)
+
+**F1 Series-Level Sponsorships** (distributed to all teams equally):
+
+Examples:
+- Nestlé (KitKat): ~$50M/year (distributed equally to all 10-11 teams)
+- PwC (official audit/analytics): ~$30M/year  
+- Barilla (official pasta): ~$20M/year
+- TAG Heuer/LVMH: ~$60M/year combined
 
 **Distribution Formula**:
+- 40% equal split: All teams receive same amount
+- 30% by championship position: Leaders get more
+- 30% by race location: Home market teams get boost
+
+**Example Annual Championship Sponsorship Income** (per team):
 ```
-Base Distribution:
-  1st Constructor: $100M
-  2nd Constructor: $75M
-  3rd Constructor: $50M
-  4th Constructor: $35M
-  5th Constructor: $25M
-  6th Constructor: $18M
-  7th Constructor: $14M
-  8th Constructor: $10M
-  9th Constructor: $8M
-  10th Constructor: $7M
+Equal Share (40% of $160M): $64M / 10 teams = $6.4M per team
 
-Championship Performance Multiplier:
-  If finished 3+ consecutive top-3 seasons: +15% bonus
-  Historical participation bonus: Up to +10% (per FIA rules)
-  Total adjustments: Can swing ±20% from base
+Championship Position (30% of $160M):  
+  1st place: +$7.2M (9% of championship tier)
+  2nd place: +$6M
+  3rd place: +$4.8M
+  ... decreasing to ...
+  10th place: +$0.5M
 
-Example: 4th place championship
-  - Base: $35M
-  - Consistency bonus (3 years top-5): +$3.5M (10%)
-  - Total: $38.5M
+Race Location (30% of $160M):
+  Team at home race: +$1-5M depending on market size
+  (Example: McLaren at Silverstone +$3M, Haas at Austin +$2M, Alfa Romeo at Monza +$2.5M)
 
-Example: 1st place championship
-  - Base: $100M
-  - Consistency bonus: +10M
-  - TV Rights share (additional): +$15M
-  - Total: $125M
-```
-
-**Race-by-Race Distribution** (each race distributes $25M):
-```
-Race Result Payment (per $25M race distribution):
-  1st place: $4M
-  2nd place: $2.5M
-  3rd place: $1.5M
-  4th-10th: $500K-$100K
-  
-Over 24-race season:
-  - Win all races: $96M race winnings
-  - Podiums every race (3rd average): $36M
-  - Points-scoring every race (6th average): $12M
-  - DNF average (0 points): $0 race earnings
-```
-
-### 5.2.5 TV Rights Distribution
-
-**Additional Revenue Stream**: TV rights payments from broadcasters
-
-**Annual TV Distribution**: ~$50M split among 10 teams
-- Distributed quarterly (Q1-Q4)
-- Formula:
-  - 50% split equally among all 10 teams: $2.5M each/quarter
-  - 30% distributed by championship position (1st gets more)
-  - 20% distributed by race viewership (higher audience markets get higher shares)
-
-**Example Quarter TV Revenue:**
-```
-Q2 TV Revenue: $12.5M total to distribute
-
-Base Equal Share (50%): $6.25M
-  - All 10 teams: $625K each
-
-Championship Position Distribution (30%): $3.75M
-  - 1st: $750K
-  - 2nd: $625K
-  - 3rd: $500K
-  - ... decreasing ...
-  - 10th: $100K
-
-Viewership Bonus (20%): $2.5M
-  - Race 7 (UK market, high viewership): Beneficiary gets +$400K
-  - Race 8 (low viewership): Beneficiary gets +$50K
-
-Your Team Q2 TV Revenue:
-  - Base: $625K
-  - Championship position (4th): +$425K
-  - Viewership bonus: +$200K
-  - Q2 Total: $1.25M (quarterly)
+Estimated per-team total: $6.4M-$13M depending on championship position and home races
 ```
 
 ---
 
 ## 5.3 EXPENSE CATEGORIES
 
-### 5.3.1 Cost Cap Breakdown (Revisited with Detail)
+### 5.3.1 Cost Cap Breakdown (2026 REGULATIONS - $215M)
 
-Total Annual Budget: $135M
+**Total Annual Cost Cap**: $215M (increased from $135M in 2023-2025)
 
-| Category | Budget | Monthly Rate | Notes |
+**EXCLUDED from Cost Cap** (outside the $215M limit):
+- Driver salaries (fully excluded)
+- Top 3 executives (salaries only, not bonuses)
+- Technical Director salary ($800K-$1.5M)
+- Marketing and promotional spending
+- Legal fees and FIA compliance
+- Logistics beyond factory operations
+- Sustainable fuel specification costs (new in 2026)
+
+| Category (IN CAP) | Budget | Monthly Rate | Notes |
 |----------|--------|------------|--------|
-| **Personnel** | $45M | $3.75M | Salaries, bonuses, benefits |
-| **Power Unit** | $20.3M | $1.69M | Engine R&D, supplier fees, dyno |
-| **Chassis & Aero** | $30M | $2.5M | Design, manufacturing, wind tunnel |
-| **Operations** | $20M | $1.67M | Logistics, travel, utilities |
-| **Facilities** | $10M | $833K | Building maintenance, equipment |
-| **IT & Telemetry** | $10M | $833K | Software, servers, data systems |
-| **Contingency** | $9.7M | $808K | Unplanned costs, emergencies |
+| **Personnel (salaries only)** | $120M | $10M | Non-driver salaries, benefits |
+| **R&D Operations** | $45M | $3.75M | Aerodynamics, Chassis, Reliability R&D |
+| **Power Unit R&D** | $28M | $2.33M | Engine development, dyno hours |
+| **Manufacturing & Parts** | $12M | $1M | Component production, QC |
+| **Operations (in-cap)** | $10M | $833K | Facility operations, utilities |
+| **IT & Telemetry** | $3M | $250K | Servers, telemetry systems |
+| **Contingency** | $7M | $583K | Emergency costs, overruns |
+
+**CAPEX ALLOWANCE** (Separate from Cost Cap):
+- Budget: $45M/4 years = $11.25M/year
+- Uses: Factory/wind tunnel upgrades, simulator improvements, equipment replacement
+- Amortized over 4 years (can carryover between years)
+- Allows gradual facility modernization without Cost Cap penalties
 
 ### 5.3.2 Quarterly Budget Tracking
 
@@ -285,15 +333,23 @@ Monthly Expenses (Projected):
 
 Income (Q2):
   Sponsorship Q2 payment: +$19.5M
-  Prize money (Races 7-12): +$8M (6 races × avg $1.3M/race)
-  TV Rights Q2: +$1.25M
-  Total Q2 Income: +$28.75M
+  Prize money: $0 (NO RACE-BY-RACE PAYOUTS)
+  Championship sponsorship share (Q2): +$2M (estimated annual $6.4-13M / 4 quarters)
+  Total Q2 Income: +$21.5M
 
-Q2 Net: +28.75M - 36M = -$7.25M deficit
+Q2 Net: +21.5M - 36M = -$14.5M deficit
 
-Closing Balance (end Q2): $15M - $7.25M = $7.75M
+Closing Balance (end Q2): $15M - $14.5M = $500K (CRITICAL)
 
-Status: CASH FLOW POSITIVE (income covers expenses)
+Status: SEVERE CASH FLOW CRUNCH mid-season
+Impact: Teams must manage cash very carefully; may need emergency borrowing
+
+**NOTE: Prize Money Paid End-of-Season Only**
+- All championship prize money ($100M-$168M per team) paid in DECEMBER
+- Creates massive Q4 cash influx (after paying November expenses)
+- This is why many mid-field teams struggle Q1-Q3
+- Teams with large sponsorship deals have easier cash flow
+- New/small teams often require loans during season
 Contingency: Adequate buffer for emergencies
 
 If major crisis occurred (driver injury):
@@ -531,72 +587,122 @@ Team is INSOLVENT, faces bankruptcy, enters administration (FIA takeover)
 
 ---
 
+## 5.5+ BANKRUPTCY & TEAM SALE MECHANICS
+
+### Anti-Dilution Fee (Concorde Agreement)
+
+**Scenario: Team enters administration (bankruptcy), must be sold**
+
+```
+When team is insolvent and FIA must facilitate new ownership:
+
+FIA Process:
+  1. Team enters administration (legal procedure)
+  2. Assets liquidated or sold as going concern
+  3. New buyer acquires team franchise
+  4. New buyer must pay "Anti-Dilution Fee" to remaining teams
+
+Anti-Dilution Fee Calculation:
+  - Fixed amount: $450M per team acquisition
+  - Distribution: Divided equally among all OTHER teams (9-10 teams)
+  
+Example (11-team grid in 2026):
+  - Haas (hypothetically) enters administration
+  - New buyer pays FIA: $450M
+  - Distributed to other 10 teams: $45M each
+  
+Rationale: Protects existing teams' prize money from dilution
+  - New team = more teams sharing same prize pool
+  - Without fee, 10-team pool drops in value per team
+  - Fee compensates for that dilution
+
+Strategic Impact:
+  - High barrier to team acquisition (separate from franchise cost)
+  - Makes rescue of failing team expensive (new owner pays $450M + operational costs)
+  - Encourages team stability (FIA/other teams incentivized to help failing team)
+  - Creates financial incentive for well-managed teams to stay healthy
+```
+
+**Alternatives to Bankruptcy:**
+- Emergency loan from FIA ($100-200M, 0% interest, structured repayment)
+- Temporary prize money advance (teams can take 50% of next year's predicted prize money early)
+- Engine supplier bailout (manufacturer provides engine discount, improves cash position)
+- Investor injection (external capital before insolvency reached)
+
+---
+
 ## 5.6 BUDGET ALLOCATION STRATEGIES
 
 ### 5.6.1 Conservative Budget (Mid-Field Team)
 
 ```
-Annual Budget: $95M (50% below Cost Cap ceiling)
+Annual Cost Cap: $150M (70% of $215M ceiling, minimal ambition)
 
-Allocation:
-  Personnel: $30M (32%)
-    - Drivers: $15M (limited stars)
-    - Engineers: $12M (mid-tier talent)
-    - Support: $3M
+Allocation (in-cap spending):
+  Personnel (non-drivers): $60M (40%)
+    - Driver salaries: EXCLUDED (external $10-20M)
+    - Engineers: $40M (mid-tier talent)
+    - Support: $20M
   
-  R&D: $25M (26%)
-    - Aerodynamics: $8M
-    - Power Unit: $5M (supplier fee, limited in-house)
-    - Chassis: $6M
-    - Other: $6M
+  R&D: $30M (20%)
+    - Aerodynamics: $10M
+    - Power Unit: $8M (supplier fee if non-manufacturer)
+    - Chassis: $8M
+    - Reliability: $4M
   
-  Operations: $18M (19%)
-    - Logistics: $8M
-    - Travel: $6M
-    - Facilities: $4M
+  Manufacturing & Operations: $20M (13%)
+    - Component production, logistics
   
-  Contingency: $22M (23%)
-    - Emergency buffer
-    - Unplanned hires
-    - Crisis management
+  Facilities & IT: $10M (7%)
+    - Simulator, wind tunnel operations
+  
+  Contingency: $30M (20%)
+    - Emergency buffer for crises
+    - Mid-season adjustments
 
-Strategy: Safe, sustainable, lower ambition
+CapEx (separate): $11.25M/year (facility upgrades)
+
+Strategy: Safe, sustainable, lower ambition, minimal franchise investment
 Expected Performance: Mid-field (6-8th championship finish)
-Expected Prize Money: $15-18M
-Expected Net: -$10M loss (operating at loss, requires external investment)
+Expected Prize Money: $90-108M (per finishing position)
+Expected Sponsorship: $80-120M
+Expected Net: Breakeven to +$20M profit (if 6th-7th place)
 ```
 
 ### 5.6.2 Aggressive Budget (Championship Contender)
 
 ```
-Annual Budget: $135M (at Cost Cap ceiling)
+Annual Cost Cap: $215M (at ceiling, championship push)
 
-Allocation:
-  Personnel: $45M (31%)
-    - Drivers: $28M (two top-tier drivers)
-    - Engineers: $14M (hiring world-class specialists)
-    - Support: $3M
+Allocation (in-cap spending):
+  Personnel (non-drivers): $120M (56%)
+    - Driver salaries: EXCLUDED (external $50-70M)
+    - Elite engineers: $60M (world-class specialists)
+    - Support staff: $30M
+    - Coaching/analytics: $10M
   
-  R&D: $50M (34%)
-    - Aerodynamics: $18M (pushing Gen 3 developments)
-    - Power Unit: $16M (aggressive engine program)
+  R&D: $50M (23%)
+    - Aerodynamics: $18M (aggressive development)
+    - Power Unit: $18M (if manufacturer; or $8M if client)
     - Chassis: $10M
-    - Other: $6M
+    - Reliability: $4M
   
-  Operations: $25M (17%)
-    - Logistics: $10M
-    - Travel: $10M
-    - Facilities: $5M
+  Manufacturing & Operations: $25M (12%)
+    - Component production, expedited timelines
   
-  Contingency: $25M (17%)
-    - High-risk R&D failures
-    - Driver injury contingency
-    - Sponsor shortfall buffer
+  Facilities & IT: $12M (6%)
+    - Premium simulator, wind tunnel ops
+  
+  Contingency: $8M (4%)
+    - Minimal buffer (aggressive spending)
 
-Strategy: Aggressive, championship-focused, high-risk
+CapEx (separate): $11.25M/year (accelerated facility modernization)
+
+Strategy: Aggressive, championship-focused, high-risk, major owner investment
 Expected Performance: Top-3 finish (championship contender)
-Expected Prize Money: $50-80M (depending on finishing position)
-Expected Net: -$5M to +$35M (wide variance based on results)
+Expected Prize Money: $144-168M (depending on 3rd vs. 1st place)
+Expected Sponsorship: $160-210M (top-tier teams attract premium sponsors)
+Expected Net: +$50M to +$130M profit (if top-3), -$30M loss (if 5th)
 ```
 
 ---
@@ -610,18 +716,17 @@ FINANCIAL REPORT - Q2 (Races 7-12)
 ════════════════════════════════════════════════════════════════
 
 INCOME TRACKING (YTD):
-  Sponsorship Received: $39M / $78M target (50%)
-    - TechCorp: $15M (on track, bonuses pending)
-    - FinanceBank: $12M (at risk, morale concerns)
-    - Other: $12M (stable)
+  Sponsorship Received: $95M / $185M target (51%)
+    - Titlesponsor Oracle: $32.5M (on track, bonuses pending)
+    - Major Partner (Finance): $32.5M (at risk, performance below target)
+    - Other: $30M (stable)
   
-  Prize Money Received: $16M / $30M target (53%)
-    - Races 1-6 earnings: $8M (avg 4th place = $1.33M/race)
-    - Races 7-12 forecast: $8M (on track)
+  Prize Money Received: $0 (PAID AT SEASON END ONLY)
+    - Current forecast based on 4th place position: ~$132M (paid December)
   
-  TV Rights: $2.5M / $6M target (42%)
+  Championship Series Sponsorships: $6.4M YTD (shared pool)
   
-  Total YTD: $57.5M
+  Total YTD (excluding season-end prizes): $101.4M
 
 EXPENSES YTD:
   Personnel: $22.5M / $45M budget (50%)
@@ -629,9 +734,10 @@ EXPENSES YTD:
     - Bonuses paid: $1.5M
     - Status: On budget
   
-  R&D: $15M / $50M budget (30%)
+  R&D: $15M / $45M budget (33%)
     - Development spending: $12M
-    - Token usage: 3.5 / 8 tokens (44%)
+    - Wind Tunnel hours: 20 / 72 hours (28%)
+    - CFD units: 300 / 1400 units (21%)
     - Status: On track
   
   Operations: $12M / $25M budget (48%)
@@ -654,16 +760,20 @@ NET CASH POSITION:
   Status: HEALTHY
 
 FORECAST TO SEASON END:
-  If current performance continues (4th place average):
-    - Total Prize Money: $30M (24 races × $1.25M avg)
-    - Sponsorship adjusted: $75M (TechCorp reduced 15% due to position)
-    - TV Rights: $6M
-    - Total Income: $111M
-    - Expenses: $135M (Cost Cap hard limit)
-    - Year-End: -$34M SHORTFALL
+  If current performance continues (4th place finish in championship):
+    - Championship Prize Money: $144M (4th place, paid December)
+    - Sponsorship adjusted: $160M (some bonuses lost due to non-top-3 finish)
+    - Championship Series bonus: $6.4M
+    - Total Income: $310.4M
+    - Expenses: $215M (Cost Cap hard limit, plus excluded categories)
+    - Year-End: +$95.4M PROFIT
+    - Status: POSITIVE if 4th place maintained
   
-  Status: CONCERNING
-  Action Required: Either improve performance or reduce spending
+  Risk Scenarios:
+    - If finish 8th: Prize $90M, sponsorship drops to $120M → +$1.4M (tight)
+    - If finish 10th: Prize $72M, sponsorship $80M → -$62.6M (DEFICIT)
+  
+  Action Required: Must maintain top-6 position to avoid financial crisis
 
 RISK ASSESSMENT:
   🔴 RED FLAGS:
@@ -911,10 +1021,89 @@ Historical Note:
 
 ---
 
+## 5.10 COST CAP ENFORCEMENT & PENALTIES (2026 REGULATIONS)
+
+### Audit Schedule
+
+- **Quarterly Audits**: Races 6, 12, 18, and end of season
+- **Categories checked**: In-cap spending (personnel, R&D, ops), excluded categories (driver salaries, marketing, etc.)
+- **Verification**: FIA official audit of team records, invoices, contracts
+
+### Penalty Framework
+
+**MINOR BREACH** (0-5% overage):
+```
+Overage Example: Spent $225M instead of $215M cap = $10M overage = 4.7%
+
+Penalties:
+  - Monetary fine: $500K-$2M (proportional to overage)
+  - ATR reduction: -5% to -10% for next season
+  - Constructors' points: No deduction for minor breach
+  
+Example: -7% ATR = from 72 hours wind tunnel → 67 hours (50% of full allocation)
+Impact: Roughly equivalent to -$300-500K R&D spending power
+
+Total cost: $1-2M fine + $300-500K lost R&D value = realistic deterrent
+```
+
+**MODERATE BREACH** (5-10% overage):
+```
+Overage Example: Spent $237M = $22M overage = 10.2%
+
+Penalties:
+  - Monetary fine: $3-5M
+  - ATR reduction: -10% to -20% for next season
+  - Constructors' points: -10 points (average ~1-2 races worth)
+  - Investigation escalation: FIA formal hearing
+  
+Example: -15% ATR = from 72 hours → 61 hours (significantly impacts development)
+Impact: Roughly -$1-2M R&D spending power plus points penalty
+Total competitive cost: $5M fine + $1-2M R&D loss + potential championship impact
+```
+
+**MAJOR BREACH** (>10% overage):
+```
+Overage Example: Spent $260M = $45M overage = 20.9%
+
+Penalties:
+  - Monetary fine: $10-15M
+  - ATR reduction: -25% to -35% for next season
+  - Constructors' points: -30 points (major deduction, hurts championship)
+  - Possible exclusion: From races if not resolved
+  - Investigation: Potential fraud investigation
+  
+Example: -30% ATR = from 72 hours → 50 hours (barely competitive)
+Impact: -$3-4M R&D spending power PLUS major points deduction
+Total cost: $10-15M fine + championship impact
+```
+
+### Red Bull 2021 Real Example
+
+```
+Actual Breach: 1.6% overage (~$1.6M over $145M cap)
+FIA Penalty: $7M fine + 10% ATR reduction for 2022
+Interpretation: Treated as minor breach despite small overage due to transparency cooperation
+
+In-Game Application:
+  - Small overages (<2%) treated leniently if team immediately self-reports
+  - Discovered overages without disclosure result in harsher penalties
+  - Financial transparency builds trust (lower penalties for accidental overages)
+```
+
+---
+
 **[END OF PART 5: FINANCE & SPONSORSHIP SYSTEM]**
 
-**Total Pages**: 35-40 pages
+**Total Pages**: 45-50 pages
 
-This system provides comprehensive financial management across sponsorship, prize money, Cost Cap enforcement, cash flow management, and crisis resolution. All financial mechanics interconnect with Team Management (salary/bonus impacts on morale) and Season Management (performance impacts on prize money and sponsorship).
+This system provides comprehensive financial management across:
+- Prize money distribution (3-tier formula: 75% championship-based, 20% heritage, 5% Ferrari legacy)
+- Sponsorship contracts ($50-70M+ for top teams, with market growth mechanic)
+- Cost Cap enforcement ($215M with tiered penalties including ATR reduction)
+- Cash flow management (season-end prize payouts create mid-season liquidity challenges)
+- Bankruptcy procedures (anti-dilution fees, FIA intervention options)
+- Mid-season crisis mechanics (injuries, sponsor termination, cash flow shortfalls)
+
+All financial mechanics interconnect with Team Management (salary/bonus impacts on morale) and Season Management (performance impacts on prize money and sponsorship).
 
 **NEXT SYSTEM**: Part 6 — Race Simulation & Mechanics (pit stops, tire management, weather, strategy execution, driver behavior)
