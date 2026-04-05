@@ -10,11 +10,13 @@
 
 | Component | Details |
 |-----------|---------|
-| **Personnel** | 45-60 employees (drivers, engineers, mechanics, administration) |
-| **R&D Centers** | 8 specialized departments |
+| **Factory Staff** | 500-800 employees (manufacturing, assembly, maintenance, logistics) |
+| **Race Team** | 60-80 employees (drivers, engineers, mechanics, strategy, operations) |
+| **Managed Roles** | Only key positions: 3 Directors, 7 Department Leads, 2 Drivers, 20-25 core engineers |
+| **R&D Centers** | 8 specialized departments (Aero, PU, Chassis, Reliability, etc.) |
 | **Base Facilities** | 6 core subsystems (wind tunnel, simulator, maintenance, assembly, data, operations) |
 | **Cost Cap** | $215M (FIA hard limit, 2025-2026 regulations) |
-| **CapEx Allowance** | $45M/4 years (separate from Cost Cap) |
+| **CapEx Allowance** | $45M/3 years (separate from Cost Cap, facility modernization) |
 | **Management Cycle** | Weekly, intensifies during inter-race windows |
 | **Critical Events** | Driver injuries, key staff departures, morale crises, poaching attempts |
 
@@ -24,28 +26,41 @@
 
 ### 3.2.1 Personnel Hierarchy & Headcount
 
-**Target team size**: 52 full-time employees
+**Race Team size**: 60-80 core employees (directly managed by player)  
+**Factory Staff**: 500-800 support employees (abstracted, managed via Team Base Level)
+
+**KEY MANAGED POSITIONS**:
 
 | Category | Count | Role | Salary Range (Annual) |
 |----------|-------|------|---------------------|
-| **PRIMARY DRIVER** | 1 | Championship contender | $25M - $70M |
-| **SECOND DRIVER** | 1 | Support/teammate | $10M - $40M |
-| **RESERVE/TEST DRIVER** | 1 | Emergency + development | $2M - $8M |
-| **Top Management** | 3 | Exec Directors (Performance/Engineering/Technical) | $600K - $1.5M |
-| **Department Leads** | 7 | R&D center managers (varies by director) | $203K - $317K |
-| **Senior Engineers** | 12 | Specialists (10+ years experience) | $127K - $203K |
-| **Mid-Level Engineers** | 15 | Core workforce (3-10 years) | $82K - $127K |
-| **Junior Engineers** | 8 | Graduates/interns (0-3 years) | $57K - $82K |
-| **Mechanics** | 4 | Pit crew & base maintenance | $65K - $95K |
-| **Managers & Support** | 3 | Operations, HR, Finance lead | $150K - $300K |
+| **PRIMARY DRIVER** | 1 | Championship contender | $50M - $55M |
+| **SECOND DRIVER** | 1 | Support/teammate | $15M - $30M |
+| **RESERVE/TEST DRIVER** | 1 | Emergency + development | $1M - $5M |
+| **Top Management** | 3 | Exec Directors (Performance/Engineering/Technical) | $800K - $2.5M |
+| **Department Leads** | 7 | R&D center managers (varies by director) | $400K - $700K |
+| **Race Engineers** | 2 | One per driver, affects setup feedback | $250K - $400K |
+| **Factory Engineers** | 8-10 | Specialists, senior technical staff | $200K - $350K |
+| **Mid-Level Engineers** | 8-10 | Core workforce (3-10 years) | $120K - $180K |
+| **Junior Engineers** | 5-8 | Graduates/interns (0-3 years) | $70K - $100K |
+| **Mechanics & Pit Crew** | 8-12 | Pit crew chief + 7-11 specialists | $80K - $150K |
+| **Strategy & Ops** | 3-5 | Chief strategist, engineers, coordinators | $150K - $300K |
+| **Managers & Support** | 5-8 | Operations, HR, Finance, logistics | $120K - $250K |
 
-**DRIVER SALARY SCALE REFERENCE**:
-- **Elite/Stars** (Pace 90+): $50M - $70M/year
+**DRIVER SALARY SCALE REFERENCE** (2025-2026):
+- **Top Team** (Pace 90+): $50M - $55M/year (max budget realistic)
 - **Leaders** (Pace 85-89): $25M - $40M/year
 - **Professionals** (Pace 78-84): $10M - $20M/year
-- **Rookies** (Pace <78): $2M - $8M/year
+- **Rookies/Reserves** (Pace <78): $1M - $5M/year
 
-**Total annual personnel budget**: $105M - $135M (~50% of Cost Cap)
+**ENGINEER SALARY SCALE**:
+- **Junior**: $70K - $100K (0-3 years, fresh graduates)
+- **Mid-Level**: $120K - $180K (3-10 years, core engineers)
+- **Senior**: $200K - $350K (10+ years, specialists)
+- **Department Lead**: $400K - $700K (R&D center manager)
+- **Executive Director**: $800K - $2.5M (3 top positions)
+
+**Total annual Race Team personnel budget**: $80M - $120M (~40-55% of Cost Cap)  
+**Factory Staff costs**: Included in base operations, not individually tracked
 
 ### 3.2.2 Decision-Making Hierarchy (THREE-DIRECTOR MODEL)
 
@@ -89,12 +104,13 @@ Instead of abstract "R&D," the system divides into 8 specialized centers, each w
 #### **CENTER 1: AERODYNAMICS**
 
 **Lead Role**: Chief Aerodynamicist  
-**Team Size**: 5-6 engineers (wind tunnel, CFD, design)  
-**Annual Budget**: $18-22M (14% of Cost Cap)  
+**Team Size**: 6-8 engineers (wind tunnel, CFD, design)  
+**Annual Budget**: $42-54M (40-50% of R&D allocation, ~$108M R&D total)  
 **Primary Focus**: Bodywork, wings, floor, DRS development  
 **Tools**: Wind tunnel (ATR-limited), CFD clusters, design software  
 **Technical Constraint**: ATR system (56-80 wind tunnel hours/year, 1120-1840 CFD units/year)  
 **Output**: Aerodynamic coefficient improvements (0.1-0.5 sec/lap per major update)
+**Strategic Priority**: Highest impact on lap time performance
 
 **Development Trees:**
 - **Front Wing**: Downforce vs. drag trade-off, 3 evolution paths
@@ -113,9 +129,11 @@ Instead of abstract "R&D," the system divides into 8 specialized centers, each w
 
 #### **CENTER 2: POWER UNIT (Engine)**
 
+**FOR MANUFACTURER TEAMS ONLY** (Mercedes, Ferrari, Red Bull, McLaren):
+
 **Lead Role**: Chief Power Unit Engineer  
-**Team Size**: 4-5 engineers (engine, ERS, thermal management)  
-**Annual Budget**: $20-25M (14-17% of Cost Cap)  
+**Team Size**: 5-6 engineers (engine, ERS, thermal management)  
+**Annual Budget**: $32-42M (30-40% of R&D allocation = ~$108M R&D total)  
 **Primary Focus**: Engine development, MGU-K optimization, ERS battery management  
 **Tools**: Dynamometer testing rig, thermal CFD, endurance test facilities  
 **Technical Constraint**: Homologation freeze (major engine specs locked; only point improvements allowed)  
@@ -138,8 +156,23 @@ Instead of abstract "R&D," the system divides into 8 specialized centers, each w
 - Engine failure mid-season is catastrophic (reliability center must compensate)
 - Reliability insurance costs: $500K-$2M per season (if purchased)
 
+---
 
-**IMPORTANT - Non-Manufacturer Teams**: Client teams (Haas, Alfa Romeo, etc.) do NOT have independent Power Unit R&D centers. Instead, they purchase complete power units from manufacturers and have only a small "Engine Integration" department (2-3 engineers).
+**FOR CUSTOMER TEAMS** (Haas, Alfa Romeo, Kick Sauber, etc.):
+
+**Lead Role**: Engine Integration Lead  
+**Team Size**: 2-3 engineers (supplier liaison, integration only)  
+**Annual Budget**: $2M - $4M (within Cost Cap)  
+**Primary Focus**: Engine installation, ERS system integration with car, software mapping  
+**Tools**: Dyno liaison (at supplier), thermal monitoring  
+**No Independent R&D**: Cannot develop power units, must accept manufacturer designs
+**Power Unit Cost**: ~$15M/year per power unit supplier (OUTSIDE Cost Cap, like real F1)
+**Strategy**: Customer teams negotiate supplier terms, can't influence engine development
+
+**Customer Team Options:**
+- Option A: Buy from leading manufacturer (e.g., Mercedes) - high cost ($15-18M), best reliability
+- Option B: Buy from mid-tier supplier (e.g., Ferrari customer) - mid cost ($12-15M), medium reliability
+- Option C: Budget supplier relationship - low cost ($10-12M), reliability risk
 
 ---
 
@@ -147,7 +180,7 @@ Instead of abstract "R&D," the system divides into 8 specialized centers, each w
 
 **Lead Role**: Chief Structure Engineer  
 **Team Size**: 3-4 engineers (suspension, geometry, materials)  
-**Annual Budget**: $12-15M (8-10% of Cost Cap)  
+**Annual Budget**: $16-22M (15-20% of R&D allocation)  
 **Primary Focus**: Suspension kinematics, chassis stiffness, weight optimization  
 **Tools**: CAD design, FEA analysis, durability test rig  
 **Technical Constraint**: None (within 798kg total car weight)  
@@ -169,8 +202,8 @@ Instead of abstract "R&D," the system divides into 8 specialized centers, each w
 #### **CENTER 4: RELIABILITY & DURABILITY**
 
 **Lead Role**: Chief Reliability Engineer  
-**Team Size**: 3 engineers (failure analysis, materials, testing)  
-**Annual Budget**: $8-12M (5-8% of Cost Cap)  
+**Team Size**: 3-4 engineers (failure analysis, materials, testing)  
+**Annual Budget**: $11-16M (10-15% of R&D allocation)  
 **Primary Focus**: DNF prevention, component longevity, failure mode analysis  
 **Tools**: Endurance test rigs, failure databases, stress analysis software  
 **Technical Constraint**: Direct trade-off with performance (conservative specs = higher reliability)  
@@ -198,7 +231,7 @@ Instead of abstract "R&D," the system divides into 8 specialized centers, each w
 
 **Lead Role**: Head of Manufacturing Operations  
 **Team Size**: 2-3 engineers + mechanics (CNC machining, assembly quality control)  
-**Annual Budget**: $6-8M (4-5% of Cost Cap)  
+**Annual Budget**: $11-16M (10-15% of R&D allocation)  
 **Primary Focus**: Component production, assembly quality, part delivery timelines  
 **Tools**: CNC machines, robotic assembly arms, quality control systems  
 **Technical Constraint**: Production capacity (max 4 complete component sets/week without overtime)  
@@ -426,26 +459,86 @@ Every engineer has these characteristic dimensions:
   - Affects departing team's season competitiveness if allowed to leave mid-season
 - Department lead departure: -50% R&D speed for 2-3 weeks until replacement
 
-### 3.4.4 Engineer Fatigue System
+### 3.4.4 Race Engineers vs Factory Engineers
 
-**Fatigue Accumulation**:
-- Each project assigned: +10 fatigue per week (exceeds natural recovery)
-- Simultaneous projects: Cumulative fatigue penalty
-- Natural recovery: -5 fatigue per week with no new projects
+**RACE ENGINEERS** (One per driver, follows to each race):
+- **Role**: Driver's personal technical liaison, setup engineer, telemetry specialist
+- **Salary**: $250K - $400K/year (higher due to specialization)
+- **Responsibilities**:
+  - Manages driver setup feedback (suspension, wings, brake balance)
+  - Analyzes telemetry data race-by-race
+  - Provides sector-by-sector performance analysis
+  - Improves driver adaptation to car (-0.1 to -0.3 sec/lap setup optimization)
+  - Pit stop communication and strategy call
+- **Impact**: Better race engineer = faster driver adaptation, better qualifying, better racecraft decisions
+- **Turnover Risk**: Moderate (drivers may request specific race engineers)
+- **Development**: Skill improves with successful performance improvements per race
 
-**Fatigue Thresholds**:
-- **0-30%**: No penalty
-- **31-60%**: -5% R&D speed, +2% error rate
-- **61-85%**: -15% R&D speed, +5% error rate, morale -10%
-- **85-100%**: -30% R&D speed, +10% error rate, morale -20%, 5% departure risk per week
+**FACTORY ENGINEERS** (Based at HQ, work on R&D and testing):
+- **Role**: R&D specialists, development, testing, long-term projects
+- **Salary**: $70K - $350K/year (depends on seniority)
+- **Responsibilities**:
+  - Long-term R&D projects (aero, chassis, reliability)
+  - Simulator development and driver coaching
+  - Component design and validation
+  - Pre-season testing and baseline setup development
+  - Post-race failure analysis
+- **Impact**: Factory engineers directly contribute to performance via R&D updates
+- **Turnover Risk**: High for senior engineers (poaching from rivals)
+- **Development**: Skill improves with successful R&D project completions
 
-**Mitigation**:
-- 2-week mandatory rest: Resets fatigue to 0%, costs $100K salary
-- Reduce simultaneous projects: Max 3 per engineer; >3 → automatic fatigue threshold jump
+**Organizational Structure Example**:
+```
+DRIVER #1 CAR
+├─ Race Engineer #1 ($350K) → Follows to races, manages setup/telemetry
+├─ Factory Engineers (Aerodynamics, Chassis, Reliability):
+│   ├─ Senior Aero Specialist ($280K)
+│   ├─ Chassis/Suspension Engineer ($200K)
+│   └─ Reliability Engineer ($180K)
+└─ Test Driver / Simulator Engineer ($150K)
 
-**Critical Condition**:
-- Engineer at 85%+ fatigue >4 weeks: Health issues, mandatory leave (2-4 weeks), -25% skill recovery after
-- Repeated fatigue cycling can trigger permanent departure
+DRIVER #2 CAR
+├─ Race Engineer #2 ($300K) → Follows to races
+├─ Shared Factory Engineers (above team contributes 40%)
+└─ Development/Reserve Driver use
+```
+
+**Race Engineer Skill Affects**:
+- Driver adaptation speed: +2-4% faster if excellent race engineer
+- Setup optimization per race: -0.05 to -0.15 sec/lap
+- Pit stop communication clarity: Better strategy decisions
+- Morale: +5% if driver satisfied with race engineer
+
+---
+
+### 3.4.5 Engineer Workload System
+
+**Workload Definition**: Number of simultaneous active projects per engineer (no fatigue health mechanic, only productivity/error effects)
+
+**Workload Levels**:
+- **Light (1 project)**: Normal R&D speed (100%), error rate baseline (2%)
+- **Moderate (2 projects)**: R&D speed 95%, error rate +1% (3%)
+- **Heavy (3 projects)**: R&D speed 85%, error rate +2% (4%)
+- **Overloaded (4+ projects)**: R&D speed 70%, error rate +4% (6%), morale -10%
+
+**Error Consequences**:
+- Errors cause rework: +1-2 weeks delay on affected project
+- Major errors (10% of time): Component failure risk during testing, $500K-$2M replacement cost
+- Critical errors (rare, 2%): Entire project scrapped, $3-5M loss, -15% morale for team
+
+**Management Options**:
+- Max 3 simultaneous projects per engineer recommended (no penalties)
+- Hire additional engineers to distribute workload ($70K-350K salary depending on level)
+- Extend project timelines to spread work over longer periods
+- Outsource non-critical tasks (CAD design, simulation runs) via contractors (-$100K-500K cost)
+
+**Workload Dynamics**:
+- Monthly review of engineer assignments
+- High morale increases error tolerance (-1% error rate bonus)
+- Low morale increases error chance (+2% error rate penalty)
+- Seniority reduces error rate: Senior -2%, Mid-level -1%, Junior +0%
+
+**No Health Mechanic**: Engineers don't get "fatigue-sick" or go on mandatory leave. Instead, overwork affects productivity and error chance only (realistic to modern F1 where engineers work long hours year-round)
 
 ---
 
@@ -454,7 +547,7 @@ Every engineer has these characteristic dimensions:
 ### 3.5.1 Three Driver Categories
 
 #### **DRIVER #1 (Primary/Championship Contender)**
-- **Salary Range**: $25M - $70M/year (Elite/Star drivers)
+- **Salary Range**: $50M - $55M/year (Elite/Star drivers only, realistic max)
 - **Expectations**: Top-3 championship, minimum 3 podiums/season
 - **Contract Length**: 2-3 years (typically renewed annually for stars)
 - **Status**: Gets strategic priority on race days
@@ -462,11 +555,11 @@ Every engineer has these characteristic dimensions:
   - Per-point bonus: $10K per championship point (e.g., 2nd place 18pts = $180K)
   - Win bonus: $500K per race
   - Podium bonus: $250K per podium (P2/P3)
-  - Championship bonus: $5M if finishes top-3 in championship
+  - Championship bonus: $3-5M if finishes top-3 in championship
   - Sponsor income share: 15-20% of sponsor bonus pool earned by team
 
 #### **DRIVER #2 (Support/Teammate)**
-- **Salary Range**: $10M - $40M/year (Professional/Leader drivers)
+- **Salary Range**: $15M - $30M/year (Professional/Leader drivers)
 - **Expectations**: Top-8 finish, minimum 1 podium/season
 - **Contract Length**: 2-3 years
 - **Role**: Support team strategy, secondary points scorer
@@ -479,11 +572,13 @@ Every engineer has these characteristic dimensions:
 - **Promotion Clause**: Can upgrade to #1 if primary injured or underperforming
 
 #### **RESERVE/TEST DRIVER**
-- **Salary Range**: $2M - $8M/year (Rookie/development drivers)
+- **Salary Range**: $1M - $5M/year (Rookie/development drivers, realistic budget)
 - **Role**: Emergency replacement, 2x mandatory FP1 sessions per car per season
 - **Contract Length**: 1-2 years
 - **Career Path**: Development driver building experience
 - **FP1 Mechanics**: 2 mandatory free practice sessions per calendar year to gain experience
+- **Activation Cost**: When primary driver injured, reserve steps in immediately (no replacement period)
+- **Performance**: -1.0 to -1.5 sec/lap vs primary (due to lower adaptation to car setup)
 
 ### 3.5.2 Driver Attributes
 
@@ -721,33 +816,48 @@ Each facility has levels 1-10 with upgrades at increasing cost.
 - Headquarters/factory upgrades
 - Equipment replacement (CNC, test rigs, servers)
 
-**Cost Cap Enforcement:**
-- Quarterly audits (Races 6, 12, 18, end of season)
-- 0-5% overage: $500K fine + 5-10% ATR reduction
-- 5-10% overage: $2M fine + 10-20% ATR reduction + possible points deduction
-- >10% overage: $5M fine + 20% ATR reduction + constructors' points deduction + investigation
+**Cost Cap Enforcement** (STRICT penalties, like real F1):
+- Annual audit (end of season) + Quarterly reviews at Races 6, 12, 18
+- **0-5% overage**: $5M fine + 5% ATR reduction (lose wind tunnel hours)
+- **5-10% overage**: $5-10M fine + 15-25% ATR reduction (significant performance hit) + possible constructor points deduction
+- **>10% overage**: $10-15M fine + 25-35% ATR reduction + mandatory constructor points deduction (like Red Bull 2023)
+- **Repeat offense** (2+ breaches in 3 seasons): Points deduction + potential championship invalidation
+
+**Audit Mechanics:**
+- Teams submit quarterly spending reports
+- FIA spot-checks during race weekends
+- Independent accountants verify audits
+- Discrepancies found → automatic penalty increase 50%
+- Fraud discovered → championship void + constructors' ban
 
 ### 3.8.2 Spending Dynamics
 
-**Fixed Personnel Costs** (~$105M, locked):
-- Driver #1: $25M - $70M (based on skill/market value)
-- Driver #2: $10M - $40M
-- Reserve Driver: $2M - $8M
-- Exec Directors (3): $1.8M - $4.5M
-- Department Leads & Staff: $8M - $12M
+**Fixed Personnel Costs** (~$100M-120M, locked):
+- Driver #1 (Primary): $50M - $55M (realistic top budget)
+- Driver #2 (Secondary): $15M - $30M (support role)
+- Reserve Driver: $1M - $5M (emergency backup)
+- Exec Directors (3): $2.4M - $7.5M (Performance $0.8-2.5M, Engineering $0.8-2.5M, Technical $0.8-2.5M)
+- Department Leads (7): $2.8M - $4.9M ($400K-700K each)
+- Senior/Race Engineers (10): $2M - $3.5M (specialists)
 
 **Variable Personnel Budget** ($15M):
 - Bonuses, hiring, promotions, retention, morale activities
 - Strategic allocation determines competitiveness
 - Can be reallocated to bonus pools if drivers outperform
 
-**R&D Budget Allocation** ($65M total):
-- Aerodynamics: $20M
-- Chassis & Brakes: $15M
-- Power Unit: $18M (manufacturers only; client teams get engine supply contract $15-25M outside cap)
-- Reliability: $7M
-- Manufacturing: $5M
-- Contingency: $3M - $7M
+**R&D Budget Allocation** ($100-120M total for competitive team):
+- Aerodynamics: $42-54M (40-50% - highest priority, most impact)
+- Power Unit: $30-42M (30-35%, manufacturers only; client teams get engine supply contract $10-15M OUTSIDE cap)
+- Chassis & Suspension: $16-22M (15-20%)
+- Reliability & Manufacturing: $11-18M (10-15%)
+- Contingency & Other: $5-10M (5-10%)
+
+**For Customer Teams** (no in-house power unit R&D):
+- Aerodynamics: $45-50M (50% of their R&D)
+- Chassis & Suspension: $20-25M (25%)
+- Reliability & Manufacturing: $15-20M (20%)
+- Engine Integration: $2-4M (within Cost Cap)
+- Engine Supply Contract: $10-15M/year (OUTSIDE Cost Cap, paid to supplier)
 
 **Facility Operations** ($20M):
 - Wind tunnel operational costs: $8M
