@@ -72,9 +72,9 @@ Temperature effects:
 
 **Temperature Optimal Windows** (each compound):
 ```
-C5 Soft: Optimal 25-35°C, works 15-40°C, cold penalty 1.0+ sec, overheat breakdown
+C5 Soft: Optimal 18-28°C, works 15-30°C, above 30°C overheat quickly, cold penalty 1.0+ sec
 C4 Medium: Optimal 20-32°C, works 10-38°C, more forgiving
-C3 Hard: Optimal 18-28°C, works 8-35°C, takes 2-3 laps to warm up
+C3 Hard: Optimal 25-35°C, works 18-40°C, takes 2-3 laps to warm in cool conditions
 ```
 
 **Mandatory Requirement**: At least TWO DIFFERENT compounds must be used in dry race
@@ -163,42 +163,76 @@ This adds strategic layer: manage tires through temperature transitions
 
 ### 6.2.3 Tire Degradation Model
 
-**Degradation Formula:**
+**Degradation Formula (Realistic Three-Phase Model):**
 ```
-Lap Time Loss = Base Lap Time + (Degradation Rate × Laps Used)
+PHASE 1 - PLATEAU (Laps 1-10/15): Stable Performance
+  - Fresh tires perform consistently
+  - Lap times: ±0.05 sec variation (setup/fuel load only)
+  - Grip level: 100% of nominal
+  - Strategy: Maximize pace, build advantage on fresher tires
 
-Example - Soft Tire Behavior:
-  Lap 1: 1:23.5 (fresh, optimal)
-  Lap 2: 1:23.6 (+0.1 sec degradation begins)
-  Lap 3: 1:23.8 (+0.2 cumulative)
-  Lap 4: 1:24.1 (+0.5 cumulative)
-  Lap 5: 1:24.5 (+0.9 cumulative, near end of life)
-  Lap 6: 1:25.2 (+1.6 cumulative, degrading rapidly)
+PHASE 2 - LINEAR DEGRADATION (Laps 11-22): Predictable Loss
+  - Tire wear begins affecting grip progressively
+  - Lap time loss: +0.05 to +0.10 sec per lap (depending on setup, fuel, track)
+  - Example: Lap 15 = +0.25-0.50 sec vs Lap 10
+  - Grip level: Decreases from 95% → 75%
+  - Strategy: Monitor lap times, prepare pit strategy
+
+PHASE 3 - CLIFF (Final 2-3 Laps): Sudden Performance Drop
+  - Tires reach end-of-life threshold
+  - Lap time loss: +0.30 to +0.80 sec additional penalty
+  - Grip level: Drops below 70% (unstable)
+  - Example: Lap 24 (if lifespan is 24 laps) suddenly +1.2 sec slower
+  - Risk: High aquaplaning/spin probability if on wet track
+  - Strategy: MUST pit before entering cliff phase
+
+Example - Soft Tire Behavior on High-Degradation Track:
+  Laps 1-8: 1:23.5 (stable plateau)
+  Lap 9: 1:23.5 (still optimal)
+  Lap 10: 1:23.6 (+0.1 linear wear begins)
+  Lap 12: 1:23.8 (+0.3 cumulative)
+  Lap 14: 1:24.1 (+0.6 cumulative)
+  Lap 16: 1:24.5 (+1.0 cumulative)
+  Lap 17: 1:24.8 (+1.3 cumulative, near end)
+  Lap 18: 1:25.5 (+2.0 sec, CLIFF PHASE - must pit now)
   
-  Soft tire window: Laps 1-5 are prime, Lap 6 is already slow
-  Pit stop timing: Should stop by end of Lap 5 before tire goes off cliff
+  Optimal pit window: Laps 16-17 (before cliff)
+  Critical pit deadline: Lap 18 (tires undriveable)
+
+Example - Hard Tire Behavior on Low-Degradation Track:
+  Laps 1-15: 1:25.0 (extended stable plateau)
+  Lap 16: 1:25.1 (+0.1 wear begins)
+  Lap 22: 1:25.6 (+0.6 cumulative linear wear)
+  Lap 25: 1:26.1 (+1.1 cumulative)
+  Lap 26: 1:27.0 (+2.0 sec cliff - end of life)
+  
+  Tire window: 25-26 laps usable, cliff at lap 27
 ```
 
-**Track-Specific Degradation:**
+**Track-Specific Degradation Profiles:**
 ```
-High Degradation Tracks (street circuits, high-temp):
-  - Monaco, Singapore, Mexico City
-  - C5 life: 10-18 laps only
-  - Medium tire life: 20-25 laps
-  - Hard tire life: 35-40 laps
-  - Strategy: More frequent pit stops needed (2-3 stops mandatory)
+HIGH DEGRADATION TRACKS (Monaco, Singapore, Mexico City):
+  - C5 Soft: 8 laps plateau, then +0.08-0.10 sec/lap, cliff at lap 15-18
+  - C4 Medium: 12 laps plateau, then +0.06-0.08 sec/lap, cliff at lap 22-25
+  - C3 Hard: 18 laps plateau, then +0.05-0.07 sec/lap, cliff at lap 35-40
+  - Strategy: Frequent pit stops (2-3 mandatory, sometimes 4)
 
-Low Degradation Tracks (smooth, cool):
-  - Monza, Montreal, Silverstone
-  - Soft tire life: 20-25 laps
-  - Medium tire life: 35-40 laps
-  - Hard tire life: 50+ laps
-  - Strategy: Fewer pit stops (potentially 1 stop possible)
+MEDIUM DEGRADATION TRACKS (Silverstone, Spa, Suzuka):
+  - C5 Soft: 10 laps plateau, then +0.05-0.07 sec/lap, cliff at lap 20-23
+  - C4 Medium: 15 laps plateau, then +0.04-0.06 sec/lap, cliff at lap 30-35
+  - C3 Hard: 22 laps plateau, then +0.03-0.05 sec/lap, cliff at lap 45-50
+  - Strategy: Standard 2-3 pit stops
 
-Weather Impact:
-  - Wet conditions: All tire compounds degrade 25% faster
-  - Hot conditions (35°C+): Degradation +15%
-  - Cold conditions (<10°C): Degradation -20% (tires harder to warm up)
+LOW DEGRADATION TRACKS (Monza, Montreal, Abu Dhabi):
+  - C5 Soft: 15 laps plateau, then +0.03-0.05 sec/lap, cliff at lap 28-32
+  - C4 Medium: 20 laps plateau, then +0.03-0.04 sec/lap, cliff at lap 38-42
+  - C3 Hard: 28 laps plateau, then +0.02-0.03 sec/lap, cliff at lap 55-65
+  - Strategy: Potential for 1-stop or 2-stop strategies
+
+Weather Impact on Degradation:
+  - Wet conditions: All compounds degrade +25% faster (shorter plateau, steeper linear phase)
+  - Hot conditions (35°C+): Degradation +15% faster (cliff phase arrives earlier)
+  - Cold conditions (<10°C): Degradation -20% slower (extended plateau and lifespan)
 ```
 
 ### 6.2.3 Pit Stop Mechanics
@@ -252,6 +286,37 @@ Pit Stop Timeline (Real-Time):
       - Cold asphalt (<15°C): +30% warm-up time (slower to reach optimal window)
     
     After tire warm-up (Lap 2-5 depending on compound): Full grip available
+```
+
+**Pit Mechanics Terminology:**
+
+```
+Two-Car Stack (Double Stack):
+  Definition: Two cars from the same team pit consecutively in the same lap
+  Mechanics: 
+    - Car A enters pit box, executes pit stop (2.0-2.5 sec)
+    - Car B follows immediately behind, waits for Car A to exit
+    - Car B then enters pit box for their stop
+  
+  Time Loss for Second Car:
+    - Car A total time: 2.0-2.5 sec (standard)
+    - Car B delay: Additional 3-4 sec wait for pit box to clear
+    - Car B total pit cycle: 5-7 sec (compared to 2.0-2.5 if pitted separately)
+    - Relative loss: 2-4 seconds vs staggered pit timing
+  
+  Strategic Use:
+    - Allowed by FIA regulations (no penalty)
+    - Used when both cars need to pit urgently (tire fail, damage)
+    - Used when defending team position (both cars pit under safety car)
+    - Economical decision if leader not pitting (preserve relative positions)
+  
+  Risk: High time cost for second car; use only when necessary
+
+Two-Stop Strategy:
+  Definition: Standard race strategy using exactly two pit stops
+  Mechanics: Pit stop Lap X, then pit stop Lap Y (two total interventions)
+  Example: Soft 12 laps → Medium 30 laps → Hard 16 laps (pit stops at Lap 12 and Lap 42)
+  Advantage: Balances pit stop time loss (5+ seconds total) vs tire degradation management
 ```
 
 **Pit Stop Timing Decision:**
@@ -312,6 +377,89 @@ Recommendation from Telemetry Team:
    by Lap 10."
 
 Decision: Pit Lap 6 (balanced between aggressive and defensive)
+```
+
+**Undercut vs Overcut Strategy:**
+
+```
+UNDERCUT STRATEGY (Pit Stop 1-2 Laps Earlier Than Opponent):
+  Definition: Complete your pit stop before your rival, gaining time advantage
+
+  How It Works:
+    Scenario: You're in 2nd place, 1.2 sec behind leader on Lap 18
+    - You pit Lap 20: Exit pit lane, now on fresh soft tires
+    - Leader pits Lap 22: Still on old medium tires for 2 more laps
+    
+    Lap 21 (You on fresh tires vs Leader on old):
+      Your pace: 1:23.0 (fresh soft tires, perfect grip)
+      Leader pace: 1:24.2 (degraded medium tires, losing grip)
+      Gain per lap: -1.2 seconds
+    
+    Lap 22 (Both pit):
+      You pit to 2nd set of tires
+      Leader pits, now everyone on similar tire age
+      Net result: You gained ~2 seconds during your free advantage laps
+  
+  Undercut Effectiveness Formula:
+    Gain = (Fresh tire speed advantage) × (Laps driven on fresh before opponent pits)
+    Example: Fresh tires +0.5 sec/lap × 2 laps = +1.0 sec advantage
+  
+  When Undercut Works Best:
+    - High tire degradation track (tires lose 0.1 sec/lap in cliff phase)
+    - When leader is on old tires nearing pit window
+    - When opponent won't expect early pit stop
+    - When new tires warm up quickly (soft compound, hot track)
+  
+  When Undercut Fails:
+    - Opponent is already on fresh tires (no deficit to overcome)
+    - Pit stop loss (2.5 sec) > lap-time gain from fresh tires (1.0-1.5 sec)
+    - Opponent defends aggressively, forces position loss
+    - You fall back further behind despite fresh tires
+
+OVERCUT STRATEGY (Pit Stop 1-2 Laps Later Than Opponent):
+  Definition: Stay out while rival pits, then pit later to gain advantage from longer tire life window
+
+  How It Works:
+    Scenario: You're in 2nd place, 0.8 sec behind leader on Lap 25
+    - Leader pits Lap 28: Goes to fresh medium tires
+    - You pit Lap 30: Stay out 2 extra laps on current tires
+    
+    Lap 29-30 (Leader on fresh tires vs You on older):
+      Leader pace on fresh mediums: 1:23.5
+      Your pace on degraded softs: 1:23.8
+      Relative loss: -0.3 sec/lap for 2 laps = -0.6 sec
+    
+    Lap 31+ (You on fresh tires vs Leader on slightly older mediums):
+      Your pace on fresh mediums: 1:23.2 (fresh tire advantage)
+      Leader pace on older mediums: 1:23.6 (2 laps of degradation)
+      Gain per lap: -0.4 seconds
+      Over next 5 laps: -2.0 sec advantage builds
+  
+  Overcut Effectiveness Formula:
+    Loss period: (Laps you stayed out) × (pace deficit per lap vs opponent's fresh tires)
+    Gain period: (Fresh tire advantage) × (Opponent tire degradation advantage)
+    Net gain = Gain period - Loss period
+    
+    Example: Stay out 2 laps, lose 0.3/lap = -0.6 sec loss
+             Then gain 0.4/lap for 5 laps = +2.0 sec gain
+             Net: +1.4 sec advantage after 7 total laps
+  
+  When Overcut Works Best:
+    - Tires still have strong performance window (not in cliff phase)
+    - Opponent will quickly degrade on fresh tires due to track conditions
+    - Following car on fresh tires has better pace (you can attack)
+    - Leader can't extend tire life significantly beyond normal strategy
+  
+  When Overcut Fails:
+    - You pit while tires are in cliff phase (lose too much time waiting)
+    - Opponent's fresh tires still dominate your pace
+    - Safety car/VSC bunches field, negating your advantage
+
+TACTICAL SUMMARY:
+  Undercut: Faster reaction, guaranteed time gain during execution, higher pit stop risk
+  Overcut: Requires discipline, needs opponent to have worse tire degradation, higher execution risk
+  
+  Choice depends on: Track tire degradation profile, current tire age, fuel strategy, opponent pit timing prediction
 ```
 
 ---
@@ -474,7 +622,7 @@ LIGHT RAIN:
   - Wet tire risks:
     * Water depth <3mm: Intermediate tires safe (optimal choice)
     * Water depth 3-5mm: Intermediate becoming risky, slicks still bad
-    * Water depth >5mm: Risk of aquaplaning on slicks (1-3% per lap)
+    * Water depth >5mm: Risk of aquaplaning on slicks (1-2% per lap; drivers will self-pit)
   - Driver instruction change: "Be careful, wet sections appearing"
   - Pit stop decision: Switch from dry to intermediate tires
 
@@ -485,10 +633,10 @@ HEAVY RAIN:
   - Tire performance: Wet tires required for safety
   - Performance: All lap times -1.5 to -2.5 sec/lap slower
   - Aquaplaning risk mechanics:
-    * Water depth 5-8mm: Aquaplaning on intermediates possible (0.5-1% per lap)
-    * Water depth 8-12mm: Aquaplaning serious risk (1-2% per lap on int, 5-8% on slicks)
-    * Water depth >12mm: Aquaplaning critical on intermediates (3-5% per lap)
-    * Wet tires: Designed for water dispersion, <0.5% aquaplaning risk
+    * Water depth 5-8mm: Aquaplaning on intermediates minimal (0.1-0.3% per lap)
+    * Water depth 8-12mm: Aquaplaning on intermediates low risk (0.2-0.5% per lap on int, 1-2% on slicks)
+    * Water depth >12mm: Aquaplaning on intermediates moderate (0.3-0.5% per lap)
+    * Wet tires: Designed for water dispersion, <0.1% aquaplaning risk
   - Safety car likely deployed
   - Driver instruction: "Safety first, no risks"
   - Pit stop decision: Switch to wet tires or pause/pit early
@@ -500,14 +648,15 @@ HEAVY RAIN:
 Definition: Loss of tire grip due to water layer between tire and track
 
 Aquaplaning Probability by Combination:
-  Intermediate tires + Light rain (3mm water):  0.5% per lap
-  Intermediate tires + Moderate rain (5mm):     1.5% per lap
-  Intermediate tires + Heavy rain (8mm+):       3-5% per lap
+  Intermediate tires + Light rain (3mm water):  0.1-0.3% per lap
+  Intermediate tires + Moderate rain (5mm):     0.2-0.5% per lap
+  Intermediate tires + Heavy rain (8mm+):       0.3-0.5% per lap
   
-  Slick tires + Any rain (3mm+):                1-3% per lap (light)
-                                                5-8% per lap (moderate/heavy)
+  Slick tires + Any rain (3mm+):                1-2% per lap (light rain)
+                                                2-3% per lap (moderate/heavy)
+                                                (drivers will self-pit)
   
-  Wet tires + Any rain:                         <0.5% per lap (designed for this)
+  Wet tires + Any rain:                         <0.1% per lap (designed for this)
 
 Aquaplaning Consequences:
   Hydroplane Event (rare but happens):
@@ -753,17 +902,23 @@ INSTRUCTION: "Push/Attack" (NO TIME LIMIT)
   Costs:
     - Fuel flow approaches 100 kg/hour limit (risk of power cut-off)
     - Tire wear increases 10-15% per lap
-    - Driver fatigue accumulates: +10% per lap of sustained push
+    - Mental load accumulates with sustained pushing
   
-  Fatigue Mechanics:
-    - First 3 laps: No penalty (fresh driver)
-    - Laps 4-6: -0.05 sec/lap additional fatigue penalty
-    - Laps 7+: -0.10 sec/lap (compounding tiredness)
-    - Recovery: 5 laps of normal pace to reduce fatigue 50%
+  Mental Load Mechanics (Driver Concentration):
+    - Laps 1-15: No penalty (driver fresh and focused)
+    - Laps 16+: After 15 laps of consecutive attacking, error probability increases
+      * Lap 16 of attack: +0.1% error probability
+      * Lap 17 of attack: +0.2% cumulative error probability
+      * Lap 18 of attack: +0.3% cumulative error probability
+      * Each additional lap: +0.1% additional error probability
+    - Error types: Missed braking point, off-line corner, slight lock-up
+    - Error consequence: -0.05 to -0.15 sec/lap lost performance
+    - Recovery: 3-5 laps of "Manage Fuel/Tires" instruction to reset mental load
   
-  Morale impact: +10% if overtake successful, -10% if DNF/error
-  DNF risk: +1% per lap of sustained attack (cumulative)
+  Morale impact: +10% if overtake successful, -10% if error/off-line
+  DNF risk: +0.5% per lap of sustained attack (cumulative from rash mistakes)
   Use case: Attacking leader, attempting overtake, recovering from pit stop disadvantage
+  Strategic note: Push hard early, then manage mid-race to avoid mental fatigue
 
 INSTRUCTION: "Manage Fuel/Tires"
   Effect: Driver enters economy mode
@@ -943,6 +1098,139 @@ Decision: Two-stop strategy (standard, balanced risk)
   Lap 43-58: Drive hard on fresh Hards to finish
 ```
 
+### 6.6.2 MGU-K Energy Management System
+
+**Energy Recovery & Deployment Strategy:**
+
+```
+MGU-K (Motor Generator Unit - Kinetic) System Overview:
+  Purpose: Capture braking energy, convert to electrical energy for later use
+  Battery capacity: ~4 MJ (Megajoules) per lap
+  Recovery during braking: 0.8-1.0 MJ per braking event
+  Deployment power boost: +0.2-0.5 sec/lap depending on recovery/usage
+
+Driver Control Options (Tactical):
+  - High Recovery Mode: Maximum energy recapture during braking
+    * Captures: 1.0 MJ per lap (maximum)
+    * Penalty: -0.1 sec/lap (increased engine braking, harder to modulate)
+    * Benefit: More battery charge available for straights
+    * Use case: Low-power tracks, conservation racing
+  
+  - Medium Recovery Mode (Default): Balanced approach
+    * Captures: 0.8 MJ per lap
+    * Penalty: None (normal braking feel)
+    * Benefit: Standard power boost (+0.2-0.3 sec/lap if used)
+    * Use case: Most tracks, strategic situations
+  
+  - Low Recovery Mode: Minimal energy capture
+    * Captures: 0.5 MJ per lap (minimum safe)
+    * Penalty: None (loose braking feel, harder to lock)
+    * Benefit: Can recover energy from crashes/damage safely
+    * Use case: Defensive racing, protecting battery when full
+
+Deployment Strategy (Use of Stored Energy):
+  High Deployment Mode: Use all stored energy aggressively
+    * Power boost: +0.5 sec/lap on straights (Monza, Baku, Hungary)
+    * Battery drain: 4 MJ = 1 lap of maximum boost
+    * Tactical use: Overtaking on straights, defending into corners
+    * Risk: Battery depleted, no power available for defense
+  
+  Medium Deployment Mode (Default): Use energy gradually
+    * Power boost: +0.2-0.3 sec/lap continuously
+    * Battery management: Lasts entire race, sustainable
+    * Tactical use: Consistent pace improvement, always available
+  
+  Economy Deployment Mode: Minimal power usage
+    * Power boost: +0.05 sec/lap (barely noticeable)
+    * Battery conservation: Can accumulate full charge (8 MJ)
+    * Tactical use: Stretching fuel, protecting engine, rain preparation
+    * Benefit: Can unleash maximum power late race
+
+Track-Specific Energy Management:
+  High-speed tracks (Monza, Spa, Baku):
+    - Long straights = more energy recovery opportunity
+    - High power boost benefit on straights
+    - Recommend: High deployment mode (1-2 lap overtaking windows)
+  
+  Medium-speed tracks (Silverstone, Hungary, Canada):
+    - Balanced recovery and usage
+    - Use medium mode for consistent pace
+  
+  Low-speed/Tight tracks (Monaco, Singapore):
+    - Limited braking energy recovery (no long straights)
+    - Focus on battery economy
+    - Recommend: Low deployment, save energy for critical moments
+  
+  Technical note: MGU-K system adds tactical layer similar to fuel strategy
+```
+
+### 6.6.3 Dirty Air Effect (Following Cars)
+
+**Aerodynamic Wake & Grip Loss:**
+
+```
+Dirty Air Definition: Loss of downforce when following closely behind another car
+
+Physics: Car ahead displaces air, creates turbulent wake → following car loses aero grip
+
+Distance-Based Effects:
+  <0.5 seconds gap (≈50-80 meters):
+    - Downforce loss: -0.1 to -0.2 sec/lap (moderate)
+    - Handling: Understeer in corners, harder to maintain line
+    - In technical corners: -0.1 sec/lap penalty
+    - On straights: No penalty (drafting benefit +0.05 sec/lap)
+  
+  0.5-1.0 second gap:
+    - Downforce loss: -0.15 to -0.3 sec/lap (significant)
+    - Handling: Noticeable understeer, must reduce brake pressure
+    - All corners: -0.2-0.3 sec/lap penalty
+    - Strategic impact: Hard to overtake without clear straight
+  
+  1.0-1.5 second gap:
+    - Downforce loss: -0.05 to -0.15 sec/lap (mild)
+    - Handling: Manageable, slight understeer only
+    - Overtaking possible if tires fresher
+  
+  >1.5 seconds gap:
+    - Downforce loss: Negligible (<0.05 sec/lap)
+    - Handling: Clean air, full grip available
+
+Track Influence on Dirty Air:
+  High downforce tracks (Monaco, Singapore):
+    - Dirty air very severe (more downforce loss)
+    - Gap must be >2 seconds for clean racing
+    - Overtaking very difficult without DRS
+  
+  Low downforce tracks (Monza, Spa):
+    - Dirty air less severe (tires matter more than aero)
+    - Gap of 1 second usually sufficient
+    - Overtaking easier due to straight-line speed
+  
+  Technical corners (90°+ turns):
+    - Dirty air effect worst (maximum grip needed)
+    - Understeer compounded by tire degradation
+  
+  Slow corners (<60° turn):
+    - Dirty air effect reduced (brakes more important than aero)
+
+Tactical Implications:
+  Following Strategy: 
+    - Stay 1.0-1.5 sec behind to conserve fuel/tires
+    - Avoid <0.5 sec until ready to commit to overtake
+    - Use straights to build confidence for attack
+  
+  Defending Strategy:
+    - Leave >1.5 sec gap in technical sections (difficult to attack)
+    - Tighten line in slow corners (increase apex speed)
+    - Allow 0.5-1.0 sec in section opponent wants to attack (cover likely line)
+  
+  Overtaking Strategy:
+    - Build confidence at 0.8-1.0 sec gap first
+    - Attack on straight with DRS if available
+    - Use fresh tires for overtake (overcome dirty air penalty)
+    - High-speed corners easier (already losing some grip, attack planned)
+```
+
 ---
 
 ## 6.7 RACE INCIDENT SYSTEM
@@ -1072,41 +1360,136 @@ Championship Impact of Injury:
 **DNF Probability During Race:**
 ```
 MODERN F1 RELIABILITY (2025-2026):
-Modern F1 cars are extremely reliable. Average DNF rate: ~0.5-1% per race per team
+Average DNF rate per race (per team): 1.5-2.5% (standard reliability)
 
 Baseline Mechanical Failure (per race):
-  - Engine failure: 0.1-0.3% per race (depends on aggressive power tuning)
-  - Hydraulic failure: 0.05-0.15% per race
-  - Electrical/ECU: 0.05-0.10% per race
-  - Suspension failure: 0.1-0.2% per race (only from major curb strikes/crashes)
+  - Engine failure: 0.5-1.0% per race (depends on power unit tuning)
+  - Hydraulic failure: 0.3-0.5% per race
+  - Electrical/ECU: 0.2-0.3% per race
+  - Suspension failure: 0.3-0.5% per race (from curb strikes, setup aggression)
 
-Total baseline DNF risk: 0.3-0.75% per race (realistic modern range)
+Total baseline DNF risk: 1.5-2.5% per race (normal reliability)
 
-Modifiers (per reliability investment):
-  - Poor reliability (low investment): +0.5% total
-  - Standard reliability: Baseline only
-  - Excellent reliability (high investment): -0.2% total
+Reliability Investment Modifiers:
+  - Poor reliability (low investment, aggressive tuning): 3.0-5.0% total
+    * Engine pushed to maximum → higher failure risk
+    * Minimal redundancy systems → component vulnerability
+  
+  - Standard reliability: 1.5-2.5% total (baseline)
+    * Balanced tuning and safety margins
+    * Standard maintenance protocols
+  
+  - Excellent reliability (high investment, conservative setup): 0.8-1.2% total
+    * Conservative power mapping → extended engine life
+    * Full redundancy systems → component protection
+    * Strict maintenance schedules
   
 Engine Resource Limit:
   - Each power unit has 6-8 Grand Prix resource limit
-  - Risk increases sharply in Lap 6-8 of PU use (approaching new spec requirement)
-  - Teams typically deploy fresh PU before resource limit
+  - Risk increases if pushing beyond design parameters
+  - Teams typically deploy fresh PU before running out of resources
 
 Example: Lap 35 (of 58)
-  Engine resource check: 5/8 used (healthy)
+  Engine resource check: 5/8 used
+  Reliability setting: Standard (2.0% DNF probability)
   Reliability roll: 75 (out of 0-100)
-  Result: Engine survives if DNF probability < 75%
+  Result: Engine survives if random roll > DNF probability
   
-  If reliability standard (DNF 0.5%): Engine survives
-  If reliability poor (DNF 1.0%): Still survives (only 1% chance)
-  If reliability excellent (DNF 0.3%): Safe
+  Scenarios:
+    If reliability poor (4.0% DNF): Would fail (only 4% survival chance on this roll)
+    If reliability standard (2.0% DNF): Engine survives (75% > 2%)
+    If reliability excellent (1.0% DNF): Safe (75% > 1%)
   
-  Impact of DNF (extremely rare):
-    - Championship points: 0
-    - Loss of strategic position/momentum
-    - Team morale: -20% (reliability failure)
-    - Sponsor morale: -10% (DNF hurts KPIs)
-    - Note: Prize money impact minimal (paid at season-end based on final position)
+  Impact of DNF (rare but consequential):
+    - Championship points: 0 points for race
+    - Loss of strategic momentum (affects sponsor KPI tracking)
+    - Team morale: -20% (reliability failure damage)
+    - Sponsor morale: -10% (DNF reduces championship position KPI)
+    - Financial impact: Potential $2-5M repair/replacement cost
+    - Note: Prize money not affected (paid at season-end based on final championship position)
+```
+
+### 6.7.3 Engine Power Mode Impact on Reliability
+
+**Qualifying Mode vs Economy Mode Strategy:**
+
+```
+QUALIFYING MODE (Maximum Power Tuning):
+  Power output: +3-5% above standard
+  Performance gain: +0.3-0.5 sec/lap
+  Engine stress: Maximum
+  Usage limit: 8-10 laps per race maximum
+  
+  Reliability Impact:
+    Within limit (laps 1-8):
+      - DNF probability: Normal (1.5-2.5%)
+      - No additional risk
+    
+    Over limit (lap 9+ in qualifying mode):
+      - DNF probability increases: ×3-5 multiplier
+      - Example: Normal 2.0% → 6-10% DNF risk per additional lap
+      - Risk escalates: Lap 9 = +2% risk, Lap 10 = +5% risk, Lap 11+ = exponential risk
+      - Engine component stress: Excessive, approaching structural limits
+  
+  Tactical Use:
+    - Aggressive overtaking: Use 2-3 laps of qualifying mode
+    - Final sprint finish: Use 5-6 laps in last 5 laps
+    - Never exceed 10 laps total per race (unless desperate situation)
+    - Track remaining allocation: Display shows "Qualy mode: 4/8 laps remaining"
+  
+  Risk-Reward Decision:
+    Scenario: In 4th place, 3 laps remaining, 1.2 sec behind 3rd place
+    - Use all 4 remaining laps in qualifying mode: +0.4 sec/lap = 1.2 sec gain
+    - Probability: 95% catch and pass 3rd place, 5% probability of engine failure
+    - Risk: -25 points vs +3 points (DNF if engine fails)
+    - Decision: Only use in late race when championship is at stake
+
+ECONOMY MODE (Conservative Power Mapping):
+  Power output: -2-3% below standard
+  Performance loss: -0.15-0.25 sec/lap
+  Engine stress: Minimal
+  Usage: Can use entire race
+  
+  Reliability Benefits:
+    - Engine life extension: +2-3 races beyond normal resource limit
+    - Example: Normal 6 PU limit → 8-9 PU limit with economy mode
+    - DNF probability reduction: -0.5% (from 2.0% → 1.5%)
+    - Long-term team cost savings: $5-10M less engine replacement expenses
+  
+  Tactical Use:
+    - Championship-clinching lead: Use to nurse engine safely
+    - Multiple resource-limited power units: Stretch life further
+    - Mid-field comfort: Secure points without mechanical risk
+    - Wet weather: Weather protection (conservative setup reduces risk)
+  
+  When to Enable Economy Mode:
+    - Team is 5+ points clear in championship
+    - Power unit has 6+ Grand Prix used (approaching limit)
+    - Finished in top-10 (secure points regardless of pace loss)
+    - Weather uncertain (safety margin helps)
+
+Long-Term Planning (Season Strategy):
+  Example: 24-race season, 3 power units, limited budget
+  
+  Aggressive Strategy:
+    - Races 1-10: Qualifying mode when needed (overtaking, qualify high)
+    - Races 11-18: Standard mode (engine resources depleting)
+    - Races 19-24: Fresh PU, unlimited power (season finale push)
+    - PU usage: 8+8+8 = 24 races (perfect allocation)
+    - Cost: 1 PU replacement mid-season ($3-5M)
+  
+  Conservative Strategy:
+    - Races 1-12: Economy mode (preserve engines)
+    - Races 13-24: Standard mode (last 12 races, engines still strong)
+    - PU usage: 12+12 = 24 races (two PUs exactly)
+    - Cost: Save $3-5M (avoid PU replacement)
+    - Downside: Lost 0.15-0.25 sec/lap early season (missed point opportunities)
+
+Driver Communication:
+  Team radio call: "Switch to Economy mode, save the engine for final races"
+  Driver response: Driver feels power loss but understands strategic value
+  Morale impact: -5% (driver frustrated at slower pace)
+  Recovery: +3% if economy mode results in championship clinch
 ```
 
 ---
