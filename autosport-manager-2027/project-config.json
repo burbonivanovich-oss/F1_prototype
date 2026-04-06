@@ -14,22 +14,23 @@
   "scope": {
     "focus": "Team management & real-time race simulation with 24 AI drivers",
     "core_features": [
-      "Team management (drivers, engineers, staff)",
-      "Real-time race simulation (24 cars, physics, AI, weather)",
-      "Tactical race planning (pit strategy, tire strategy, driver instructions)",
-      "Season progression (24 races, 10-month calendar)",
-      "Vehicle setup & development (aerodynamics, chassis, power unit)",
-      "Career progression system (driver morale, team performance)",
-      "Live race monitor (visual + data, multiple camera views)",
-      "Dynamic weather system (rain, temperature, track grip changes)",
-      "Tire management system (degradation model, temperature, compounds)"
+      "Team management (drivers, engineers, staff hierarchy)",
+      "Strategic race simulation (24 AI drivers, distance-based progression, weather-affected outcomes)",
+      "Tactical race planning (pit strategy, tire compound selection, driver instructions: push/defend/save)",
+      "Season progression (24 races, 10-month calendar with testing sessions)",
+      "Vehicle setup & development (aerodynamics, chassis, power unit research trees)",
+      "Career progression system (driver morale dynamics, team reputation, sponsor relationships)",
+      "Live race monitor (standings, telemetry, pit strategy visualization, incident log)",
+      "Dynamic weather system (rain intensity, track temperature, tire degradation modifiers)",
+      "Tire strategy system (soft/medium/hard compounds, degradation curves, temperature windows)"
     ],
     "excluded_v1": [
       "Multiplayer / online racing",
       "VR support",
       "Console versions (PC/Steam only)",
       "Mobile version",
-      "3D track recreation (simplified visuals acceptable)"
+      "Direct car control (player orders, does not steer/brake/accelerate)",
+      "3D track recreation with detailed graphics (simplified 2D/schematic acceptable)"
     ]
   },
   "timeline": {
@@ -67,9 +68,17 @@
     }
   },
   "engine": {
-    "options": ["Unity", "Godot", "Unreal"],
-    "recommendation": "Unity (best balance for management UI-heavy game)",
+    "options": ["Unity", "Godot"],
+    "recommendation": "Unity 2022.3 LTS (best for UI-heavy management game with responsive data visualization)",
+    "rationale": "UIToolkit for performant real-time graphs, built-in physics unnecessary (distance-based sim only), Steam integration, asset ecosystem",
     "decision_target": "Week 1 of pre-production"
+  },
+  "performance_targets": {
+    "simulation_hz": 20,
+    "ui_refresh_hz": 10,
+    "target_fps": 30,
+    "max_save_file_mb": 5,
+    "notes": "Management game: 30 FPS acceptable (not real-time action). Simulation at 20 Hz sufficient for pit strategy calculations. UI refresh 10 Hz for telemetry updates."
   },
   "monetization": {
     "model": "TBD - Premium/F2P/Season Pass under evaluation",
@@ -77,24 +86,27 @@
   },
   "risks": {
     "high_priority": [
-      "Physics engine bottleneck with 24 simultaneous cars (FPS drop)",
-      "AI decision lag (pit strategy responsiveness)",
-      "Save/load file corruption (data loss risk)"
+      "Over-engineered physics engine taking dev time without gameplay benefit (wrong architectural direction)",
+      "AI makes illogical pit strategy decisions (e.g., pits too late, wrong compound choice)",
+      "Save/load file corruption causing player progress loss",
+      "UI performance degrades with 24-car standings + live telemetry graphs",
+      "Licensing: F1/FIA may prohibit use of real team names, drivers, logos"
     ],
     "medium_priority": [
-      "Floating-point determinism loss (save/load divergence)",
-      "Licensing requirements for F1/teams/drivers",
-      "UI complexity overwhelming players",
-      "Memory leaks over long race sessions"
+      "Floating-point determinism loss (save/load produces different race outcomes)",
+      "Player doesn't feel strategic depth (all decisions feel obvious, no tension)",
+      "Memory leaks over long play sessions (frame rate degradation after 2+ hours)",
+      "Modding community expectations (player-created cars, teams, championships)"
     ],
     "low_priority": [
-      "Modding community support",
-      "Platform-specific optimization (AMD vs NVIDIA)"
+      "Platform-specific optimization (AMD GPU compatibility, Intel vs AMD CPU variance)",
+      "Steam Achievements/Leaderboards scope creep"
     ]
   },
   "risk_management": {
     "documentation": "See documentation/RISKS_ASSESSMENT.md",
     "review_frequency": "Weekly (Mondays)",
-    "contingency_weeks": 3
+    "contingency_weeks": 3,
+    "critical_decision": "IMPORTANT: TDD describes full physics engine (semi-implicit Euler, collision detection, 24-car threading). For MANAGER game, may be over-engineered. Consider simplified distance-based race progression instead. Validate in Week 1 kickoff with tech lead."
   }
 }
