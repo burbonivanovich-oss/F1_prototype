@@ -12,29 +12,35 @@
     "minage": 16
   },
   "scope": {
-    "focus": "Team management & race tactics (no dynamic race simulation)",
+    "focus": "Team management & real-time race simulation with 24 AI drivers",
     "core_features": [
       "Team management (drivers, engineers, staff)",
-      "Tactical race planning (pit strategy, tire strategy)",
-      "Season progression",
-      "Vehicle setup & development",
-      "Career progression system",
-      "Live race monitor (text-based or simplified visuals)"
+      "Real-time race simulation (24 cars, physics, AI, weather)",
+      "Tactical race planning (pit strategy, tire strategy, driver instructions)",
+      "Season progression (24 races, 10-month calendar)",
+      "Vehicle setup & development (aerodynamics, chassis, power unit)",
+      "Career progression system (driver morale, team performance)",
+      "Live race monitor (visual + data, multiple camera views)",
+      "Dynamic weather system (rain, temperature, track grip changes)",
+      "Tire management system (degradation model, temperature, compounds)"
     ],
     "excluded_v1": [
-      "Dynamic race simulation engine",
-      "Multiplayer",
+      "Multiplayer / online racing",
       "VR support",
-      "Console versions"
+      "Console versions (PC/Steam only)",
+      "Mobile version",
+      "3D track recreation (simplified visuals acceptable)"
     ]
   },
   "timeline": {
     "preproduction_weeks": 10,
-    "preproduction_target": "2024-06-30",
+    "preproduction_start": "2026-04-07",
+    "preproduction_target": "2026-06-15",
     "production_estimate": "24-36 weeks",
-    "alpha_target": "Q4 2024",
-    "beta_target": "Q1 2025",
-    "release_target": "Q2 2025"
+    "production_start": "2026-06-16",
+    "alpha_target": "Q4 2026",
+    "beta_target": "Q1 2027",
+    "release_target": "Q2 2027"
   },
   "team": {
     "current_mode": "Full Development (Design Mode focus for pre-production)",
@@ -71,13 +77,24 @@
   },
   "risks": {
     "high_priority": [
-      "Licensing requirements for F1/motorsport teams and drivers",
-      "AI complexity for realistic team management behavior",
-      "UI performance at scale (many game objects)"
+      "Physics engine bottleneck with 24 simultaneous cars (FPS drop)",
+      "AI decision lag (pit strategy responsiveness)",
+      "Save/load file corruption (data loss risk)"
     ],
     "medium_priority": [
-      "Save game system complexity",
-      "Balancing competitive fairness vs engagement"
+      "Floating-point determinism loss (save/load divergence)",
+      "Licensing requirements for F1/teams/drivers",
+      "UI complexity overwhelming players",
+      "Memory leaks over long race sessions"
+    ],
+    "low_priority": [
+      "Modding community support",
+      "Platform-specific optimization (AMD vs NVIDIA)"
     ]
+  },
+  "risk_management": {
+    "documentation": "See documentation/RISKS_ASSESSMENT.md",
+    "review_frequency": "Weekly (Mondays)",
+    "contingency_weeks": 3
   }
 }
