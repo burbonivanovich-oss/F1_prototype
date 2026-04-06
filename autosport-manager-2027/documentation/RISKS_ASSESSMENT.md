@@ -10,76 +10,77 @@
 
 ### HIGH-PRIORITY RISKS (Critical Path Impact)
 
-#### RISK #1: Physics Engine Performance Bottleneck
+#### RISK #1: Over-Engineered Architecture (Lap-Tick Approach Risk)
 **Severity**: HIGH  
-**Probability**: MEDIUM (60%)  
-**Impact**: Game unplayable (FPS < 30 at target hardware)
+**Probability**: MEDIUM (50%)  
+**Impact**: Wrong architectural direction wastes weeks, delays prototype
 
 **Problem**:
-- 24 simultaneous cars × physics calculations per frame
-- Collision detection: 276 potential car-pairs (24×23÷2)
-- Tire temperature updates (4 tires × 24 cars per frame)
-- Expected at ~100+ ms per physics frame (unacceptable)
+- If team chooses "full physics" approach (Approach A) instead of "distance-based" (Approach B)
+- Full physics adds 30+ weeks of development (vs 8 weeks for distance-based)
+- Player never steers/drives car → physics unnecessary for gameplay
+- Risk: Team implements full physics, realizes too complex mid-Week 4, must restart
 
 **Mitigation Strategy**:
-1. **Prototype with 8 cars first** (not 24)
-   - Achieves proof-of-concept faster
-   - Profiles real bottlenecks before heavy optimization
-   - If 8 cars runs at 60 FPS, scaling to 24 becomes feasible
-   
-2. **Physics optimization techniques** (in priority order):
-   - Spatial partitioning (quadtree): Reduces collision checks from 276 to ~40 pairs
-   - SIMD vectorization (Burst compiler): 3-4× speedup on numerical math
-   - Fixed timestep: Decouple simulation from rendering (sim at 50 Hz, render at 60 FPS)
-   - Reduce physics precision on distant cars (LOD system)
-   
-3. **Fallback plan** (if 24 cars unachievable):
-   - **Option A**: Reduce simultaneous AI cars to 16-18 (rest are simplified/static)
-   - **Option B**: Extend development timeline (use 2-3 months for optimization)
-   - **Option C**: Target lower FPS (stable 30 FPS acceptable for management game)
+1. **CRITICAL: Week 1 Kickoff Decision** (MUST HAPPEN)
+   - Review ARCHITECTURE_DECISION_PHYSICS_VS_SIMPLIFIED.md
+   - Choose Approach: A (full physics) / B (distance-based) / C (hybrid)
+   - **Recommendation**: Approach B or C (management game, not racing sim)
+   - Document decision in writing (signature from tech lead, producer)
+
+2. **Prototype validation** (Week 2):
+   - Implement lap-tick simulator with 3 cars
+   - Verify: lap time formula works, overtake logic works, deterministic
+   - If formula-based approach feels good → continue Approach B/C
+   - If feels too "gamey" → pivot to hybrid with more detail
+
+3. **Fallback plan**:
+   - If team chose wrong approach mid-project (Week 3), can't easily pivot
+   - Better to decide correctly NOW than restart later
 
 **Success Criteria**:
-- 8-car prototype: 60+ FPS on reference hardware (GTX 1060, i5-8400)
-- 24-car race: 50+ FPS minimum (acceptable for turn-based management)
-- Profile data showing bottleneck location (CPU? collision? AI?)
+- Approach decision made and documented by Apr 13 (end of Week 1)
+- 3-car prototype running deterministically by end of Week 2
+- Team agrees: "This formula-based approach captures the strategy"
 
-**Timeline**: Prototype phase (Weeks 2-4)
+**Timeline**: Week 1 (CRITICAL), validate Week 2
 
 ---
 
-#### RISK #2: AI Decision Lag & Unresponsiveness
+#### RISK #2: AI Makes Illogical Pit Strategy Decisions
 **Severity**: HIGH  
 **Probability**: MEDIUM (55%)  
-**Impact**: Game feels unresponsive, AI makes poor pit decisions
+**Impact**: Player sees AI pitting at wrong times, undermines strategy game
 
 **Problem**:
-- 24 AI drivers making decisions simultaneously
-- Each decision involves complex evaluation: pit strategy, fuel, degradation, morale
-- If AI thread falls behind physics thread, decisions are stale/incorrect
-- Player sees AI pitting at bad times (wasted pit stop)
+- AI pit decision logic must seem realistic to player
+- If AI pits too early (fresh tires) or too late (cliff phase crash), game feels broken
+- Decision tree must account for fuel, tire degradation, position, morale
+- Testing hard: need to watch 10+ races to validate pit timing is reasonable
 
 **Mitigation Strategy**:
-1. **Parallel AI thread** (separate from physics thread)
-   - Main thread: Rendering (60 FPS)
-   - Physics thread: Simulation (50 Hz fixed step)
-   - AI thread: Decisions (~10 Hz, 100 ms cycles)
-   - No blocking between threads (eventual consistency)
+1. **Simple decision tree** (not complex optimization):
+   - Use heuristic thresholds: pit when degradation > 0.75 AND fuel < 15 laps
+   - Don't try to find globally optimal pit window (too complex)
+   - Player shouldn't see AI pitting within 1-2 laps of optimal (acceptable)
 
-2. **Simplified decision tree** (vs. complex optimization):
-   - Don't try to find "optimal" pit window (too slow)
-   - Use heuristics: pit when degradation > 0.8 OR fuel < 10 laps
-   - Morale affects risk tolerance (not slow computation)
+2. **Playtesting in Week 4** (pit strategy validation):
+   - Watch 3 full races
+   - Log all AI pit stops (lap number, tire choice, result)
+   - Check: AI pit timing reasonable? Fuel decisions sensible?
+   - If AI pitting illogically → simplify decision tree further
 
-3. **Caching & memoization**:
-   - Pit window calculation cached (update every 5 laps, not every frame)
-   - Competitor analysis cached (update every 100 ms, not continuously)
+3. **Fallback plan**:
+   - If AI logic too complex for Week 4: remove morale/risk factors
+   - Use deterministic pit rules: "pit at lap 25 if soft tires, lap 35 if medium"
+   - Less realistic, but predictable and understandable
 
 **Success Criteria**:
-- AI decisions made within 100 ms (no visible lag)
-- AI pit stops occur at reasonable times (within 2-lap window of optimal)
-- AI responds to weather changes within 1 lap
+- AI pit timing within 2-lap window of "reasonable" (subjective, playtested)
+- No AI crashes into pit wall or dangerous driving
+- Player says: "AI strategy makes sense" after watching 2 races
 
-**Timeline**: Module prototype (Weeks 5-6)
+**Timeline**: Week 4 implementation, Week 4 playtesting validation
 
 ---
 
@@ -125,78 +126,81 @@
 
 ---
 
-#### RISK #4: Memory Leaks Over Long Race
+#### RISK #4: Memory Leaks Over Long Play Session
 **Severity**: MEDIUM  
-**Probability**: MEDIUM-HIGH (70%)  
-**Impact**: Frame rate degradation after 1+ hour play session
+**Probability**: MEDIUM (60%)  
+**Impact**: Frame rate degradation after 2+ hours (multiple races)
 
 **Problem**:
-- Long-running races (30+ min at 1x speed)
-- Event listeners not unsubscribed (common in game code)
-- Garbage collection stutters at 60+ FPS (noticeable pause every 2-3 seconds)
-- Player frustration: "Frame rate got worse mid-race"
+- Telemetry logs accumulate (every lap = new data point)
+- Event listeners not unsubscribed (common Unity bug)
+- GC pauses (noticeable at 30 FPS target, even 50ms pause is 1 frame)
+- Player plays 5 races straight (2+ hours) → "game slowed down"
 
 **Mitigation Strategy**:
-1. **Profiling from day 1**:
-   - Unity Memory Profiler (built-in)
-   - Monitor memory growth over 1-hour test run
-   - Flag leaks immediately (before shipping)
+1. **Profiling from Week 1**:
+   - Unity Profiler window (built-in, free)
+   - Monitor heap growth during 2-hour play session
+   - Mark leaks immediately (fix before Week 10)
 
 2. **Best practices**:
-   - Event unsubscription on object destruction
-   - Object pooling for frequently-created objects (telemetry logs)
-   - Nullable types for explicit memory management
+   - Event unsubscription: `OnDestroy()` cleans up listeners
+   - Telemetry log cap: only keep last 1000 entries (not infinite)
+   - Object pooling: reuse pit-stop UI elements, not recreate
 
 3. **GC tuning**:
-   - Mono GC settings: `Time.capturFrameRate` during races to control GC
-   - Use `GC.Collect()` during load screens (not during race)
+   - GC.Collect() only during race load screens
+   - Avoid large allocations during race (heap fragmentation)
 
-4. **Testing**:
-   - Automated test: run 1-hour race at 1x speed, log memory every minute
-   - Alert if memory growth > 100 MB/hour
+4. **Testing** (Week 10):
+   - Automated: play 5 races back-to-back (~2 hours)
+   - Log memory every 5 minutes
+   - Alert if growth > 100 MB total
 
 **Success Criteria**:
-- Memory growth < 50 MB over 1-hour race
-- No frame drops below 58 FPS in final 30 minutes
-- Zero detected memory leaks in profiler
+- Total memory growth < 200 MB over 5 races
+- Frame rate stable (30 FPS ±1) throughout
+- Zero memory leaks detected in profiler
 
-**Timeline**: QA phase (Weeks 9-10)
+**Timeline**: Profiling Week 1, validation Week 10
 
 ---
 
-#### RISK #5: Floating-Point Determinism Loss
+#### RISK #5: Save/Load Determinism Loss
 **Severity**: MEDIUM  
-**Probability**: MEDIUM (50%)  
-**Impact**: Save/load produces different race outcomes (unfair to player)
+**Probability**: MEDIUM (45%)  
+**Impact**: Save at Lap 10, load, Lap 11 produces different results (unfair)
 
 **Problem**:
-- Physics simulation depends on floating-point math (velocity, position)
-- Floating-point is non-associative: (a+b)+c ≠ a+(b+c) in many cases
-- Different compiler optimizations can change precision slightly
-- Save/load might produce different results than continuous simulation
+- Lap time formula depends on floating-point math
+- Floating-point is non-associative: (a+b)+c ≠ a+(b+c)
+- Random number generation must be seeded identically for reproducibility
+- If RNG seed lost on load → entire race diverges
 
 **Mitigation Strategy**:
-1. **Fixed-point arithmetic** (where possible):
-   - Use integer math for tire degradation (0-1000 scale instead of 0.0-1.0 float)
-   - Use fixed-step physics integration (semi-implicit Euler, not adaptive)
+1. **Deterministic RNG**:
+   - Store RNG seed in race state (not just save position)
+   - When loading, restore exact RNG seed
+   - Each "lap tick" advances RNG deterministically (same seed = same random numbers)
 
-2. **Deterministic math functions**:
-   - Avoid `Math.Sqrt()` (precision varies by CPU)
-   - Use lookup tables for expensive functions (sin, cos)
-   - Explicit casting to float (prevent double precision conversion)
+2. **Testing protocol** (Week 9):
+   - Save at lap 5
+   - Load and continue to lap 30
+   - Separately, run lap 6-30 continuously (no load)
+   - Compare: lap times should be identical ±0.0001 seconds
+   - If diverges: debug RNG seed or floating-point accumulation
 
-3. **Physics replay validation**:
-   - Record first 5 laps without save/load
-   - Save at lap 5, load, continue race
-   - Compare lap 6+ data: should match within ±0.01 seconds
-   - If diverges, investigate and fix
+3. **Fallback**:
+   - If determinism hard to achieve: document as "known issue"
+   - Race divergence < 1% acceptable for player experience
+   - Better to ship with minor divergence than delay by weeks
 
 **Success Criteria**:
-- Load/save test: lap time difference < 0.5%
-- 10 save/load cycles show consistent results
-- Physics replay deterministic within floating-point epsilon
+- 10 save/load cycles: < 0.01% lap time variation
+- RNG seed properly restored on load
+- Player unaware of any divergence (no visible effect)
 
-**Timeline**: Prototype testing (Week 6)
+**Timeline**: Week 9 (save/load module), full validation Week 10
 
 ---
 
