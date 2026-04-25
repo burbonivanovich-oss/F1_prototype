@@ -17,7 +17,7 @@
 - **Player decisions**: Pit timing, tire compounds, driver instructions (push/defend/save)
 - **Real-time UI**: Live standings, telemetry graphs, pit strategy advisor
 - **Season progression**: 24 races with R&D, team management, driver morale
-- **Deterministic** (save/load must produce identical results)
+- **Non-deterministic by design** (save/load may produce different outcomes — see ADR 2026-04-25). Dev-only seed override for QA bug reproduction.
 - **Performance**: 30 FPS target, 20 Hz simulation tick (NOT 60 FPS)
 
 ### What This Game IS:
@@ -52,9 +52,8 @@ Race completes in 58 ticks × 2 sec = ~2 minutes (with UI rendering at 30 FPS)
 
 **Benefits**:
 - Simple (lap outcome = formula, not 1000 physics calculations)
-- Deterministic (same input = same lap time, always)
 - Performant (CPU usage negligible)
-- Debuggable (race progression visible in logs)
+- Debuggable (race progression visible in logs; dev-seed override allows reproducible runs in QA builds)
 
 ---
 
@@ -254,6 +253,71 @@ public class RaceSimulator
 
 **Key advantage**: All simulation on main thread, no threading complexity.
 
+**Hybrid hooks**: Step 2 (`UpdateCarPosition`) calls `ResolveOvertakeAttempt()` defined in §1.6.1 when two cars are within overtake range. Step 6 (`CheckCollision`) calls `RollIncident()` defined in §1.6.2 only when an overtake attempt fails. Neither hook adds physics — both are formula-driven probability rolls.
+
+---
+
+## 1.6.1 OVERTAKE RESOLUTION (Hybrid)
+
+When the gap between attacker and defender closes below a track-specific threshold during a tick, the simulation rolls an overtake outcome rather than instantly swapping positions.
+
+```
+gap_closed = (speed_attacker - speed_defender) * tick_dt
+if gap_closed > 0 AND distance < OVERTAKE_THRESHOLD:
+    P(success) = sigmoid(
+          w1 * (skill_attacker - skill_defender)
+        + w2 * (pace_attacker - pace_defender)
+        + w3 * tire_age_delta
+        + w4 * DRS_flag
+        + w5 * track_overtake_difficulty
+        - w6 * defender_aggression
+    )
+    if RNG.NextDouble(seed_for_attempt) < P(success):
+        SwapPositions(attacker, defender)
+    else:
+        RollIncident(attacker, defender)   // see §1.6.2
+```
+
+**Inputs** (variables only — tuning numbers belong in design docs, not TDD):
+- Driver skill: `overtaking` and `defending` sub-stats (0-100)
+- Pace delta: current lap-time potential difference
+- Tire age delta: laps since last pit per car
+- DRS flag: boolean from track + race rules
+- `track_overtake_difficulty`: per-circuit constant (Monaco high, Monza low)
+- `defender_aggression`: derived from current driver instruction (push/defend/save) and morale
+
+**RNG seeding**: Per the ADR 2026-04-25 non-determinism decision, the per-attempt seed is derived from a non-stable source (e.g. wall-clock + monotonic counter). In dev/QA builds with `AUTOSPORT_RNG_SEED` set, the seed is derived deterministically from `(seedOverride, lap, attackerId)` for reproducible bug investigation.
+
+---
+
+## 1.6.2 INCIDENT MODEL (Hybrid)
+
+When an overtake attempt fails, the simulation rolls an incident outcome:
+
+```
+P(incident) = (1 - P(success)) * driver_risk_appetite * track_risk_factor
+roll = RNG.NextDouble(seed_for_incident)
+
+if roll > P(incident):
+    outcome = CLEAN          // no penalty
+elif roll > P(incident) * 0.7:
+    outcome = MINOR_CONTACT  // pace penalty +0.2-0.5s/lap, repairable at pit
+else:
+    outcome = MAJOR_INCIDENT
+    car.aeroDamage += rand(0.3, 0.6)
+    car.mechanicalDamage += rand(0.2, 0.5)
+    if car.aeroDamage + car.mechanicalDamage >= DNF_THRESHOLD:
+        car.status = DNF
+```
+
+**Inputs**:
+- `driver_risk_appetite` ∈ {conservative, balanced, aggressive} — see §1.7 `CarState.driverRiskAppetite`
+- `track_risk_factor`: per-circuit constant (street circuits high, modern tracks low)
+- `incidentRiskAccumulator`: increases on near-misses, resets at pit stop or after a clean lap (prevents runaway incident chains)
+- `lastIncidentLap`: cooldown to prevent double-incidents within N laps
+
+**Outcomes feed back into**: `CarState.aeroDamage`, `CarState.mechanicalDamage`, `CarState.status` (see §1.7).
+
 ---
 
 ## 1.7 RACE STATE STRUCTURE
@@ -276,10 +340,18 @@ public class RaceState
         public float totalTimeSeconds;  // Sum of all lap times
         public float fuel;  // kg remaining
         public Tire[] tires;  // 4 tires
-        public float damage;  // 0-100%
         public int consecutiveLapsPushed;  // For tire deg calculation
         public bool hasPitted;  // Track pit history
+
+        // Hybrid additions (see §1.6.2 incident model):
+        public float aeroDamage;             // 0-1, multiplier on cornering pace
+        public float mechanicalDamage;       // 0-1, multiplier on top speed
+        public float incidentRiskAccumulator;// resets at pit / clean lap
+        public byte lastIncidentLap;         // cooldown to prevent double-incidents
+        public RiskProfile driverRiskAppetite; // conservative/balanced/aggressive — derived from morale + instruction
     }
+
+    public enum RiskProfile { Conservative, Balanced, Aggressive }
     
     [Serializable]
     public class Tire
@@ -351,6 +423,8 @@ public class RacePersistence
 
 **Recommendation**: Start with Option A (single-threaded). If profiling shows UI lag, migrate to Option B without changing simulation logic.
 
+**Mandatory from day 1 (per ADR 2026-04-25)**: a `SnapshotBuffer` abstraction. The simulator publishes immutable per-tick snapshots (car positions, lap times, events) into a double-buffered store; the UI reads from the buffer rather than from live sim state. This keeps Option A simple while making the future migration to Option B a thread-boundary swap rather than a rewrite. See §1.14 for how the UI consumes snapshots.
+
 ---
 
 ## 1.10 DEVELOPMENT WORKFLOW
@@ -413,7 +487,7 @@ public class RacePersistence
 **Technical**:
 - [ ] Stable 30 FPS with 24 cars on reference hardware
 - [ ] Save/load works (100 cycles without corruption)
-- [ ] Deterministic (save at lap 10, load, race produces identical lap 11+)
+- [ ] Dev-seed override (`AUTOSPORT_RNG_SEED`) reproduces identical race outcomes in QA builds; release builds are non-deterministic by design (see ADR 2026-04-25)
 - [ ] No memory leaks over 2-hour session
 
 **Gameplay**:
@@ -437,6 +511,29 @@ public class RacePersistence
 - Weather evolution
 - AI pit strategy decision tree
 - UI architecture
+
+---
+
+## 1.14 VISUAL INTERPOLATION LAYER
+
+**Layer**: UI (`RaceMonitorView`), not simulation. The simulation never reads interpolated values — its state remains tick-discrete.
+
+**Goal**: smooth movement of 2D track-map dots at 30 FPS even though the sim updates every 50 ms (20 Hz). Without interpolation, dots would snap-step ~1.5× per frame.
+
+**Mechanism**:
+1. Each simulation tick, the sim writes an authoritative `Snapshot` (per-car track-distance scalar `position_t ∈ [0, 1]`, per-car lap-time, events) to the immutable `SnapshotBuffer` from §1.9.
+2. The UI keeps the latest two snapshots: `S_prev` (tick `t`) and `S_curr` (tick `t+1`).
+3. Each frame, the UI computes `alpha = (now - S_curr.tickTime) / 50ms` clamped to `[0, 1]`.
+4. Per car: `displayPosition = lerp(S_prev.position, S_curr.position, alpha)`.
+5. The display position is a track-distance scalar; the UI projects it onto the per-track polyline (see content pipeline below) via arc-length lookup to get screen-space `(x, y)`.
+
+**Track polyline asset** (per-circuit content, 24 circuits for v1):
+- Source: open GPS traces (e.g. OpenStreetMap relations for permanent circuits, GPX exports for street circuits).
+- Format: ordered list of (lat, lon) points, normalized to local 2D coordinates and sampled to ~200-400 points per lap.
+- Cached metadata: total arc length (meters), per-segment cumulative length for fast `position ∈ [0,1] → (x, y)` lookup.
+- Pipeline risk: per-circuit licensing must be validated before content lock-in (see `project-config.json` `risks.medium_priority`).
+
+**Why UI-side, not sim-side**: keeping interpolation in the UI preserves a clean contract — the simulation produces discrete ground-truth events and positions; the renderer is responsible only for visual smoothness. This also means a future replay/spectator mode can be a pure consumer of snapshot streams.
 
 ---
 

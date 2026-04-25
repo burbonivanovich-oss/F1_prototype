@@ -1,7 +1,7 @@
 # ARCHITECTURE DECISION: Full Physics vs Distance-Based Simulation
 
 **Date**: 2026-04-06  
-**Status**: DECISION PENDING - CRITICAL FOR WEEK 1 KICKOFF  
+**Status**: ACCEPTED 2026-04-25  
 **Impact**: Determines entire technical direction for TDD  
 
 ---
@@ -210,4 +210,38 @@ This is clearly **Approach B or Hybrid**, not full physics.
 **Impact if Deferred**: TDD becomes incorrect, team builds wrong thing
 
 This is the most important decision for the entire project. Get it right now.
+
+---
+
+## DECISION RECORDED — 2026-04-25
+
+**Adopted approach**: **Hybrid** (lap-tick base from Approach B + probabilistic overtake resolution + lightweight collision/damage model).
+
+**Visual fidelity**: **Level 2** — 2D track map with cars rendered as moving dots. No 3D for v1.
+
+**Threading**: Single-threaded simulation (Option A from revised TDD §1.9), with an immutable `SnapshotBuffer` abstraction in place from day 1 so a future migration to two-threaded (Option B) is a boundary swap rather than a rewrite.
+
+**Track geometry pipeline**: Per-circuit polylines sourced from open GPS tracks (e.g. OpenStreetMap traces). Licensing per circuit must be validated before content lock-in (see new medium-priority risk in `project-config.json`).
+
+**Simulation determinism**: **Non-deterministic by design.** Same player inputs after a save/load may produce different race outcomes. Rationale: race replayability, anti-save-scum, and "living race" feel where reloading does not lock in past outcomes. This explicitly reverses the determinism requirement in `01_ARCHITECTURE_OVERVIEW_REVISED.md` §1.1 and §1.12 — those sections are revised to match.
+
+**QA mitigation for non-determinism**: A dev-only seed override (env var `AUTOSPORT_RNG_SEED` or `--seed=<int>` CLI flag) freezes RNG in development and QA builds for bug reproduction. The override is compiled out / unreachable in release builds, so end users always get non-deterministic races.
+
+**Rationale for Hybrid + Level 2**:
+- Producer's core experience: "watch the race and make race-engineer decisions during it." Hybrid gives organic-feeling overtakes/incidents that justify watching; Level 2 dots are sufficient visual fidelity for that experience without 3D-track production cost.
+- Hybrid resolves a pre-existing inconsistency in revised TDD §1.6 (loop calls `CheckCollision` despite §1.2 promising "no physics"). Hybrid legitimizes that call via the lightweight incident model.
+
+**Consequences accepted**:
+- Per-track polyline content pipeline (24 circuits) not previously scoped — added as risk.
+- Overtake probability tuning is now a balance risk — added as risk.
+- Loss of QA "load save, reproduce bug" workflow without dev-seed override — mitigated by override flag.
+- TDD §1.1 / §1.12 determinism requirements removed.
+
+**Alternatives considered and rejected**:
+- Pure Approach B: rejected — overtakes would feel arbitrary, undermining "watch the race" goal.
+- Full Approach A (physics): rejected per original ADR analysis — overkill for management genre.
+- Strict input-driven determinism: rejected — producer wanted reloads to materially change race outcomes, not just QA reproducibility.
+
+**Owner**: Producer
+**Implementation kickoff**: Week 1 of pre-production (per existing roadmap).
 

@@ -86,14 +86,14 @@
   },
   "risks": {
     "high_priority": [
-      "Over-engineered physics engine taking dev time without gameplay benefit (wrong architectural direction)",
+      "Overtake probability tuning produces unrealistic race outcomes (too few or too many passes per race)",
       "AI makes illogical pit strategy decisions (e.g., pits too late, wrong compound choice)",
       "Save/load file corruption causing player progress loss",
       "UI performance degrades with 24-car standings + live telemetry graphs",
       "Licensing: F1/FIA may prohibit use of real team names, drivers, logos"
     ],
     "medium_priority": [
-      "Floating-point determinism loss (save/load produces different race outcomes)",
+      "Per-track polyline content pipeline (24 circuits from open GPS sources) blocks Visual Tier Level 2 delivery; per-circuit licensing must be validated",
       "Player doesn't feel strategic depth (all decisions feel obvious, no tension)",
       "Memory leaks over long play sessions (frame rate degradation after 2+ hours)",
       "Modding community expectations (player-created cars, teams, championships)"
@@ -107,6 +107,6 @@
     "documentation": "See documentation/RISKS_ASSESSMENT.md",
     "review_frequency": "Weekly (Mondays)",
     "contingency_weeks": 3,
-    "critical_decision": "IMPORTANT: TDD describes full physics engine (semi-implicit Euler, collision detection, 24-car threading). For MANAGER game, may be over-engineered. Consider simplified distance-based race progression instead. Validate in Week 1 kickoff with tech lead."
+    "critical_decision": "RESOLVED 2026-04-25: Hybrid architecture (lap-tick base + probabilistic overtake + lightweight incident model) with Visual Tier Level 2 (2D track map, dot-rendered cars). Single-threaded sim with mandatory SnapshotBuffer abstraction. Non-deterministic by design with dev-only seed override for QA. Track polylines sourced from open GPS data. See documentation/ARCHITECTURE_DECISION_PHYSICS_VS_SIMPLIFIED.md (status: ACCEPTED) and documentation/technical/01_ARCHITECTURE_OVERVIEW_REVISED.md (sections 1.6.1, 1.6.2, 1.7, 1.9, 1.14)."
   }
 }
