@@ -34,7 +34,7 @@
 
 ## 1.2 ARCHITECTURE PHILOSOPHY: "Lap Tick" Simulation
 
-Instead of frame-by-frame physics, the race progresses in discrete **lap ticks** (every 1-2 seconds real-time):
+Instead of frame-by-frame physics, the race progresses in discrete **lap ticks** every 50 ms wall-clock (20 Hz simulation rate). The amount of in-game time advanced per tick is controlled by the player's speed multiplier (see §1.15). The simulation tick rate itself stays constant so the frame budget does not flex with player speed choice.
 
 ```
 TRADITIONAL PHYSICS APPROACH:
@@ -44,10 +44,10 @@ Frame 2 (16.67 ms) → Update position 0.1 meters
 Frame 60 (1000 ms) → 1 lap completed
 
 MANAGEMENT GAME APPROACH (Better):
-Lap Tick 1 (2 seconds) → Lap 1 completed, position updated
-Lap Tick 2 (2 seconds) → Lap 2 completed, position updated
-...
-Race completes in 58 ticks × 2 sec = ~2 minutes (with UI rendering at 30 FPS)
+Sim tick fires every 50 ms wall-clock (20 Hz, fixed).
+In-game time advanced per tick = base_step * speed_multiplier
+Player chooses speed multiplier (pause / 1x / 2x / 4x / 8x / instant).
+Race wall-clock duration is therefore player-controlled, not fixed.
 ```
 
 **Benefits**:
@@ -534,6 +534,31 @@ public class RacePersistence
 - Pipeline risk: per-circuit licensing must be validated before content lock-in (see `project-config.json` `risks.medium_priority`).
 
 **Why UI-side, not sim-side**: keeping interpolation in the UI preserves a clean contract — the simulation produces discrete ground-truth events and positions; the renderer is responsible only for visual smoothness. This also means a future replay/spectator mode can be a pure consumer of snapshot streams.
+
+---
+
+## 1.15 RACE SPEED MODEL
+
+**Producer requirement (2026-04-25)**: race wall-clock duration is player-controlled with a speed multiplier (pause / 1x / 2x / 4x / 8x / instant), not fixed at ~2 minutes as the original §1.2 implied.
+
+**Implementation contract**:
+
+- Simulation tick rate is fixed at 20 Hz (50 ms wall-clock per tick) regardless of speed multiplier. Frame budget per TDD §1.4 does not flex.
+- Each tick advances `in_game_time_step = base_step * speed_multiplier`. At 1x, `base_step` is calibrated so that one race lap occupies a producer-chosen real-time duration (target TBD via playtest; see open question below).
+- Speed multipliers ≤ 1x apply by reducing in-game time per tick — visually smoother because more snapshots per in-game lap.
+- Speed multipliers > 1x apply by advancing more in-game time per tick — fewer interpolation samples, but UI still renders at 30 FPS so motion stays smooth.
+- "Instant" mode: simulation runs in a tight loop without `Time.deltaTime` gating until race end or next interactive prompt; UI shows progress indicator. Used when player wants to skip ahead.
+- "Pause" mode: simulator does not advance in-game time. UI remains fully interactive (player can browse standings, plan strategy, change speed, issue instructions).
+
+**Why simulation rate is constant (not scaled)**: scaling sim Hz with speed multiplier would push 4×–8× modes outside the §1.4 frame budget and risk variable physics behaviour. Holding sim rate constant and varying time-per-tick keeps performance predictable; the tradeoff is fewer interpolation samples per in-game lap at high speeds, which is acceptable for management-sim viewing.
+
+**Open question (needs systems-designer + playtest)**: real-time-per-lap calibration at 1x. Two reference points to choose from:
+- Real F1 lap times (~80–120 seconds) → 60-lap race ≈ 80–120 minutes at 1x. Realistic but very long.
+- Compressed "engineer time" (e.g., 10–20 seconds per lap at 1x) → 60-lap race ≈ 10–20 minutes at 1x. Better fit for "watch + decide" loop.
+
+Recommend the compressed model (~15s/lap at 1x) pending playtest. Speed multipliers then give 7.5s/lap at 2x, 3.75s/lap at 4x, sub-2s at 8x, immediate at instant.
+
+**Status**: needs technical-director sign-off on the constant-sim-rate-with-variable-time-step model before implementation; calibration target needs playtest.
 
 ---
 
