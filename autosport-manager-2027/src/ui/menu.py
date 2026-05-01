@@ -331,7 +331,84 @@ def show_race_result(
     console.print(table)
     console.print()
 
-    # Player summary
+    # ── Race statistics ────────────────────────────────────────────────────
+    stats_table = Table(box=box.SIMPLE, show_header=False, padding=(0, 2))
+    stats_table.add_column("Stat", width=22)
+    stats_table.add_column("Value", width=30)
+
+    # Fastest lap
+    fl_driver = drivers.get(state.fastest_lap_driver_id)
+    if fl_driver and state.fastest_lap_time_s < 9000:
+        fl_t = state.fastest_lap_time_s
+        m, s = int(fl_t // 60), fl_t % 60
+        fl_team = teams.get(fl_driver.team_id)
+        fl_color = fl_team.color if fl_team else "white"
+        stats_table.add_row(
+            "⚡ Fastest Lap",
+            f"[{fl_color}]{fl_driver.short_name}[/]  {m}:{s:06.3f}  (L{state.fastest_lap_number})"
+        )
+
+    # Total overtakes
+    ot_count = sum(1 for e in state.events if e.event_type == "OVERTAKE" and "overtakes" in e.description)
+    stats_table.add_row("🔄 Overtakes", str(ot_count))
+
+    # DNFs
+    dnf_count = sum(1 for c in state.cars if c.dnf)
+    stats_table.add_row("💥 Retirements", str(dnf_count))
+
+    # Safety car laps
+    sc_events = [e for e in state.events if e.event_type == "SC" and "SAFETY CAR deployed" in e.description.upper() or "SAFETY CAR" in e.description]
+    sc_count = len([e for e in state.events if "SAFETY CAR deployed" in e.description or "🔴 SAFETY CAR" in e.description])
+    stats_table.add_row("🚨 Safety Cars", str(sc_count))
+
+    # Driver of the race: most overtakes made (on-track passes)
+    overtake_counts: dict[int, int] = {}
+    for ev in state.events:
+        if ev.event_type == "OVERTAKE" and "overtakes" in ev.description:
+            overtake_counts[ev.driver_name] = overtake_counts.get(ev.driver_name, 0) + 1
+
+    dotr_driver = None
+    dotr_team = None
+    best_ot = 0
+    for d_id, d in drivers.items():
+        count = overtake_counts.get(d.name, 0)
+        if count > best_ot:
+            best_ot = count
+            dotr_driver = d
+            dotr_team = teams.get(d.team_id)
+
+    if dotr_driver and dotr_team:
+        fin_pos = next((c.position for c in state.cars if c.driver_id == dotr_driver.id), "?")
+        stats_table.add_row(
+            "🏆 Driver of Race",
+            f"[{dotr_team.color}]{dotr_driver.name}[/]  P{fin_pos}  ({best_ot} overtakes)"
+        )
+
+    console.print(Panel(stats_table, title="Race Statistics", border_style="dim", padding=(0, 2)))
+    console.print()
+
+    # ── Constructor points this race ──────────────────────────────────────
+    team_pts: dict[int, int] = {}
+    for car in state.sorted_cars():
+        t = teams.get(car.team_id)
+        if t:
+            team_pts[t.id] = team_pts.get(t.id, 0) + (pts_map.get(car.position, 0) if not car.dnf else 0)
+
+    pts_table = Table(box=box.SIMPLE, show_header=True, header_style="bold white", padding=(0, 1))
+    pts_table.add_column("Team", width=28)
+    pts_table.add_column("Points", width=7, justify="right")
+    for t_id, pts in sorted(team_pts.items(), key=lambda x: -x[1]):
+        team = teams.get(t_id)
+        if not team or pts == 0:
+            continue
+        is_player = (t_id == player_team_id)
+        row_style = "bold" if is_player else ""
+        pts_table.add_row(f"[{team.color}]{team.name}[/]", str(pts), style=row_style)
+
+    console.print(Panel(pts_table, title="Constructor Points This Race", border_style="dim yellow", padding=(0, 1)))
+    console.print()
+
+    # ── Player summary ────────────────────────────────────────────────────
     player_cars = [c for c in state.cars if c.team_id == player_team_id]
     total_pts = sum(pts_map.get(c.position, 0) for c in player_cars if not c.dnf)
     player_team = teams.get(player_team_id)
