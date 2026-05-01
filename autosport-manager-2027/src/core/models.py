@@ -61,6 +61,13 @@ class DriverInstruction(Enum):
     FUEL_SAVE = "FUEL_SAVE"  # Conservation; -0.10s lap, -12% fuel
 
 
+class TeamOrder(Enum):
+    FREE_RACE    = "FREE_RACE"    # Both drivers race freely
+    HOLD_GAP     = "HOLD_GAP"    # Driver 1 holds gap; driver 2 not to overtake
+    SWAP_DRIVERS = "SWAP_DRIVERS" # Request position swap between teammates
+    PUSH_BOTH    = "PUSH_BOTH"   # Both drivers on ATTACK mode
+
+
 class WeatherCondition(Enum):
     DRY = "DRY"
     LIGHT_RAIN = "LIGHT_RAIN"
@@ -175,6 +182,9 @@ class RaceState:
 
     # Player's team id
     player_team_id: int = 0
+
+    # Team orders
+    team_order: Optional["TeamOrder"] = None
 
     def get_car(self, driver_id: int) -> Optional[CarState]:
         for car in self.cars:

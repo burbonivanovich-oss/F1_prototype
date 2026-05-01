@@ -434,6 +434,7 @@ def build_controls_panel(player_cars: list[CarState], drivers: dict) -> Panel:
             f"[bold]f{n}[/]  Fuel Save"
         )
     cmds.append("[bold]ff[/]  Fast-fwd 5 laps   [bold]fff[/]  Fast-fwd 10 laps   [bold]q[/]  Quit")
+    cmds.append("[dim]Team orders: [bold]tohold[/] Hold gap  [bold]toswap[/] Swap drivers  [bold]topush[/] Push both  [bold]tofree[/] Free race[/]")
     return Panel(
         "\n".join(cmds) if cmds else "[dim]No controls available[/dim]",
         title="Commands",

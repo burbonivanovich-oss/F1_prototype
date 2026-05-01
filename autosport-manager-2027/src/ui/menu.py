@@ -15,6 +15,7 @@ from ..data.circuits import CIRCUITS, Circuit
 from ..data.teams import TEAMS, Team
 from ..data.drivers import DRIVERS, Driver
 from ..core.models import TireCompound
+from ..core.tire import compute_strategy_windows
 
 console = Console()
 
@@ -206,7 +207,17 @@ def pre_race_strategy(
     if circuit.rain_probability > 0.25:
         console.print("[cyan]⚑ High rain probability — be ready to switch to Inters quickly.[/]")
 
-    console.print()
+    # Show computed strategy windows
+    avail_dry = [c for c in available_compounds if c.is_dry]
+    strategies = compute_strategy_windows(avail_dry, circuit.total_laps, circuit.tire_deg_multiplier)
+    if strategies:
+        console.print("[bold]Recommended strategies:[/]")
+        for i, strat in enumerate(strategies[:4], 1):
+            stops_str = f"{strat['stops']}-stop"
+            star = "[yellow]★[/]" if i == 1 else " "
+            console.print(f"  {star} [{i}] {stops_str:8s}  {strat['label']}")
+        console.print()
+
 
     overrides: dict[int, dict] = {}
     for driver in drivers:

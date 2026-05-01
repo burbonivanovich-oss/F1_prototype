@@ -18,7 +18,7 @@ from rich.prompt import Prompt, IntPrompt
 from src.data.circuits import CIRCUITS
 from src.data.teams import TEAMS, TEAM_MAP
 from src.data.drivers import DRIVERS, DRIVER_MAP
-from src.core.models import TireCompound, DriverInstruction
+from src.core.models import TireCompound, DriverInstruction, TeamOrder
 from src.core.engine import RaceEngine
 from src.ui.display import render_race_screen_rich, console
 from src.ui.menu import (
@@ -54,6 +54,19 @@ def parse_player_commands(
 
     if cmd in ("fff", "10"):
         return 10
+
+    # Team order commands
+    team_order_map = {
+        "to0": TeamOrder.FREE_RACE,
+        "tofree": TeamOrder.FREE_RACE,
+        "tohold": TeamOrder.HOLD_GAP,
+        "toswap": TeamOrder.SWAP_DRIVERS,
+        "topush": TeamOrder.PUSH_BOTH,
+    }
+    if cmd in team_order_map:
+        engine.command_team_order(team_order_map[cmd])
+        _console.print(f"[bold yellow]▶ Team order: {team_order_map[cmd].value}[/]")
+        return 0
 
     # Car-specific commands: b1, b44, a4, m81, d18, f63, etc.
     compound_shortcuts = {

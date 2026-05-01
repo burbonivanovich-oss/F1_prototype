@@ -14,6 +14,7 @@ from typing import Optional, TYPE_CHECKING
 from .models import (
     TireCompound, TirePhase, DriverInstruction, WeatherCondition,
     SafetyCarState, CarState, RaceState, RaceEvent, PitStopResult, OvertakeResult,
+    TeamOrder,
 )
 from .tire import (
     TIRE_PROFILES, get_tire_phase, tire_deg_penalty_s,
@@ -162,6 +163,55 @@ class RaceEngine:
         """Player sets driver instruction for next lap."""
         self._player_instructions[driver_id] = instruction
 
+    def command_team_order(self, order: TeamOrder) -> None:
+        """Player issues a team-wide order. Applied until next command_team_order call."""
+        self.race_state.team_order = order
+        self.race_state.events.append(RaceEvent(
+            self.race_state.current_lap, "Team Principal", "INFO",
+            f"📻 Team orders: {order.value.replace('_', ' ').title()}",
+            is_player_event=True,
+        ))
+
+    def _apply_team_orders(self, state: "RaceState") -> None:
+        order = state.team_order
+        if order is None or order == TeamOrder.FREE_RACE:
+            return
+
+        player_cars = [c for c in state.cars if c.team_id == self.player_team_id and not c.dnf]
+        if len(player_cars) < 2:
+            return
+
+        player_cars_sorted = sorted(player_cars, key=lambda c: c.position)
+        lead_car   = player_cars_sorted[0]
+        follow_car = player_cars_sorted[1]
+
+        if order == TeamOrder.HOLD_GAP:
+            if follow_car.gap_to_ahead_s < 1.5 and follow_car.team_id == lead_car.team_id:
+                follow_car.instruction = DriverInstruction.MANAGE
+
+        elif order == TeamOrder.SWAP_DRIVERS:
+            if (follow_car.gap_to_ahead_s < 0.5
+                    and follow_car.team_id == lead_car.team_id
+                    and lead_car.tire_age_laps > follow_car.tire_age_laps + 3):
+                # Actually execute swap: adjust race times
+                lead_car.total_race_time_s, follow_car.total_race_time_s = (
+                    follow_car.total_race_time_s - 0.1,
+                    lead_car.total_race_time_s + 0.1,
+                )
+                driver1 = self.drivers.get(lead_car.driver_id)
+                driver2 = self.drivers.get(follow_car.driver_id)
+                if driver1 and driver2:
+                    state.events.append(RaceEvent(
+                        state.current_lap, "Team Principal", "INFO",
+                        f"📻 {driver2.short_name} passes {driver1.short_name} — team order executed.",
+                        is_player_event=True,
+                    ))
+                state.team_order = TeamOrder.FREE_RACE  # Reset after swap
+
+        elif order == TeamOrder.PUSH_BOTH:
+            for car in player_cars:
+                car.instruction = DriverInstruction.ATTACK
+
     # ── Main lap simulation ───────────────────────────────────────────────────
 
     def simulate_lap(self) -> RaceState:
@@ -195,6 +245,9 @@ class RaceEngine:
             for car in state.cars:
                 if car.driver_id == driver_id and not car.dnf:
                     car.instruction = instr
+
+        # ── 4b. Apply team orders ─────────────────────────────────────────────
+        self._apply_team_orders(state)
 
         # ── 5. Execute pit stops (player commands + AI decisions) ─────────────
         pit_results = self._execute_pit_stops(state, lap)

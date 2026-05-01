@@ -169,6 +169,102 @@ def tire_degradation_pct(profile: TireProfile, tire_age: int, deg_mult: float) -
     return min(1.0, tire_age / total_life)
 
 
+def compute_strategy_windows(
+    available_dry: list[TireCompound],
+    total_laps: int,
+    deg_mult: float,
+) -> list[dict]:
+    """
+    Compute recommended 1-stop and 2-stop pit windows for a race.
+    Returns a list of strategy dicts, ordered by estimated total time.
+    Each dict: {stops, stints: [(compound, start_lap, end_lap), ...], quality}
+    """
+    strategies = []
+
+    def stint_time_estimate(compound: TireCompound, stint_laps: int, fuel_start: float) -> float:
+        profile = TIRE_PROFILES.get(compound)
+        if not profile:
+            return 9999.0
+        total_pen = 0.0
+        for lap in range(1, stint_laps + 1):
+            total_pen += tire_deg_penalty_s(profile, lap, deg_mult)
+        total_pen -= compound.grip_advantage_s * stint_laps  # compound pace bonus
+        total_pen += fuel_start * 0.005 * stint_laps * 0.5   # avg fuel weight
+        return total_pen
+
+    # ── 1-stop strategies ────────────────────────────────────────────────────
+    for start_cmpd in available_dry:
+        for end_cmpd in available_dry:
+            if start_cmpd == end_cmpd:
+                continue
+            start_profile = TIRE_PROFILES.get(start_cmpd)
+            if not start_profile:
+                continue
+            cliff_start = int(start_profile.plateau_laps / deg_mult) + int(start_profile.linear_phase_laps / deg_mult)
+            # Ideal pit: 2 laps before cliff, or earlier for softest compound
+            ideal_pit = max(3, min(cliff_start - 2, int(total_laps * 0.45)))
+            pit_range = (max(3, ideal_pit - 3), min(total_laps - 5, ideal_pit + 3))
+
+            stint2_laps = total_laps - ideal_pit
+            end_profile = TIRE_PROFILES.get(end_cmpd)
+            if not end_profile:
+                continue
+            end_cliff = int(end_profile.plateau_laps / deg_mult) + int(end_profile.linear_phase_laps / deg_mult)
+            if end_cliff < stint2_laps:
+                continue  # Second compound won't survive
+
+            score = stint_time_estimate(start_cmpd, ideal_pit, 105.0) + \
+                    stint_time_estimate(end_cmpd, stint2_laps, 55.0) + 22.0  # pit loss
+
+            strategies.append({
+                "stops": 1,
+                "stints": [(start_cmpd, 1, ideal_pit), (end_cmpd, ideal_pit + 1, total_laps)],
+                "pit_range": [pit_range],
+                "score": score,
+                "label": f"{start_cmpd.display_name}→{end_cmpd.display_name}  L{pit_range[0]}-{pit_range[1]}",
+            })
+
+    # ── 2-stop strategies ────────────────────────────────────────────────────
+    for s1 in available_dry:
+        for s2 in available_dry:
+            if not s1.is_dry or not s2.is_dry:
+                continue
+            p1 = TIRE_PROFILES.get(s1)
+            p2 = TIRE_PROFILES.get(s2)
+            if not p1 or not p2:
+                continue
+            c1 = max(8, int(p1.plateau_laps / deg_mult) - 2)
+            c1 = min(c1, int(total_laps * 0.35))
+            c2 = c1 + max(8, int(p2.plateau_laps / deg_mult) - 2)
+            c2 = min(c2, int(total_laps * 0.72))
+            if c2 >= total_laps - 4:
+                continue
+
+            s3_laps = total_laps - c2
+            best_final = best_compound_for_stint(available_dry, s3_laps, deg_mult)
+            score = (stint_time_estimate(s1, c1, 105.0) +
+                     stint_time_estimate(s2, c2 - c1, 75.0) +
+                     stint_time_estimate(best_final, s3_laps, 40.0) + 44.0)
+            strategies.append({
+                "stops": 2,
+                "stints": [(s1, 1, c1), (s2, c1+1, c2), (best_final, c2+1, total_laps)],
+                "pit_range": [(max(3, c1-3), c1+3), (max(c1+5, c2-3), c2+3)],
+                "score": score,
+                "label": (f"{s1.display_name}→{s2.display_name}→{best_final.display_name}"
+                          f"  L~{c1}/L~{c2}"),
+            })
+
+    # Deduplicate by label and sort by score
+    seen = set()
+    unique = []
+    for s in sorted(strategies, key=lambda x: x["score"]):
+        if s["label"] not in seen:
+            seen.add(s["label"])
+            unique.append(s)
+
+    return unique[:6]  # Return top 6 strategies
+
+
 def best_compound_for_stint(
     available: list[TireCompound],
     stint_laps: int,
