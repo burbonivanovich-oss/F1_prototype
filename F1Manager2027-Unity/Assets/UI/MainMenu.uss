@@ -1,0 +1,233 @@
+/* ── Autosport Manager 2027 — Menu Styles ── */
+
+.menu-root {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #050508;
+    color: #e0e0e0;
+    align-items: center;
+}
+
+.menu-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0 30px;
+}
+
+.game-title {
+    font-size: 42px;
+    color: #ffffff;
+    -unity-font-style: bold;
+    letter-spacing: 8px;
+}
+
+.game-subtitle {
+    font-size: 22px;
+    color: #e8002d;
+    letter-spacing: 20px;
+    margin-top: -6px;
+}
+
+.screen {
+    flex-direction: column;
+    width: 700px;
+    align-items: center;
+}
+
+.active-screen { display: flex; }
+.hidden-screen { display: none; }
+
+.screen-title {
+    font-size: 18px;
+    color: #888;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    -unity-font-style: bold;
+}
+
+/* ── Team list ── */
+.team-list {
+    width: 100%;
+    height: 400px;
+    background-color: #0a0a12;
+    border-color: #222;
+    border-width: 1px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.team-row {
+    flex-direction: row;
+    padding: 12px 16px;
+    align-items: center;
+    border-bottom-color: #1a1a24;
+    border-bottom-width: 1px;
+}
+
+.team-row:hover { background-color: #0f0f1e; }
+.team-row.selected { background-color: #0d1a2a; }
+
+.team-color-bar { width: 5px; height: 28px; border-radius: 3px; margin-right: 14px; }
+.team-row-name { font-size: 15px; color: #fff; width: 220px; }
+.team-row-short { font-size: 12px; color: #666; width: 50px; }
+.team-row-perf { font-size: 13px; color: #aaa; width: 80px; }
+.team-row-badges { flex-direction: row; }
+.team-badge { font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-right: 4px; }
+.badge-pwr { background-color: #223366; color: #4488ff; }
+.badge-df  { background-color: #224422; color: #44cc44; }
+
+/* ── Circuit list ── */
+.circuit-filters { flex-direction: row; margin-bottom: 12px; }
+.filter-btn { font-size: 12px; padding: 4px 14px; margin-right: 6px; background-color: #111; color: #888; border-color: #333; }
+.filter-btn.active-filter { background-color: #0d1a2a; color: #4488ff; border-color: #4488ff; }
+
+.circuit-list {
+    width: 100%;
+    height: 380px;
+    background-color: #0a0a12;
+    border-color: #222;
+    border-width: 1px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.circuit-row {
+    flex-direction: row;
+    padding: 10px 16px;
+    align-items: center;
+    border-bottom-color: #1a1a24;
+    border-bottom-width: 1px;
+}
+
+.circuit-row:hover { background-color: #0f0f1e; }
+.circuit-row.selected { background-color: #0d1a2a; }
+
+.circuit-row-name { font-size: 14px; color: #fff; width: 180px; }
+.circuit-row-country { font-size: 12px; color: #666; width: 120px; }
+.circuit-row-laps { font-size: 12px; color: #888; width: 60px; }
+.circuit-row-len { font-size: 12px; color: #888; width: 70px; }
+.circuit-row-type { font-size: 11px; padding: 2px 8px; border-radius: 3px; margin-right: 8px; }
+.type-pwr { background-color: #1a2244; color: #4488ff; }
+.type-df  { background-color: #1a2a1a; color: #44cc44; }
+.type-bal { background-color: #222; color: #888; }
+
+/* ── Strategy screen ── */
+.strategy-content {
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.car-strategy-panel {
+    flex-direction: column;
+    width: 300px;
+    padding: 14px;
+    background-color: #0a0a12;
+    border-color: #222;
+    border-width: 1px;
+    border-radius: 6px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+}
+
+.car-strat-name { font-size: 15px; color: #fff; -unity-font-style: bold; margin-bottom: 10px; }
+.strat-label { font-size: 12px; color: #666; margin-bottom: 4px; }
+.compound-selector, .fuel-selector { flex-direction: column; margin-bottom: 12px; }
+.compound-dropdown { font-size: 13px; }
+.fuel-slider { margin: 4px 0; }
+.fuel-val-label { font-size: 12px; color: #aaa; -unity-text-align: upper-right; }
+
+.strategy-hints { flex-direction: column; }
+.strategy-hint { font-size: 11px; color: #88aaff; margin-bottom: 3px; }
+
+.strategy-recommendations {
+    flex-direction: column;
+    width: 100%;
+    padding: 14px;
+    background-color: #0a0a12;
+    border-color: #222;
+    border-width: 1px;
+    border-radius: 6px;
+}
+
+.strat-list { flex-direction: column; margin-top: 8px; }
+.strat-item { flex-direction: row; padding: 6px 0; border-bottom-color: #1a1a24; border-bottom-width: 1px; }
+.strat-item-label { font-size: 13px; color: #ccc; flex-grow: 1; }
+.strat-item-badge { font-size: 11px; padding: 2px 8px; border-radius: 3px; }
+.strat-1stop { background-color: #1a3322; color: #44cc88; }
+.strat-2stop { background-color: #331a22; color: #cc4488; }
+
+/* ── Results ── */
+.results-podium {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    height: 120px;
+}
+
+.podium-place { flex-direction: column; align-items: center; padding: 8px 20px; }
+.podium-p1 { background-color: #1a1500; border-color: #ffcc00; border-width: 1px; border-radius: 4px; }
+.podium-p2 { background-color: #111118; border-color: #888; border-width: 1px; border-radius: 4px; }
+.podium-p3 { background-color: #110800; border-color: #cc6622; border-width: 1px; border-radius: 4px; }
+
+.podium-pos  { font-size: 28px; color: #ffcc00; -unity-font-style: bold; }
+.podium-name { font-size: 14px; color: #fff; margin-top: 4px; }
+.podium-team { font-size: 11px; color: #888; margin-top: 2px; }
+
+.results-list {
+    width: 100%;
+    height: 300px;
+    background-color: #0a0a12;
+    border-color: #222;
+    border-width: 1px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.result-row {
+    flex-direction: row;
+    padding: 7px 14px;
+    align-items: center;
+    border-bottom-color: #1a1a24;
+    border-bottom-width: 1px;
+}
+
+.result-pos  { width: 32px; font-size: 14px; -unity-font-style: bold; }
+.result-num  { width: 40px; font-size: 12px; color: #666; -unity-text-align: upper-center; }
+.result-name { width: 160px; font-size: 13px; }
+.result-team { width: 100px; font-size: 12px; color: #666; }
+.result-gap  { width: 90px; font-size: 12px; color: #888; -unity-text-align: upper-right; }
+.result-pts  { width: 50px; font-size: 13px; color: #ffcc00; -unity-font-style: bold; -unity-text-align: upper-right; }
+.result-fl   { width: 30px; font-size: 11px; color: #cc44ff; -unity-text-align: upper-center; }
+
+.constructor-points {
+    flex-direction: row;
+    padding: 10px;
+    background-color: #0a0a12;
+    border-color: #222;
+    border-width: 1px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+/* ── Shared confirm button ── */
+.confirm-button {
+    font-size: 15px;
+    -unity-font-style: bold;
+    letter-spacing: 2px;
+    padding: 12px 40px;
+    background-color: #0d2211;
+    color: #44ff88;
+    border-color: #44ff88;
+    border-width: 1px;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.confirm-button:hover { background-color: #1a3322; }
+
+.race-start { background-color: #3a0505; color: #ff4444; border-color: #ff4444; }
+.race-start:hover { background-color: #4a0808; }

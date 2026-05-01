@@ -1,0 +1,266 @@
+/* ── Autosport Manager 2027 — Race Screen Styles ── */
+
+.race-root {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0f;
+    color: #e0e0e0;
+}
+
+/* ── Top bar ── */
+.top-bar {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 12px;
+    background-color: #111118;
+    border-bottom-color: #333;
+    border-bottom-width: 1px;
+    height: 40px;
+}
+
+.lap-counter {
+    font-size: 16px;
+    color: #ffffff;
+    -unity-font-style: bold;
+    margin-right: 20px;
+}
+
+.sc-badge {
+    background-color: #e8a000;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-right: 12px;
+}
+
+.sc-badge Label { color: #000; -unity-font-style: bold; font-size: 12px; }
+
+.vsc-badge {
+    background-color: #2244cc;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-right: 12px;
+}
+
+.vsc-badge Label { color: #fff; -unity-font-style: bold; font-size: 12px; }
+
+.hidden { display: none; }
+
+.weather-section { flex-direction: row; align-items: center; margin-right: 20px; }
+.weather-icon { font-size: 18px; margin-right: 6px; }
+.weather-label { color: #aaccff; font-size: 13px; margin-right: 8px; }
+.temp-label { color: #cccccc; font-size: 12px; }
+
+.weather-forecast { flex-direction: row; align-items: center; }
+.forecast-label { color: #666; font-size: 11px; margin-right: 4px; }
+.forecast-icons { color: #88aaff; font-size: 13px; }
+
+/* ── Main content ── */
+.main-content {
+    flex-direction: row;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* ── Standings ── */
+.standings-panel {
+    width: 55%;
+    flex-direction: column;
+    padding: 8px;
+    border-right-color: #222;
+    border-right-width: 1px;
+}
+
+.panel-title {
+    color: #888;
+    font-size: 11px;
+    -unity-font-style: bold;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.standings-header {
+    flex-direction: row;
+    padding: 4px 2px;
+    border-bottom-color: #333;
+    border-bottom-width: 1px;
+    margin-bottom: 2px;
+}
+
+.col-pos { width: 28px; color: #666; font-size: 11px; }
+.col-num { width: 36px; color: #666; font-size: 11px; }
+.col-driver { width: 80px; color: #666; font-size: 11px; }
+.col-gap { width: 90px; color: #666; font-size: 11px; -unity-text-align: upper-right; }
+.col-tire { width: 60px; color: #666; font-size: 11px; }
+.col-pit { width: 28px; color: #666; font-size: 11px; -unity-text-align: upper-center; }
+.col-instr { width: 50px; color: #666; font-size: 11px; }
+.col-last { width: 80px; color: #666; font-size: 11px; -unity-text-align: upper-right; }
+
+.standings-list { flex-grow: 1; }
+
+/* Standings row */
+.standings-row {
+    flex-direction: row;
+    padding: 3px 2px;
+    align-items: center;
+}
+
+.standings-row:hover { background-color: #1a1a28; }
+.standings-row.player-row { background-color: #0d1a2a; }
+.standings-row.dnf-row { opacity: 0.45; }
+.standings-row.battle-row .label-gap { color: #ff4444; }
+
+.label-pos { width: 28px; font-size: 13px; color: #cccccc; -unity-font-style: bold; }
+.label-num { width: 36px; font-size: 12px; color: #888; -unity-text-align: upper-center; }
+.label-name { width: 80px; font-size: 13px; }
+.label-gap { width: 90px; font-size: 12px; color: #aaaaaa; -unity-text-align: upper-right; }
+.label-trend { width: 16px; font-size: 12px; -unity-text-align: upper-center; }
+.label-tire { width: 60px; font-size: 12px; }
+.label-pit { width: 28px; font-size: 12px; color: #777; -unity-text-align: upper-center; }
+.label-instr { width: 50px; font-size: 11px; }
+.label-last { width: 80px; font-size: 12px; color: #aaaaaa; -unity-text-align: upper-right; }
+
+/* Tire phase colours */
+.tire-plateau { color: #44dd44; }
+.tire-linear   { color: #ddcc44; }
+.tire-cliff    { color: #ff3333; }
+.tire-warmup   { color: #4488ff; }
+
+/* Instruction colours */
+.instr-attack  { color: #ff8844; }
+.instr-manage  { color: #888888; }
+.instr-defend  { color: #4488ff; }
+.instr-fuelsave{ color: #44bbff; }
+
+/* ── Right column ── */
+.right-column {
+    width: 45%;
+    flex-direction: column;
+    padding: 8px;
+}
+
+.player-panels {
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+/* Player car panel */
+.player-car-panel {
+    flex-direction: column;
+    border-color: #334;
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    background-color: #0d1020;
+}
+
+.player-car-panel.team-red    { border-color: #E8002D; }
+.player-car-panel.team-silver { border-color: #00D2BE; }
+.player-car-panel.team-orange { border-color: #FF8000; }
+.player-car-panel.team-blue   { border-color: #3B67A8; }
+
+.car-header { flex-direction: row; align-items: center; margin-bottom: 4px; }
+.car-name { font-size: 14px; color: #fff; -unity-font-style: bold; margin-right: 10px; }
+.car-position { font-size: 14px; color: #ffcc00; -unity-font-style: bold; }
+
+.car-gap-line { font-size: 12px; color: #aaaaaa; margin-bottom: 3px; }
+
+.tire-status-line { flex-direction: row; margin-bottom: 3px; }
+.tire-label { font-size: 12px; color: #cccccc; margin-right: 6px; }
+.tire-info { font-size: 12px; }
+.tire-warning { font-size: 12px; color: #ff4444; -unity-font-style: bold; }
+
+.sparkline-row { flex-direction: row; margin-bottom: 3px; }
+.sparkline-label { font-size: 11px; color: #888; margin-right: 6px; }
+.sparkline-chars { font-size: 13px; margin-right: 8px; }
+.sparkline-delta { font-size: 11px; }
+
+.sector-row { flex-direction: row; margin-bottom: 3px; }
+.sector-label { font-size: 11px; color: #888; margin-right: 6px; }
+.sector-s1 { font-size: 11px; margin-right: 4px; }
+.sector-sep { font-size: 11px; color: #444; margin-right: 4px; }
+.sector-s2 { font-size: 11px; margin-right: 4px; }
+.sector-s3 { font-size: 11px; }
+
+.fuel-row { flex-direction: row; margin-bottom: 3px; }
+.fuel-label { font-size: 11px; color: #888; margin-right: 6px; }
+.fuel-value { font-size: 12px; }
+.fuel-ok { color: #44dd44; }
+.fuel-warn { color: #ddcc44; }
+.fuel-critical { color: #ff4444; }
+
+.momentum-row { flex-direction: row; margin-bottom: 3px; }
+.momentum-label { font-size: 11px; color: #888; margin-right: 6px; }
+.momentum-zone { color: #00ff88; -unity-font-style: bold; }
+.momentum-good { color: #44dd44; }
+.momentum-bad  { color: #ff4444; }
+
+.tire-delta-row { flex-direction: row; margin-bottom: 3px; }
+.tire-delta-label { font-size: 11px; color: #888; margin-right: 6px; }
+.tire-delta-fresh { color: #44dd44; }
+.tire-delta-equal { color: #ddcc44; }
+.tire-delta-old   { color: #ff4444; }
+
+.engineer-advice { font-size: 11px; color: #88bbff; margin-top: 4px; margin-bottom: 3px; }
+
+.pit-projection { font-size: 11px; margin-top: 2px; }
+.proj-good   { color: #44dd44; }
+.proj-ok     { color: #ddcc44; }
+.proj-hard   { color: #aa4444; }
+
+/* Pit buttons */
+.pit-buttons { flex-direction: row; margin-top: 6px; flex-wrap: wrap; }
+.pit-button { margin-right: 4px; margin-bottom: 4px; font-size: 11px; padding: 3px 8px; }
+.pit-soft { background-color: #aa2200; color: #fff; }
+.pit-medium { background-color: #cc8800; color: #fff; }
+.pit-hard { background-color: #444; color: #fff; }
+
+/* ── Track map ── */
+.track-map-panel {
+    flex-direction: column;
+    border-color: #222;
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 8px;
+    background-color: #080810;
+}
+
+.track-map-art {
+    font-size: 11px;
+    color: #556677;
+    white-space: normal;
+    -unity-font-style: normal;
+}
+
+/* ── Bottom bar ── */
+.bottom-bar {
+    flex-direction: column;
+    height: 140px;
+    border-top-color: #222;
+    border-top-width: 1px;
+    background-color: #08080e;
+}
+
+.event-log {
+    flex-grow: 1;
+    padding: 4px 8px;
+}
+
+.event-log Label { font-size: 11px; color: #aaaaaa; }
+.event-player Label { color: #88ccff; }
+.event-warning Label { color: #ffcc44; }
+.event-info Label { color: #88ff88; }
+
+.command-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 10px;
+    border-top-color: #1a1a2a;
+    border-top-width: 1px;
+}
+
+.command-prompt { font-size: 12px; color: #666; margin-right: 8px; }
+.command-input { width: 200px; font-size: 12px; background-color: #111; color: #fff; }
+.confirm-btn { background-color: #1a4a1a; color: #44ff44; font-size: 12px; margin-left: 8px; padding: 4px 14px; }
+.ff-btn { background-color: #1a1a3a; color: #4488ff; font-size: 12px; margin-left: 6px; padding: 4px 10px; }

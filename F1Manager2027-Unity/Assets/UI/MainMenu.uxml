@@ -1,0 +1,83 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <Style src="MainMenu.uss" />
+
+    <ui:VisualElement name="root" class="menu-root">
+
+        <!-- Splash / header -->
+        <ui:VisualElement name="header" class="menu-header">
+            <ui:Label class="game-title" text="AUTOSPORT MANAGER" />
+            <ui:Label class="game-subtitle" text="2 0 2 7" />
+        </ui:VisualElement>
+
+        <!-- Team selection -->
+        <ui:VisualElement name="team-select-screen" class="screen active-screen">
+            <ui:Label class="screen-title" text="SELECT YOUR CONSTRUCTOR" />
+            <ui:ScrollView name="team-list" class="team-list" />
+            <ui:Button name="team-confirm-btn" class="confirm-button" text="CONFIRM TEAM" />
+        </ui:VisualElement>
+
+        <!-- Circuit selection -->
+        <ui:VisualElement name="circuit-select-screen" class="screen hidden-screen">
+            <ui:Label class="screen-title" text="SELECT CIRCUIT" />
+            <ui:VisualElement name="circuit-filters" class="circuit-filters">
+                <ui:Button name="filter-all" class="filter-btn active-filter" text="ALL" />
+                <ui:Button name="filter-pwr" class="filter-btn" text="PWR" />
+                <ui:Button name="filter-df" class="filter-btn" text="DF" />
+                <ui:Button name="filter-street" class="filter-btn" text="STREET" />
+            </ui:VisualElement>
+            <ui:ScrollView name="circuit-list" class="circuit-list" />
+            <ui:Button name="circuit-confirm-btn" class="confirm-button" text="CONFIRM CIRCUIT" />
+        </ui:VisualElement>
+
+        <!-- Pre-race strategy -->
+        <ui:VisualElement name="strategy-screen" class="screen hidden-screen">
+            <ui:Label class="screen-title" text="PRE-RACE STRATEGY" />
+            <ui:VisualElement name="strategy-content" class="strategy-content">
+                <!-- Car 1 -->
+                <ui:VisualElement name="car1-strategy" class="car-strategy-panel">
+                    <ui:Label name="car1-name" class="car-strat-name" text="Driver 1" />
+                    <ui:VisualElement class="compound-selector">
+                        <ui:Label class="strat-label" text="Starting Tyre:" />
+                        <ui:DropdownField name="car1-compound" class="compound-dropdown" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fuel-selector">
+                        <ui:Label class="strat-label" text="Fuel Load (kg):" />
+                        <ui:Slider name="car1-fuel" class="fuel-slider" low-value="85" high-value="110" value="105" />
+                        <ui:Label name="car1-fuel-val" class="fuel-val-label" text="105 kg" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="car1-strategy-hints" class="strategy-hints" />
+                </ui:VisualElement>
+                <!-- Car 2 -->
+                <ui:VisualElement name="car2-strategy" class="car-strategy-panel">
+                    <ui:Label name="car2-name" class="car-strat-name" text="Driver 2" />
+                    <ui:VisualElement class="compound-selector">
+                        <ui:Label class="strat-label" text="Starting Tyre:" />
+                        <ui:DropdownField name="car2-compound" class="compound-dropdown" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fuel-selector">
+                        <ui:Label class="strat-label" text="Fuel Load (kg):" />
+                        <ui:Slider name="car2-fuel" class="fuel-slider" low-value="85" high-value="110" value="105" />
+                        <ui:Label name="car2-fuel-val" class="fuel-val-label" text="105 kg" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="car2-strategy-hints" class="strategy-hints" />
+                </ui:VisualElement>
+                <!-- Recommended strategies -->
+                <ui:VisualElement name="strategy-recommendations" class="strategy-recommendations">
+                    <ui:Label class="strat-label" text="RECOMMENDED STRATEGIES" />
+                    <ui:VisualElement name="strat-list" class="strat-list" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button name="race-start-btn" class="confirm-button race-start" text="🏎 RACE START" />
+        </ui:VisualElement>
+
+        <!-- Race results screen -->
+        <ui:VisualElement name="results-screen" class="screen hidden-screen">
+            <ui:Label class="screen-title" text="RACE RESULT" />
+            <ui:VisualElement name="results-podium" class="results-podium" />
+            <ui:ScrollView name="results-list" class="results-list" />
+            <ui:VisualElement name="constructor-points" class="constructor-points" />
+            <ui:Button name="new-race-btn" class="confirm-button" text="NEW RACE" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

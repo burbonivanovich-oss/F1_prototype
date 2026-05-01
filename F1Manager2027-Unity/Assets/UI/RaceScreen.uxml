@@ -1,0 +1,77 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Template name="RaceScreen" src="RaceScreen.uxml" />
+    <Style src="RaceScreen.uss" />
+
+    <!-- Root container -->
+    <ui:VisualElement name="root" class="race-root">
+
+        <!-- Top bar: lap counter, weather, SC indicator -->
+        <ui:VisualElement name="top-bar" class="top-bar">
+            <ui:Label name="lap-counter" class="lap-counter" text="LAP 1 / 57" />
+            <ui:VisualElement name="sc-badge" class="sc-badge hidden">
+                <ui:Label name="sc-label" text="SAFETY CAR" />
+            </ui:VisualElement>
+            <ui:VisualElement name="vsc-badge" class="vsc-badge hidden">
+                <ui:Label name="vsc-label" text="VIRTUAL SC" />
+            </ui:VisualElement>
+            <ui:VisualElement name="weather-section" class="weather-section">
+                <ui:Label name="weather-icon" class="weather-icon" text="☀" />
+                <ui:Label name="weather-label" class="weather-label" text="DRY" />
+                <ui:Label name="temp-label" class="temp-label" text="28°C" />
+            </ui:VisualElement>
+            <ui:VisualElement name="weather-forecast" class="weather-forecast">
+                <ui:Label text="Forecast: " class="forecast-label" />
+                <ui:Label name="forecast-icons" text="☀ ☀ ☀ ☀ ☀" class="forecast-icons" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Main content: standings + player panel + track map -->
+        <ui:VisualElement name="main-content" class="main-content">
+
+            <!-- Left: Race standings -->
+            <ui:VisualElement name="standings-panel" class="standings-panel">
+                <ui:Label class="panel-title" text="STANDINGS" />
+                <ui:VisualElement name="standings-header" class="standings-header">
+                    <ui:Label class="col-pos" text="P" />
+                    <ui:Label class="col-num" text="#" />
+                    <ui:Label class="col-driver" text="DRIVER" />
+                    <ui:Label class="col-gap" text="GAP" />
+                    <ui:Label class="col-tire" text="TYRE" />
+                    <ui:Label class="col-pit" text="PIT" />
+                    <ui:Label class="col-instr" text="MODE" />
+                    <ui:Label class="col-last" text="LAST LAP" />
+                </ui:VisualElement>
+                <ui:ScrollView name="standings-list" class="standings-list" />
+            </ui:VisualElement>
+
+            <!-- Center-right: Player telemetry -->
+            <ui:VisualElement name="right-column" class="right-column">
+
+                <!-- Player car panels (up to 2) -->
+                <ui:VisualElement name="player-panels" class="player-panels">
+                    <!-- Dynamically populated by RaceViewController -->
+                </ui:VisualElement>
+
+                <!-- Track minimap -->
+                <ui:VisualElement name="track-map-panel" class="track-map-panel">
+                    <ui:Label class="panel-title" text="TRACK MAP" />
+                    <ui:Label name="track-map-art" class="track-map-art" text="" />
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Bottom: Event log + command input -->
+        <ui:VisualElement name="bottom-bar" class="bottom-bar">
+            <ui:ScrollView name="event-log" class="event-log" />
+            <ui:VisualElement name="command-row" class="command-row">
+                <ui:Label class="command-prompt" text="COMMAND:" />
+                <ui:TextField name="command-input" class="command-input" />
+                <ui:Button name="confirm-btn" class="confirm-btn" text="▶ ADVANCE" />
+                <ui:Button name="ff5-btn" class="ff-btn" text="FF ×5" />
+                <ui:Button name="ff10-btn" class="ff-btn" text="FF ×10" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
