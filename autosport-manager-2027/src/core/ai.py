@@ -191,6 +191,69 @@ class AIStrategyEngine:
         return min(30.0, to_add)  # Max realistic top-up is ~30 kg
 
 
+def pit_stop_projection(
+    car: "CarState",
+    sorted_cars: list["CarState"],
+    circuit: "Circuit",
+    available_dry: list[TireCompound],
+    laps_remaining: int,
+    pit_lane_loss_s: float = 22.0,
+) -> dict:
+    """
+    Project estimated position and recovery laps if car pits this lap.
+    Returns dict with keys: compound, position_after, position_before,
+    cars_lost, laps_to_recover, pace_gain_per_lap.
+    """
+    from .tire import tire_deg_penalty_s, best_compound_for_stint
+
+    if laps_remaining <= 1:
+        return {}
+
+    best_cmpd = best_compound_for_stint(available_dry, laps_remaining, circuit.tire_deg_multiplier)
+    cur_profile  = TIRE_PROFILES.get(car.tire_compound)
+    fresh_profile = TIRE_PROFILES.get(best_cmpd)
+
+    if not cur_profile or not fresh_profile:
+        return {}
+
+    cur_deg_pen = tire_deg_penalty_s(
+        cur_profile, car.tire_age_laps, circuit.tire_deg_multiplier, 80
+    )
+    fresh_cmpd_speed = best_cmpd.grip_advantage_s  # negative = faster
+    cur_cmpd_speed   = car.tire_compound.grip_advantage_s
+
+    pace_gain_per_lap = max(0.05, cur_deg_pen + (cur_cmpd_speed - fresh_cmpd_speed))
+
+    # Cars that drop ahead of us when we pit (within pit window)
+    cars_lost = sum(
+        1 for c in sorted_cars
+        if c.driver_id != car.driver_id
+        and not c.dnf
+        and c.position > car.position
+        and 0 <= (c.gap_to_leader_s - car.gap_to_leader_s) <= pit_lane_loss_s
+    )
+
+    position_after = car.position + cars_lost
+
+    # Laps to recover: need ~3.5s per car overtaken
+    if cars_lost == 0:
+        laps_to_recover = 0
+    else:
+        laps_to_recover = max(1, int(cars_lost * 3.5 / pace_gain_per_lap))
+
+    can_recover = laps_to_recover < laps_remaining - 2
+
+    return {
+        "compound": best_cmpd,
+        "position_before": car.position,
+        "position_after": position_after,
+        "cars_lost": cars_lost,
+        "laps_to_recover": laps_to_recover,
+        "pace_gain_per_lap": pace_gain_per_lap,
+        "can_recover": can_recover,
+    }
+
+
 def qualifying_time(
     base_lap_time_s: float,
     car_performance: int,

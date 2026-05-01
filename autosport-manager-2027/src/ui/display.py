@@ -18,6 +18,7 @@ from ..core.models import (
 )
 from ..core.tire import TIRE_PROFILES, get_tire_phase, optimal_tire_window_remaining
 from .track_map import render_track_map
+from ..core.ai import pit_stop_projection
 
 if TYPE_CHECKING:
     from ..data.drivers import Driver
@@ -173,6 +174,7 @@ def build_player_panel(
     drivers: dict,
     teams: dict,
     circuit: "Circuit",
+    available_compounds: list | None = None,
 ) -> Panel:
     player_cars = state.get_player_cars()
     if not player_cars:
@@ -262,6 +264,37 @@ def build_player_panel(
             else:
                 advice = Text("  ⚑ ENGINEER: All looks good. Stay out.", style="dim green")
             lines.append(advice)
+
+        # Strategy projection: pit now estimate
+        if available_compounds:
+            avail_dry = [c for c in available_compounds if c.is_dry]
+            laps_left = state.total_laps - state.current_lap
+            sorted_cars = state.sorted_cars()
+            proj = pit_stop_projection(car, sorted_cars, circuit, avail_dry, laps_left)
+            if proj:
+                strat_line = Text()
+                strat_line.append("  ⚑ Pit now: ", style="white")
+                cmpd = proj["compound"]
+                pos_after = proj["position_after"]
+                recover = proj["laps_to_recover"]
+                pos_before = proj["position_before"]
+                delta = pos_after - pos_before
+                if proj["cars_lost"] == 0:
+                    strat_line.append(
+                        f"P{pos_before}→P{pos_after} {cmpd.display_name} (clean stop!)",
+                        style="bold green"
+                    )
+                elif proj["can_recover"]:
+                    strat_line.append(
+                        f"P{pos_before}→P{pos_after} {cmpd.display_name} (+{delta}p), recover ~L{state.current_lap + recover}",
+                        style="yellow"
+                    )
+                else:
+                    strat_line.append(
+                        f"P{pos_before}→P{pos_after} {cmpd.display_name} (+{delta}p, hard to recover)",
+                        style="dim red"
+                    )
+                lines.append(strat_line)
 
         lines.append(Text(""))  # spacer between cars
 
@@ -445,10 +478,12 @@ def render_race_screen_rich(
     console.print()
 
     # Standings + player telemetry + track map side by side
+    from ..core.models import TireCompound
+    available_compounds = [TireCompound(n) for n in circuit.available_compounds]
     standings_table = build_standings_table(state, drivers, teams)
     standings_panel = Panel(standings_table, title="[bold]Live Standings[/]",
                             border_style="white", padding=(0, 0))
-    player_panel = build_player_panel(state, drivers, teams, circuit)
+    player_panel = build_player_panel(state, drivers, teams, circuit, available_compounds)
     weather_panel = build_weather_panel(state)
     track_panel   = build_track_map_panel(state, drivers, teams, circuit)
 
