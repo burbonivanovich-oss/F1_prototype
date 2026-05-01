@@ -119,6 +119,7 @@ def select_circuit(team: Team) -> Circuit:
         table.add_column("Overtake",width=9,  justify="center")
         table.add_column("Rain%",   width=6,  justify="center")
         table.add_column("Compounds",width=12)
+        table.add_column("Type",    width=8,  justify="center")
 
         for i, c in enumerate(CIRCUITS, 1):
             deg_label = ("LOW" if c.tire_deg_multiplier < 0.8
@@ -133,6 +134,17 @@ def select_circuit(team: Team) -> Circuit:
                 COMPOUND_DISPLAY[n][0] for n in c.available_compounds
             )
             street_tag = " [dim]⬛[/dim]" if c.is_street_circuit else ""
+            ps = c.power_sensitivity
+            if ps >= 0.75:
+                type_str = "[red]PWR[/]"
+            elif ps <= 0.25:
+                type_str = "[cyan]DF[/]"
+            elif ps >= 0.60:
+                type_str = "[yellow]PWR±[/]"
+            elif ps <= 0.40:
+                type_str = "[bright_cyan]DF±[/]"
+            else:
+                type_str = "[dim]BAL[/]"
             table.add_row(
                 str(i),
                 f"{c.name}{street_tag}",
@@ -142,6 +154,7 @@ def select_circuit(team: Team) -> Circuit:
                 f"[{ov_color}]{ov_label}[/]",
                 f"{c.rain_probability*100:.0f}%",
                 compounds,
+                type_str,
             )
 
         console.print(table)
@@ -250,7 +263,19 @@ def run_qualifying_screen(
 
     # ── Q1 ──────────────────────────────────────────────────────────────────────
     clear()
-    console.print(f"\n[bold]QUALIFYING[/]  {circuit.name}")
+    ps = circuit.power_sensitivity
+    if ps >= 0.75:
+        circ_type = "[bold red]POWER CIRCUIT[/] — PU advantage (Ferrari/Mercedes)"
+    elif ps <= 0.25:
+        circ_type = "[bold green]DOWNFORCE CIRCUIT[/] — Chassis advantage (Red Bull)"
+    elif ps >= 0.60:
+        circ_type = "[yellow]POWER-BIASED[/]"
+    elif ps <= 0.40:
+        circ_type = "[cyan]DOWNFORCE-BIASED[/]"
+    else:
+        circ_type = "[white]BALANCED[/]"
+
+    console.print(f"\n[bold]QUALIFYING[/]  {circuit.name}  {circ_type}")
     console.print(f"[dim]Q1: {len(all_drivers)} cars → 5 eliminated | Q2: 15 → 5 eliminated | Q3: 10 for pole[/]")
     console.print()
 
@@ -547,6 +572,10 @@ def show_race_result(
     table.add_column("Pts",    width=4, justify="center")
 
     pts_map = {1:25,2:18,3:15,4:12,5:10,6:8,7:6,8:4,9:2,10:1}
+    # Fastest lap bonus: +1 pt if holder finishes in top 10
+    fl_holder_id = state.fastest_lap_driver_id
+    fl_car = next((c for c in state.cars if c.driver_id == fl_holder_id), None)
+    fl_bonus_eligible = (fl_car and not fl_car.dnf and fl_car.position <= 10)
 
     sorted_cars = state.sorted_cars()
     leader_time = sorted_cars[0].total_race_time_s if sorted_cars else 0
@@ -559,6 +588,8 @@ def show_race_result(
 
         is_player = (team.id == player_team_id)
         pts = pts_map.get(car.position, 0) if not car.dnf else 0
+        if fl_bonus_eligible and car.driver_id == fl_holder_id:
+            pts += 1  # Fastest lap bonus point
 
         if car.dnf:
             time_str = f"DNF ({car.dnf_reason})"
@@ -573,9 +604,10 @@ def show_race_result(
             time_str = f"+{gap:.3f}s"
 
         row_style = "bold" if is_player else ""
+        fl_tag = " [bold magenta]FL[/]" if (fl_bonus_eligible and car.driver_id == fl_holder_id) else ""
         table.add_row(
             str(car.position),
-            f"[{team.color}]{driver.name}[/]",
+            f"[{team.color}]{driver.name}[/]{fl_tag}",
             team.name,
             str(car.laps_completed),
             time_str,
@@ -647,7 +679,10 @@ def show_race_result(
     for car in state.sorted_cars():
         t = teams.get(car.team_id)
         if t:
-            team_pts[t.id] = team_pts.get(t.id, 0) + (pts_map.get(car.position, 0) if not car.dnf else 0)
+            car_pts = pts_map.get(car.position, 0) if not car.dnf else 0
+            if fl_bonus_eligible and car.driver_id == fl_holder_id:
+                car_pts += 1
+            team_pts[t.id] = team_pts.get(t.id, 0) + car_pts
 
     pts_table = Table(box=box.SIMPLE, show_header=True, header_style="bold white", padding=(0, 1))
     pts_table.add_column("Team", width=28)
