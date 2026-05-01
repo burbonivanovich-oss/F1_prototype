@@ -161,6 +161,30 @@ namespace F1Manager
             return Math.Min(pRaw, P_CAP);
         }
 
+        /// <summary>
+        /// Direct sigmoid computation from pre-calculated inputs.
+        /// Used by tests and the player HUD to compute probability without full CarState objects.
+        /// </summary>
+        public static float ComputeSuccessProbability(
+            float skillDelta,
+            float paceDelta,
+            float tireAgeDelta,
+            bool  drsActive,
+            float trackDifficulty,
+            float defenderAggression)
+        {
+            double logit =
+                  W1_SKILL  * skillDelta
+                + W2_PACE   * paceDelta
+                + W3_TIRE   * (-tireAgeDelta)
+                + W4_DRS    * (drsActive ? 1f : 0f)
+                - W5_TRACK  * trackDifficulty
+                - W6_DEFEND * defenderAggression;
+
+            float pRaw = (float)(1.0 / (1.0 + Math.Exp(-logit)));
+            return Math.Min(pRaw, P_CAP);
+        }
+
         // ─────────────────────────────────────────────────────────────────────
         // Main resolver
         // ─────────────────────────────────────────────────────────────────────
