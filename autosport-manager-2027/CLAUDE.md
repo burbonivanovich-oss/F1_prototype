@@ -152,6 +152,44 @@ SWAP_DRIVERS executes position swap when tire delta ≥5 laps and gap <0.5s.
   positions clamped to ±3 from grid. ~4 notable start events per race.
 - Tire management affects degradation rate (already active since initial build).
 
+### Sector Times (`data/circuits.py`, `core/engine.py`, `ui/display.py`)
+Each circuit has `sector_splits: Tuple[float, float, float]` calibrated from real F1 pole data.
+S1/S2/S3 computed each lap with ±0.06s independent noise per sector.
+Player telemetry shows sectors colored: magenta=personal best, green=clean, yellow=slower, red=degrading.
+Monaco S2 = 40% of lap (tunnel), Hungary S2 = 44%, Monza S3 = 36% (Parabolica) — track identity is visible.
+
+### Race-Relative Compound Labels
+Standings table and telemetry show H/M/S based on which compound is hardest/softest for THIS circuit.
+At Monza (C2/C3/C4): the C4 column shows "S" not "M". At Monaco (C4/C5/C6): C4 shows "H".
+Pre-race screen shows "C4 — SOFT this weekend" style labels.
+
+### Circuit Power Sensitivity Model (`data/circuits.py`, `data/teams.py`, `core/engine.py`)
+Each team has `power_unit` (engine power, 84–97) and `chassis` (aero package, 73–99) sub-ratings.
+Each circuit has `power_sensitivity` (1.0=Monza/Baku, 0.10=Monaco/Singapore).
+Lap time formula: `car_gap -= (power_unit - 90) * ps * 0.015 + (chassis - 90) * (1-ps) * 0.015`
+Effect: ~±0.10s swing at extreme circuits. Ferrari wins Monza, Red Bull dominates Monaco.
+Circuit type badges (PWR/DF/BAL) shown in circuit selector and qualifying screen.
+
+### Driver Momentum System (`core/engine.py`)
+Successful overtake gives attacker a -0.10s pace bonus; defender gets +0.08s penalty.
+Exponential decay (×0.82/lap) returns to neutral in ~5 laps.
+Fastest lap holder sustains a -0.02s/lap sustained benefit.
+"Momentum" line in player telemetry: green "on form", bold green "IN THE ZONE", red "struggling".
+
+### Interactive Q1/Q2/Q3 Qualifying (`core/qualifying.py`, `ui/menu.py`)
+Full qualifying simulation before each race:
+- Q1 (20→15), Q2 (15→10), Q3 (10 cars, pole)
+- Track rubber evolution: +0.20s faster for last car in session vs first
+- Street circuit traffic: 15% chance of impeded lap at Monaco/Singapore
+- **Q2 compound rule**: Top 10 finishers must start race on their Q2 compound
+  (key strategic decision: use mediums in Q2 for better race start option)
+- Player compound choice per driver per session with grip delta shown
+- Timing table shows H/M/S labels, gaps, eliminated markers
+
+### Fastest Lap Bonus Point
+Real F1 rule: holder of fastest race lap scores +1 point, but only if they finish P1–P10.
+Magenta "FL" badge shown next to driver name in race results. Included in constructor totals.
+
 ## Tuning Parameters To Revisit
 
 | Parameter | Current | Flag | Location |
@@ -163,6 +201,8 @@ SWAP_DRIVERS executes position swap when tire delta ≥5 laps and gap <0.5s.
 | Tire CLIFF penalty multiplier | 0.3/lap in cliff | Tune for drama | tire.py |
 | Start score noise sigma | 6.0 | Tune for drama vs realism | engine.py |
 | Wet skill penalty multiplier | 0.0075 | Balance HAM advantage | engine.py |
+| Momentum decay rate | 0.82/lap | Balance drama vs stability | engine.py |
+| power_sensitivity lap time scale | 0.015s/pt | Circuit type gap width | engine.py |
 
 ## Known Prototype Limitations
 
