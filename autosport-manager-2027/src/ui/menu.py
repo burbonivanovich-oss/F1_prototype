@@ -160,6 +160,267 @@ def select_circuit(team: Team) -> Circuit:
             console.print("[red]Invalid input.[/]")
 
 
+def run_qualifying_screen(
+    team: Team,
+    circuit: Circuit,
+    all_drivers: dict,
+    all_teams: dict,
+    player_drivers: list[Driver],
+    rng,
+) -> "QualifyingResult":
+    """
+    Interactive Q1/Q2/Q3 qualifying screen.
+    Player chooses compound for their driver(s) before each session.
+    Returns QualifyingResult for use in race engine.
+    """
+    from ..core.qualifying import run_qualifying
+    from ..core.tire import TIRE_PROFILES
+
+    available_compounds = [TireCompound(n) for n in circuit.available_compounds]
+    avail_dry = [c for c in available_compounds if c.is_dry]
+    race_labels = ("HARD", "MEDIUM", "SOFT")
+    race_colors = ("white", "yellow", "red")
+
+    def _cmpd_label(c: TireCompound) -> str:
+        idx = avail_dry.index(c) if c in avail_dry else 0
+        return f"[{race_colors[idx]}]{c.name} ({race_labels[idx]})[/]"
+
+    def _fmt_time(t: float) -> str:
+        m = int(t // 60)
+        s = t % 60
+        return f"{m}:{s:06.3f}"
+
+    def _show_session(session, session_result, player_ids: set[int]) -> None:
+        """Display timing screen for a session."""
+        clear()
+        console.print(f"\n[bold]QUALIFYING — {session}[/]  {circuit.name}")
+        console.print()
+
+        table = Table(box=box.SIMPLE_HEAD, show_header=True, header_style="bold white")
+        table.add_column("P",      width=3, justify="right")
+        table.add_column("Driver", width=20)
+        table.add_column("Team",   width=6)
+        table.add_column("Tyre",   width=5)
+        table.add_column("Time",   width=10, justify="right")
+        table.add_column("Gap",    width=9, justify="right")
+        table.add_column("",       width=12)  # Status
+
+        laps = session_result.sorted_laps()
+        fastest = laps[0].time_s if laps else 0
+
+        for i, lap in enumerate(laps, 1):
+            d = all_drivers.get(lap.driver_id)
+            t = all_teams.get(d.team_id) if d else None
+            if not d or not t:
+                continue
+            is_player = lap.driver_id in player_ids
+            is_elim = lap.driver_id in session_result.eliminated
+
+            gap_str = "POLE" if i == 1 else f"+{lap.time_s - fastest:.3f}"
+            status = ""
+            row_style = ""
+
+            if is_elim:
+                status = "[red]ELIMINATED[/]"
+                row_style = "dim"
+            elif is_player:
+                status = f"[bold yellow]★ YOUR DRIVER[/]"
+                row_style = "bold"
+
+            if lap.traffic_impeded:
+                status += " [dim](traffic)[/]"
+
+            cmpd_idx = avail_dry.index(lap.compound) if lap.compound in avail_dry else 0
+            cmpd_str = f"[{race_colors[cmpd_idx]}]{race_labels[cmpd_idx][0]}[/]"  # H/M/S
+
+            table.add_row(
+                str(i),
+                f"[{t.color}]{d.short_name}[/]",
+                t.short_name,
+                cmpd_str,
+                _fmt_time(lap.time_s),
+                gap_str,
+                status,
+                style=row_style,
+            )
+
+        console.print(table)
+
+    player_ids = {d.id for d in player_drivers}
+
+    # ── Q1 ──────────────────────────────────────────────────────────────────────
+    clear()
+    console.print(f"\n[bold]QUALIFYING[/]  {circuit.name}")
+    console.print(f"[dim]Q1: {len(all_drivers)} cars → 5 eliminated | Q2: 15 → 5 eliminated | Q3: 10 for pole[/]")
+    console.print()
+
+    # Player compound choice for Q1
+    q1_compounds: dict[int, TireCompound] = {}
+    for driver in player_drivers:
+        console.print(f"[bold]{driver.name}[/] — Q1 compound:")
+        for idx, c in enumerate(avail_dry):
+            profile = TIRE_PROFILES.get(c)
+            bonus = f"[dim]({-profile.grip_bonus_s:+.2f}s grip)[/]" if profile else ""
+            console.print(f"  [{idx+1}] {_cmpd_label(c)}  {bonus}")
+        while True:
+            try:
+                choice = IntPrompt.ask(f"  Choice", default=len(avail_dry))
+                if 1 <= choice <= len(avail_dry):
+                    q1_compounds[driver.id] = avail_dry[choice - 1]
+                    break
+                console.print("[red]Invalid.[/]")
+            except (ValueError, KeyboardInterrupt):
+                break
+
+    try:
+        Prompt.ask("[dim]Press Enter to run Q1[/]", default="")
+    except EOFError:
+        pass
+
+    # Run Q1
+    partial_result = run_qualifying(
+        circuit, all_drivers, all_teams, team.id, rng,
+        player_q1_compounds=q1_compounds,
+    )
+    _show_session("Q1", partial_result.q1, player_ids)
+
+    # Show who was eliminated
+    elim_names = [all_drivers[did].short_name for did in partial_result.q1.eliminated
+                  if did in all_drivers]
+    console.print(f"\n[red]Q1 ELIMINATED: {', '.join(elim_names)}[/]")
+    console.print()
+
+    q1_survivors_set = {l.driver_id for l in partial_result.q1.sorted_laps()[:15]}
+    player_survived_q1 = any(d.id in q1_survivors_set for d in player_drivers)
+    if not player_survived_q1:
+        console.print("[bold red]❌ Your driver was ELIMINATED in Q1![/]")
+        try:
+            Prompt.ask("[dim]Press Enter to continue[/]", default="")
+        except EOFError:
+            pass
+        # Still run full qualifying for grid
+        full = run_qualifying(circuit, all_drivers, all_teams, team.id, rng,
+                              player_q1_compounds=q1_compounds)
+        return full
+
+    # ── Q2 ──────────────────────────────────────────────────────────────────────
+    console.print("[bold]Q2 COMPOUND STRATEGY[/]")
+    console.print("[dim]⚑ Top 10 finishers must start the race on their Q2 compound![/]")
+    console.print()
+
+    q2_compounds: dict[int, TireCompound] = {}
+    for driver in player_drivers:
+        if driver.id not in q1_survivors_set:
+            continue
+        console.print(f"[bold]{driver.name}[/] — Q2 compound:")
+        console.print("  [dim]Using SOFT = fastest in Q2, but must start race on softs[/]")
+        console.print("  [dim]Using MEDIUM = slightly slower but better race strategy (P6-10 only)[/]")
+        for idx, c in enumerate(avail_dry):
+            profile = TIRE_PROFILES.get(c)
+            bonus = f"[dim]({-profile.grip_bonus_s:+.2f}s grip)[/]" if profile else ""
+            console.print(f"  [{idx+1}] {_cmpd_label(c)}  {bonus}")
+        while True:
+            try:
+                choice = IntPrompt.ask(f"  Choice", default=len(avail_dry))
+                if 1 <= choice <= len(avail_dry):
+                    q2_compounds[driver.id] = avail_dry[choice - 1]
+                    break
+                console.print("[red]Invalid.[/]")
+            except (ValueError, KeyboardInterrupt):
+                break
+
+    try:
+        Prompt.ask("[dim]Press Enter to run Q2[/]", default="")
+    except EOFError:
+        pass
+
+    # Re-run qualifying with Q2 compound choices
+    partial_q2 = run_qualifying(
+        circuit, all_drivers, all_teams, team.id, rng,
+        player_q1_compounds=q1_compounds,
+        player_q2_compounds=q2_compounds,
+    )
+    _show_session("Q2", partial_q2.q2, player_ids)
+
+    elim_names_q2 = [all_drivers[did].short_name for did in partial_q2.q2.eliminated
+                     if did in all_drivers]
+    console.print(f"\n[red]Q2 ELIMINATED: {', '.join(elim_names_q2)}[/]")
+    console.print()
+
+    q2_survivors_set = {l.driver_id for l in partial_q2.q2.sorted_laps()[:10]}
+    player_survived_q2 = any(d.id in q2_survivors_set for d in player_drivers)
+    if not player_survived_q2:
+        console.print("[bold yellow]⚠ Your driver was ELIMINATED in Q2 — starts P11-15[/]")
+        try:
+            Prompt.ask("[dim]Press Enter to continue[/]", default="")
+        except EOFError:
+            pass
+        full = run_qualifying(circuit, all_drivers, all_teams, team.id, rng,
+                              player_q1_compounds=q1_compounds,
+                              player_q2_compounds=q2_compounds)
+        return full
+
+    # ── Q3 ──────────────────────────────────────────────────────────────────────
+    q3_compounds: dict[int, TireCompound] = {}
+    console.print("[bold]Q3 — SHOOTOUT FOR POLE[/]")
+    for driver in player_drivers:
+        if driver.id not in q2_survivors_set:
+            continue
+        console.print(f"[bold]{driver.name}[/] — Q3 compound (free choice, no race start restriction):")
+        for idx, c in enumerate(avail_dry):
+            profile = TIRE_PROFILES.get(c)
+            bonus = f"[dim]({-profile.grip_bonus_s:+.2f}s grip)[/]" if profile else ""
+            console.print(f"  [{idx+1}] {_cmpd_label(c)}  {bonus}")
+        while True:
+            try:
+                choice = IntPrompt.ask(f"  Choice", default=len(avail_dry))
+                if 1 <= choice <= len(avail_dry):
+                    q3_compounds[driver.id] = avail_dry[choice - 1]
+                    break
+                console.print("[red]Invalid.[/]")
+            except (ValueError, KeyboardInterrupt):
+                break
+
+    try:
+        Prompt.ask("[dim]Press Enter to run Q3[/]", default="")
+    except EOFError:
+        pass
+
+    # Full qualifying run with all compound choices
+    full_result = run_qualifying(
+        circuit, all_drivers, all_teams, team.id, rng,
+        player_q1_compounds=q1_compounds,
+        player_q2_compounds=q2_compounds,
+        player_q3_compounds=q3_compounds,
+    )
+    _show_session("Q3", full_result.q3, player_ids)
+    console.print()
+
+    # Final grid announcement
+    top3 = full_result.grid_order[:3]
+    pole = all_drivers.get(top3[0]) if top3 else None
+    if pole:
+        pole_t = all_teams.get(pole.team_id)
+        console.print(
+            f"[bold yellow]POLE POSITION: [{pole_t.color if pole_t else 'white'}]{pole.name}[/] "
+            f"({pole_t.name if pole_t else '?'})[/bold yellow]"
+        )
+    for driver in player_drivers:
+        grid_pos = (full_result.grid_order.index(driver.id) + 1
+                    if driver.id in full_result.grid_order else "?")
+        start_cmpd = full_result.q2_compound_map.get(driver.id)
+        cmpd_str = _cmpd_label(start_cmpd) if start_cmpd else "?"
+        console.print(f"[bold]{driver.name}[/] starts P{grid_pos} on {cmpd_str}")
+
+    console.print()
+    try:
+        Prompt.ask("[dim]Press Enter to continue to strategy[/]", default="")
+    except EOFError:
+        pass
+
+    return full_result
+
+
 def pre_race_strategy(
     team: Team,
     circuit: Circuit,

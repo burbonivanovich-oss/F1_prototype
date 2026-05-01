@@ -57,6 +57,7 @@ class RaceEngine:
         player_team_id: int,
         player_car_states: Optional[dict[int, dict]] = None,
         seed: Optional[int] = None,
+        qualifying_result=None,  # Optional[QualifyingResult] — pre-computed grid
     ):
         self.circuit = circuit
         self.teams = teams
@@ -87,6 +88,8 @@ class RaceEngine:
         # Engineer radio cooldown: maps (driver_id, category) → last lap sent
         self._radio_last: dict[tuple[int, str], int] = {}
 
+        self._qualifying_result = qualifying_result
+
         # Build initial race state (qualifying grid + car states)
         self.race_state = self._build_initial_state(player_car_states)
 
@@ -106,30 +109,41 @@ class RaceEngine:
         )
 
         # Qualifying simulation for grid order
-        from .ai import qualifying_time
-        grid_times: list[tuple[float, int]] = []
-        for driver in self.drivers.values():
-            if driver.team_id not in self.teams:
-                continue
-            team = self.teams[driver.team_id]
-            q_time = qualifying_time(
-                self.circuit.base_lap_time_s,
-                team.car_performance,
-                driver.pace,
-                self.circuit.circuit_length_km,
-                self.rng,
-            )
-            grid_times.append((q_time, driver.id))
-
-        grid_times.sort(key=lambda x: x[0])
+        if self._qualifying_result is not None:
+            # Use pre-computed qualifying result (from interactive qualifying screen)
+            grid_order_ids = self._qualifying_result.grid_order
+        else:
+            from .ai import qualifying_time
+            grid_times: list[tuple[float, int]] = []
+            for driver in self.drivers.values():
+                if driver.team_id not in self.teams:
+                    continue
+                team = self.teams[driver.team_id]
+                q_time = qualifying_time(
+                    self.circuit.base_lap_time_s,
+                    team.car_performance,
+                    driver.pace,
+                    self.circuit.circuit_length_km,
+                    self.rng,
+                    power_unit=team.power_unit,
+                    chassis=team.chassis,
+                    power_sensitivity=self.circuit.power_sensitivity,
+                )
+                grid_times.append((q_time, driver.id))
+            grid_times.sort(key=lambda x: x[0])
+            grid_order_ids = [driver_id for _, driver_id in grid_times]
 
         # Create car states in grid order
-        for grid_pos, (q_time, driver_id) in enumerate(grid_times, start=1):
+        for grid_pos, driver_id in enumerate(grid_order_ids, start=1):
             driver = self.drivers[driver_id]
             team   = self.teams[driver.team_id]
 
-            # Default starting compound (player override possible)
+            # Starting compound: Q2 compound rule for top 10 finishers, or player override
             default_compound = self.available_compounds[-1]  # Softest available
+            if self._qualifying_result and grid_pos <= 10:
+                q2_cmpd = self._qualifying_result.q2_compound_map.get(driver_id)
+                if q2_cmpd and q2_cmpd in self.available_compounds:
+                    default_compound = q2_cmpd
             if player_overrides and driver_id in player_overrides:
                 ov = player_overrides[driver_id]
                 default_compound = ov.get("compound", default_compound)

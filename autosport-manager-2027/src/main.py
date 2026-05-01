@@ -23,7 +23,7 @@ from src.core.engine import RaceEngine
 from src.ui.display import render_race_screen_rich, console
 from src.ui.menu import (
     splash_screen, select_team, select_circuit,
-    pre_race_strategy, show_race_result,
+    pre_race_strategy, show_race_result, run_qualifying_screen,
 )
 
 _console = Console()
@@ -182,26 +182,29 @@ def main() -> None:
     # Get player's drivers
     player_drivers = [d for d in DRIVERS if d.team_id == player_team.id]
 
-    # Pre-race strategy
-    overrides = pre_race_strategy(player_team, circuit, player_drivers)
-
-    # Apply fuel override if set
-    for driver in player_drivers:
-        if driver.id in overrides:
-            ov = overrides[driver.id]
-            # fuel_kg is set globally on CarState during engine init
-
     # All drivers participating (20 in total)
     all_drivers = {d.id: d for d in DRIVERS if not d.is_reserve}
     all_teams   = {t.id: t for t in TEAMS}
 
-    # Create the race engine
+    import random
+    rng = random.Random()
+
+    # Qualifying session (interactive Q1/Q2/Q3)
+    qualifying_result = run_qualifying_screen(
+        player_team, circuit, all_drivers, all_teams, player_drivers, rng
+    )
+
+    # Pre-race strategy (tire compound, fuel load)
+    overrides = pre_race_strategy(player_team, circuit, player_drivers)
+
+    # Create the race engine with qualifying result
     engine = RaceEngine(
         circuit=circuit,
         teams=all_teams,
         drivers=all_drivers,
         player_team_id=player_team.id,
         player_car_states=overrides,
+        qualifying_result=qualifying_result,
     )
 
     # Apply fuel load from strategy

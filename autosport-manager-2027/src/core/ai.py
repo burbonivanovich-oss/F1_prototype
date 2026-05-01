@@ -260,15 +260,24 @@ def qualifying_time(
     driver_pace: int,
     circuit_len_km: float,
     rng: random.Random,
+    power_unit: int = 90,
+    chassis: int = 90,
+    power_sensitivity: float = 0.50,
+    compound_bonus_s: float = 0.0,  # Softest compound = ~0 vs reference; harder = positive
 ) -> float:
     """
     Simulates a qualifying lap time for grid position.
-    Faster cars/drivers = smaller time = higher grid slot.
+    Uses circuit power_sensitivity to weight power_unit vs chassis contribution.
     """
-    # Car performance penalty: 97-rated car is ~0.12s off absolute best
-    car_gap  = (100 - car_performance) * 0.05
-    # Driver skill contributes ~0.5s across full range (50-100)
+    car_gap = (100 - car_performance) * 0.050
+    # Circuit-type adjustment (same model as race lap time)
+    ps = power_sensitivity
+    pu_adv   = (power_unit - 90) * ps * 0.015
+    aero_adv = (chassis - 90) * (1.0 - ps) * 0.015
+    car_gap -= (pu_adv + aero_adv)
+    # Driver skill: ±0.5s spread across 50–100 pace rating
     drv_gain = (driver_pace - 75) * 0.012
-    # Small random variation ±0.10s (tyre prep, traffic, perfect lap variance)
-    noise = rng.uniform(-0.10, 0.10)
-    return base_lap_time_s + car_gap - drv_gain + noise
+    # Tyre compound bonus (softer = faster on a quali lap)
+    # Random variation: qualifying lap variation is tight (~0.08s 1-sigma)
+    noise = rng.gauss(0, 0.08)
+    return base_lap_time_s + car_gap - drv_gain + compound_bonus_s + noise
