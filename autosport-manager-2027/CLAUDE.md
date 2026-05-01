@@ -110,6 +110,48 @@ q          Quit race
 - `documentation/technical/01_ARCHITECTURE_OVERVIEW_REVISED.md` — Lap-tick architecture, SnapshotBuffer, Unity integration plan
 - `documentation/ARCHITECTURE_DECISION_PHYSICS_VS_SIMPLIFIED.md` — Why hybrid sim was chosen
 
+## New Features Since Initial Build
+
+### ASCII Track Map (`ui/track_map.py`)
+All 24 circuits have normalized waypoint silhouettes rendered in a 40×15 ASCII minimap.
+Cars appear at their fractional track position (estimated from gap_to_leader / base_lap_time).
+Player cars shown as ★, all others as single car-number digit, colored by team.
+
+### Engineer Radio Messages (`core/engine.py` `_engineer_radio()`)
+Rate-limited contextual radio messages fire for player cars at key moments:
+tire warnings (4/2/1 laps before cliff, CLIFF itself), SC pit window, DRS attack/hunt,
+defend warning, fuel caution, final countdown (5/3/1 laps), podium/points encouragement,
+fastest lap within reach. ~0.75 messages per driver per lap.
+
+### Pit Stop Strategy Projection (`core/ai.py` `pit_stop_projection()`)
+Player panel shows real-time undercut analysis: if pitting now → estimated position,
+positions lost to cars within 22s gap, recovery lap. Green/yellow/red by recoverability.
+
+### Lap Time Sparkline (`ui/display.py` `_sparkline()`)
+Unicode block chars (▁▂▃▄▅▆▇█) visualize the last 20 lap times in the player panel,
+colored by tire phase. Shows `+Xs vs best` delta so tire fall-off is immediately visible.
+
+### Gap Trend Arrows
+Standings table shows ▲/▼/= per car based on 3-lap gap trend.
+Full gap_history[] stored for all 20 cars throughout the race.
+
+### Strategy Window Calculator (`core/tire.py` `compute_strategy_windows()`)
+Computes optimal 1-stop and 2-stop pit lap ranges per circuit using tire physics.
+Displayed in pre-race strategy screen. Circuit-specific: Monaco forces 2-stop (1.40x),
+Monza enables 1-stop hards (0.60x), Qatar requires 2-stop (1.45x).
+
+### Team Orders System
+`TeamOrder` enum: FREE_RACE, HOLD_GAP, SWAP_DRIVERS, PUSH_BOTH.
+Commands: `tohold`, `toswap`, `topush`, `tofree` during race.
+HOLD_GAP slows following car when within 1.5s of teammate.
+SWAP_DRIVERS executes position swap when tire delta ≥5 laps and gap <0.5s.
+
+### Driver Personality Differentiation
+- **Wet skill**: Scales weather lap-time penalty (HAM wet=98: 15% less penalty; STR wet=71: 6% more)
+- **Race start simulation**: Lap 1 start scoring from racecraft + experience + noise;
+  positions clamped to ±3 from grid. ~4 notable start events per race.
+- Tire management affects degradation rate (already active since initial build).
+
 ## Tuning Parameters To Revisit
 
 | Parameter | Current | Flag | Location |
@@ -119,6 +161,8 @@ q          Quit race
 | BASE_CRASH_PROB | 0.0015/lap | Monitor DNF rate | engine.py |
 | Safety car trigger probability | per-circuit | Monitor SC frequency | circuits.py |
 | Tire CLIFF penalty multiplier | 0.3/lap in cliff | Tune for drama | tire.py |
+| Start score noise sigma | 6.0 | Tune for drama vs realism | engine.py |
+| Wet skill penalty multiplier | 0.0075 | Balance HAM advantage | engine.py |
 
 ## Known Prototype Limitations
 
@@ -134,7 +178,7 @@ q          Quit race
 
 The prototype answers the spike questions from `prototypes/race-sim-spike/PLAN.md`:
 - **H1 (UI smoothness)**: Lap-by-lap tick with rich TUI renders cleanly at terminal width
-- **H3 (track projection)**: Not yet tested (2D/ASCII track map pending)
+- **H3 (track projection)**: ✅ 40×15 ASCII minimap for all 24 circuits with live car positions
 - **H2 (24-car budget)**: Python is well within budget for 20-car sim (sub-ms per lap)
 - **H4 (overtake quality)**: Sigmoid formula produces realistic ~15-70 overtakes per race by circuit type
 - **H5 (SnapshotBuffer)**: RaceState acts as the snapshot; clean separation between sim and display
