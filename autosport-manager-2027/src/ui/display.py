@@ -334,6 +334,22 @@ def build_player_panel(
         instr_line.append(car.instruction.value, style=instr_color)
         lines.append(instr_line)
 
+        # Momentum (morale modifier from overtakes/fastest lap)
+        morale = car.morale_modifier_s
+        if abs(morale) > 0.02:
+            if morale < -0.12:
+                mo_str, mo_style = f"IN THE ZONE ({morale:+.2f}s)", "bold green"
+            elif morale < -0.02:
+                mo_str, mo_style = f"on form ({morale:+.2f}s)", "green"
+            elif morale > 0.10:
+                mo_str, mo_style = f"struggling ({morale:+.2f}s)", "red"
+            else:
+                mo_str, mo_style = f"settling ({morale:+.2f}s)", "yellow"
+            mo_line = Text()
+            mo_line.append("  Momentum: ", style="white")
+            mo_line.append(mo_str, style=mo_style)
+            lines.append(mo_line)
+
         # ERS charge
         ers_bar = "█" * int(car.ers_charge_pct * 10) + "░" * (10 - int(car.ers_charge_pct * 10))
         ers_line = Text()

@@ -407,6 +407,9 @@ class RaceEngine:
         )
         self._apply_overtakes(state, ot_results)
 
+        # ── 7b. Update driver momentum after overtakes ────────────────────────
+        self._update_driver_momentum(state)
+
         # ── 8. Check incidents / crashes ──────────────────────────────────────
         self._check_incidents(state, lap)
 
@@ -478,8 +481,14 @@ class RaceEngine:
         """
         base = self.circuit.base_lap_time_s
 
-        # ── Car performance: relative to the absolute fastest car (97-rated) ──
+        # ── Car performance: overall baseline, then adjusted for circuit type ──
         car_gap = (100 - team.car_performance) * 0.055
+        # Circuit-sensitive performance: power_unit helps on power tracks, chassis on df tracks.
+        # Scale: 1-point delta = 0.015s when sensitivity=1.0; effect ≈ ±0.10s max at extreme circuits.
+        ps = self.circuit.power_sensitivity
+        pu_adv  = (team.power_unit - 90) * ps * 0.015
+        aero_adv = (team.chassis - 90) * (1.0 - ps) * 0.015
+        car_gap -= (pu_adv + aero_adv)
         base += car_gap
 
         # ── Driver pace: ±0.6s spread from 50–100 skill ───────────────────────
@@ -680,6 +689,23 @@ class RaceEngine:
             # Give attacker 0.05s gap ahead (clean pass)
             attacker.total_race_time_s = def_time - 0.05
             defender.total_race_time_s = max(def_time, att_time + 0.01)
+
+            # Momentum: attacker on a high, defender momentarily rattled
+            attacker.morale_modifier_s = max(-0.30, attacker.morale_modifier_s - 0.10)
+            defender.morale_modifier_s  = min( 0.25, defender.morale_modifier_s  + 0.08)
+
+    def _update_driver_momentum(self, state: "RaceState") -> None:
+        """Decay all drivers' morale modifiers toward 0 each lap (~halved every 5 laps)."""
+        for car in state.cars:
+            if car.dnf:
+                continue
+            # Fastest-lap holder gets a sustained small boost
+            if car.driver_id == state.fastest_lap_driver_id:
+                car.morale_modifier_s = max(-0.12, car.morale_modifier_s - 0.02)
+            # Exponential decay toward 0
+            car.morale_modifier_s *= 0.82
+            # Clamp to ±0.3s
+            car.morale_modifier_s = max(-0.30, min(0.25, car.morale_modifier_s))
 
     # ── Safety car ────────────────────────────────────────────────────────────
 

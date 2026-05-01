@@ -25,6 +25,9 @@ class Circuit:
     # Sector time fractions (must sum to ~1.0). Used for sector time display and track identity.
     # S1/S2/S3 proportions calibrated from pole lap sector data.
     sector_splits: Tuple[float, float, float] = (0.33, 0.34, 0.33)
+    # Power sensitivity: 1.0 = pure power circuit (Monza), 0.0 = pure downforce (Monaco)
+    # Modifies how much power_unit vs chassis rating affects lap time.
+    power_sensitivity: float = 0.50
 
 
 CIRCUITS: list[Circuit] = [
@@ -43,6 +46,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.28,
         sector_splits=(0.32, 0.36, 0.32),   # S2 abrasive stadium section
+        power_sensitivity=0.65,
     ),
     Circuit(
         name="Saudi Arabian Grand Prix",
@@ -59,6 +63,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.55,
         sector_splits=(0.35, 0.31, 0.34),   # S1 long high-speed blast
+        power_sensitivity=0.75,
     ),
     Circuit(
         name="Australian Grand Prix",
@@ -75,6 +80,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.50,
         sector_splits=(0.30, 0.38, 0.32),   # S2 through park circuit technical section
+        power_sensitivity=0.5,
     ),
     Circuit(
         name="Japanese Grand Prix",
@@ -91,6 +97,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.38,
         sector_splits=(0.30, 0.38, 0.32),   # S2 hairpin section; Suzuka S-curves in S1
+        power_sensitivity=0.55,
     ),
     Circuit(
         name="Chinese Grand Prix",
@@ -107,6 +114,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.32,
         sector_splits=(0.33, 0.34, 0.33),   # Balanced layout
+        power_sensitivity=0.55,
     ),
     Circuit(
         name="Miami Grand Prix",
@@ -123,6 +131,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.45,
         sector_splits=(0.31, 0.35, 0.34),   # S3 long back section
+        power_sensitivity=0.5,
     ),
     Circuit(
         name="Emilia Romagna Grand Prix",
@@ -139,6 +148,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.35,
         sector_splits=(0.33, 0.37, 0.30),   # S2 Villeneuve/Rivazza complex
+        power_sensitivity=0.45,
     ),
     Circuit(
         name="Monaco Grand Prix",
@@ -155,6 +165,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(4, 5, 6),
         safety_car_probability=0.70,
         sector_splits=(0.34, 0.40, 0.26),   # S2 tunnel+pool section; S3 Rascasse short
+        power_sensitivity=0.1,
     ),
     Circuit(
         name="Canadian Grand Prix",
@@ -171,6 +182,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.55,
         sector_splits=(0.34, 0.35, 0.31),   # S3 final straight run
+        power_sensitivity=0.6,
     ),
     Circuit(
         name="Spanish Grand Prix",
@@ -187,6 +199,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.25,
         sector_splits=(0.32, 0.35, 0.33),   # Balanced road circuit
+        power_sensitivity=0.45,
     ),
     Circuit(
         name="Austrian Grand Prix",
@@ -203,6 +216,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.30,
         sector_splits=(0.33, 0.33, 0.34),   # Compact circuit, balanced sectors
+        power_sensitivity=0.55,
     ),
     Circuit(
         name="British Grand Prix",
@@ -219,6 +233,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.28,
         sector_splits=(0.32, 0.34, 0.34),   # S3 Maggotts-Becketts complex
+        power_sensitivity=0.45,
     ),
     Circuit(
         name="Hungarian Grand Prix",
@@ -235,6 +250,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(4, 5, 6),
         safety_car_probability=0.25,
         sector_splits=(0.28, 0.44, 0.28),   # S2 dominates — long snake through stadium
+        power_sensitivity=0.2,
     ),
     Circuit(
         name="Belgian Grand Prix",
@@ -251,6 +267,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.35,
         sector_splits=(0.34, 0.31, 0.35),   # S1 Raidillon; S3 Blanchimont + Bus Stop
+        power_sensitivity=0.72,
     ),
     Circuit(
         name="Dutch Grand Prix",
@@ -267,6 +284,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(4, 5, 6),
         safety_car_probability=0.28,
         sector_splits=(0.31, 0.38, 0.31),   # S2 long banked turn section
+        power_sensitivity=0.4,
     ),
     Circuit(
         name="Italian Grand Prix",
@@ -283,6 +301,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(2, 3, 4),
         safety_car_probability=0.28,
         sector_splits=(0.30, 0.34, 0.36),   # S3 Parabolica to finish; Monza slipstream circuit
+        power_sensitivity=0.92,
     ),
     Circuit(
         name="Azerbaijan Grand Prix",
@@ -299,6 +318,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.65,
         sector_splits=(0.36, 0.32, 0.32),   # S1 long main straight + castle entry
+        power_sensitivity=0.8,
     ),
     Circuit(
         name="Singapore Grand Prix",
@@ -315,6 +335,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(4, 5, 6),
         safety_car_probability=0.72,
         sector_splits=(0.30, 0.40, 0.30),   # S2 dominates — long technical night circuit
+        power_sensitivity=0.15,
     ),
     Circuit(
         name="United States Grand Prix",
@@ -331,6 +352,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.32,
         sector_splits=(0.32, 0.35, 0.33),   # T1 hill crests into S-curves (S1)
+        power_sensitivity=0.5,
     ),
     Circuit(
         name="Mexico City Grand Prix",
@@ -347,6 +369,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.28,
         sector_splits=(0.35, 0.32, 0.33),   # S1 long Eje 5 Norte straight
+        power_sensitivity=0.65,
     ),
     Circuit(
         name="São Paulo Grand Prix",
@@ -363,6 +386,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.38,
         sector_splits=(0.32, 0.37, 0.31),   # S2 Mergulho/Pinheirinho section
+        power_sensitivity=0.5,
     ),
     Circuit(
         name="Las Vegas Grand Prix",
@@ -379,6 +403,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.45,
         sector_splits=(0.36, 0.30, 0.34),   # S1 Strip blasts; S2 tight middle complex
+        power_sensitivity=0.78,
     ),
     Circuit(
         name="Qatar Grand Prix",
@@ -395,6 +420,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.25,
         sector_splits=(0.33, 0.34, 0.33),   # High-speed; balanced sectors
+        power_sensitivity=0.58,
     ),
     Circuit(
         name="Abu Dhabi Grand Prix",
@@ -411,6 +437,7 @@ CIRCUITS: list[Circuit] = [
         available_compounds=(3, 4, 5),
         safety_car_probability=0.22,
         sector_splits=(0.32, 0.36, 0.32),   # S2 technical marina section
+        power_sensitivity=0.52,
     ),
 ]
 
