@@ -75,6 +75,19 @@ def _gap_str(gap: float, laps_behind: bool = False) -> str:
     return f"+{gap:.3f}"
 
 
+def _gap_trend(car, state: RaceState) -> str:
+    """Arrow showing whether gap to leader grew/shrunk over last 3 laps."""
+    if len(car.gap_history) < 3 or car.gap_to_leader_s == 0:
+        return " "
+    recent = car.gap_history[-3:]
+    delta = recent[-1] - recent[0]
+    if delta < -0.5:
+        return "[green]▲[/]"  # gaining on leader
+    if delta > 0.5:
+        return "[red]▼[/]"   # losing to leader
+    return "[dim]=[/]"
+
+
 def _weather_icon(cond: WeatherCondition) -> str:
     icons = {
         WeatherCondition.DRY:         "☀  DRY",
@@ -124,6 +137,7 @@ def build_standings_table(
     table.add_column("Driver", width=4)
     table.add_column("Team",   width=4)
     table.add_column("Gap",    width=10, justify="right")
+    table.add_column("▲▼",    width=2, justify="center")
     table.add_column("Tyre",   width=6)
     table.add_column("Pit",    width=3, justify="center")
     table.add_column("Instr",  width=5)
@@ -166,12 +180,15 @@ def build_standings_table(
         dnf_style = "dim" if car.dnf else ""
         final_style = f"{row_style} {dnf_style}".strip() or None
 
+        trend = _gap_trend(car, state) if not car.dnf else " "
+
         table.add_row(
             pos_str,
             str(car.car_number),
             f"[{team.color}]{driver.short_name}[/]",
             team.short_name,
             gap_s,
+            trend,
             tire_text,
             str(car.pit_stop_count),
             f"[{instr_color}]{instr_str}[/]",

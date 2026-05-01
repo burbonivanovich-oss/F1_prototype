@@ -266,9 +266,10 @@ class RaceEngine:
         self._update_positions(state)
         self._compute_gaps(state)
 
-        # ── 9b. Record gap history for player car charts ─────────────────────
-        for car in state.get_player_cars():
-            car.gap_history.append(car.gap_to_leader_s)
+        # ── 9b. Record gap history for all cars (sparkline + trend arrows) ───
+        for car in state.cars:
+            if not car.dnf:
+                car.gap_history.append(car.gap_to_leader_s)
 
         # ── 10. AI: choose next instruction ──────────────────────────────────
         self._update_ai_instructions(state)
