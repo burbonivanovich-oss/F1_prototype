@@ -233,6 +233,9 @@ class RaceEngine:
             car.total_race_time_s += lap_time
             car.laps_completed += 1
 
+            # Record history for sparkline display
+            car.lap_times.append(lap_time)
+
             # Track fastest lap
             if lap_time < state.fastest_lap_time_s:
                 state.fastest_lap_time_s = lap_time
@@ -262,6 +265,10 @@ class RaceEngine:
         # ── 9. Recompute positions & gaps ──────────────────────────────────────
         self._update_positions(state)
         self._compute_gaps(state)
+
+        # ── 9b. Record gap history for player car charts ─────────────────────
+        for car in state.get_player_cars():
+            car.gap_history.append(car.gap_to_leader_s)
 
         # ── 10. AI: choose next instruction ──────────────────────────────────
         self._update_ai_instructions(state)

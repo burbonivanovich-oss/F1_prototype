@@ -30,6 +30,21 @@ console = Console()
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
 
+_SPARK_CHARS = " ▁▂▃▄▅▆▇█"
+
+def _sparkline(values: list[float], width: int = 18) -> str:
+    """Convert a list of floats to a Unicode sparkline string."""
+    if len(values) < 2:
+        return "─" * width
+    recent = values[-width:]
+    lo, hi = min(recent), max(recent)
+    span = hi - lo
+    if span < 0.01:
+        return "▄" * len(recent)
+    normalized = [(v - lo) / span for v in recent]
+    return "".join(_SPARK_CHARS[int(n * (len(_SPARK_CHARS) - 1))] for n in normalized)
+
+
 def _tire_color(phase: TirePhase, deg_pct: float) -> str:
     if phase == TirePhase.WARM_UP:
         return "cyan"
@@ -229,6 +244,23 @@ def build_player_panel(
         else:
             tire_line.append(f"  ({window} laps window)", style="dim")
         lines.append(tire_line)
+
+        # Lap time sparkline (tire degradation trend)
+        if len(car.lap_times) >= 3:
+            spark = _sparkline(car.lap_times, width=20)
+            spark_color = _tire_color(phase, car.tire_deg_pct)
+            spark_line = Text()
+            spark_line.append("  Pace: ", style="white")
+            spark_line.append(spark, style=spark_color)
+            stint_start = max(0, len(car.lap_times) - car.tire_age_laps)
+            stint_times = car.lap_times[stint_start:]
+            if len(stint_times) >= 3:
+                best_s = min(stint_times)
+                last_s = stint_times[-1]
+                delta = last_s - best_s
+                delta_style = "green" if delta < 0.3 else ("yellow" if delta < 1.0 else "red")
+                spark_line.append(f"  +{delta:.2f}s vs best", style=delta_style)
+            lines.append(spark_line)
 
         # Fuel
         fuel_laps = car.fuel_kg / circuit.fuel_consumption_kg

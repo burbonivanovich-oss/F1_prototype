@@ -135,6 +135,10 @@ class CarState:
     ers_charge_pct: float = 0.80  # 0–1; deployed on overtake/defend
     ers_deploy_mode: str = "MEDIUM"  # LOW | MEDIUM | HIGH
 
+    # Historical data (for sparkline charts)
+    lap_times: list[float] = field(default_factory=list)    # every lap time logged
+    gap_history: list[float] = field(default_factory=list)  # gap to leader each lap
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Race-level state
