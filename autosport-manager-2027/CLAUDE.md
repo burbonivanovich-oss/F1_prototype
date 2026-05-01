@@ -22,7 +22,7 @@ autosport-manager-2027/
       drivers.py            20 drivers + 2 reserves with individual ratings
     core/
       models.py             All enums and dataclasses (TireCompound, CarState, RaceState, etc.)
-      tire.py               3-phase tire degradation model (PLATEAU → LINEAR → CLIFF)
+      tire.py               4-phase tire degradation model (WARM_UP → PLATEAU → LINEAR → CLIFF)
       weather.py            Weather state machine with 5-lap forecast
       overtake.py           Sigmoid overtake formula from GDD §08_TUNING_OVERTAKE_TIRE_v0
       ai.py                 AI pit decisions, compound selection, driver instructions
@@ -224,9 +224,8 @@ Player telemetry panel shows `Tyre Δ: P{n}:{±laps}` for the cars immediately a
 2. **No save/load**: Each run is fresh
 3. **20 cars not 24**: Prototype uses 20 drivers (2 per 10 teams)
 4. **Pit lane time fixed**: 20s pit lane loss is a constant approximation
-5. **No qualifying replay**: Qualifying is simulated procedurally (no player control)
-6. **No sprint format**: Only traditional race weekend
-7. **Weather forecast shows condition only**: No rain intensity forecast
+5. **No sprint format**: Only traditional race weekend
+6. **Weather forecast shows condition only**: No rain intensity forecast
 
 ## Development Notes
 
