@@ -417,6 +417,74 @@ def build_event_log(state: RaceState, max_events: int = 10) -> Panel:
     return Panel(content, title="Race Events", border_style="dim white", padding=(0, 1))
 
 
+# ─── Gap chart panel ─────────────────────────────────────────────────────────
+
+def build_gap_chart(
+    state: RaceState,
+    drivers: dict,
+    teams: dict,
+    window: int = 20,
+) -> Panel:
+    """
+    Mini ASCII chart showing gap-to-leader evolution for player cars.
+    Last `window` laps, y-axis = 0s (top) to max_gap (bottom).
+    """
+    player_cars = state.get_player_cars()
+    if not player_cars:
+        return Panel("[dim]No data[/]", title="Gap Chart", border_style="dim")
+
+    lines: list[Text] = []
+
+    for car in player_cars:
+        driver = drivers.get(car.driver_id)
+        team = teams.get(car.team_id)
+        if not driver or not car.gap_history:
+            continue
+
+        history = car.gap_history[-window:]
+        name_str = f"{driver.short_name} #{car.car_number}"
+        color = team.color if team else "white"
+
+        # Build sparkline of gap to leader
+        # For player in P1: gap=0 always; show gap from behind them instead
+        # Use inverted sparkline: higher gap = lower bar (further back)
+        valid = [g for g in history if g < 9000]
+        if not valid:
+            continue
+
+        spark = _sparkline(valid, width=min(window, len(valid)))
+
+        line = Text()
+        line.append(f"  {name_str} P{car.position}: ", style=color)
+        line.append(spark, style=color)
+
+        last_gap = valid[-1]
+        if car.position == 1:
+            line.append("  LEADER", style="bold green")
+        else:
+            # Gap trend over last 5 laps
+            if len(valid) >= 5:
+                trend = valid[-1] - valid[-5]
+                if trend < -0.5:
+                    line.append(f"  +{last_gap:.1f}s ▲{abs(trend):.1f}", style="green")
+                elif trend > 0.5:
+                    line.append(f"  +{last_gap:.1f}s ▼{trend:.1f}", style="red")
+                else:
+                    line.append(f"  +{last_gap:.1f}s =", style="dim")
+            else:
+                line.append(f"  +{last_gap:.1f}s", style="white")
+        lines.append(line)
+
+    if not lines:
+        content = Text("[dim]Waiting for data...[/dim]")
+    else:
+        lap_range = f"L{max(1, state.current_lap - window + 1)}–L{state.current_lap}"
+        header = Text(f"  Gap to leader  ({lap_range})", style="dim")
+        content = Text("\n").join([header] + lines)
+
+    return Panel(content, title="Gap Evolution", border_style="dim blue", padding=(0, 1))
+
+
 # ─── Controls help panel ──────────────────────────────────────────────────────
 
 def build_controls_panel(player_cars: list[CarState], drivers: dict) -> Panel:
@@ -545,7 +613,10 @@ def render_race_screen_rich(
     ))
 
     console.print()
-    console.print(build_event_log(state, max_events=8))
+    # Gap chart + event log side by side
+    gap_panel  = build_gap_chart(state, drivers, teams)
+    event_panel = build_event_log(state, max_events=8)
+    console.print(Columns([gap_panel, event_panel], equal=False, expand=True, padding=(0, 1)))
     console.print()
     player_cars = state.get_player_cars()
     if player_cars:
