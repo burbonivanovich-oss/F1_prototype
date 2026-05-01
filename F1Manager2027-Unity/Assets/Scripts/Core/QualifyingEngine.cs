@@ -20,8 +20,12 @@ namespace F1Manager
     public class SessionResult
     {
         public int                 Part;
+        /// <summary>All individual lap records logged during the session.</summary>
         public List<QualifyingLap> Laps = new List<QualifyingLap>();
         public List<int>           EliminatedDriverIDs = new List<int>();
+
+        /// <summary>Best lap per driver, sorted fastest first. Alias for compatibility with spec.</summary>
+        public List<QualifyingLap> Results => BestLaps();
 
         public List<QualifyingLap> BestLaps()
         {
@@ -111,13 +115,52 @@ namespace F1Manager
             return result;
         }
 
-        public float RunLapForDriver(int driverID, TireCompound compound,
-            int lapIndex, int totalLaps, int sessionPart)
+        // ── Public per-driver lap (for interactive UI use) ─────────────────────
+
+        /// <summary>
+        /// Simulates the player's qualifying lap interactively.
+        /// Mirrors the spec's RunQualifyingLapForDriver signature for UI integration.
+        /// </summary>
+        /// <param name="driverID">Driver taking the lap.</param>
+        /// <param name="compound">Compound chosen for this attempt.</param>
+        /// <param name="sessionPart">Session part (1/2/3) — affects track evolution baseline.</param>
+        public float RunQualifyingLapForDriver(int driverID, TireCompound compound, int sessionPart)
         {
-            if (!_drivers.TryGetValue(driverID, out var drv)) return 99f;
-            if (!_teams.TryGetValue(drv.teamID, out var team)) return 99f;
-            return SimulateLap(drv, team, compound, lapIndex, totalLaps, sessionPart);
+            if (!_drivers.TryGetValue(driverID, out var drv))  return 9999f;
+            if (!_teams.TryGetValue(drv.teamID,  out var team)) return 9999f;
+
+            // Mid-session lap: use a mid-point lap index in a 20-lap session window
+            float evoBase;
+            switch (sessionPart)
+            {
+                case 2:  evoBase = -0.05f; break;
+                case 3:  evoBase = -0.10f; break;
+                default: evoBase =  0.00f; break;
+            }
+            return SimulateLap(drv, team, compound, lapIdx: 10, totalLaps: 20, part: sessionPart)
+                   + evoBase;
         }
+
+        // ── Public lap time formula (exposed for UI compound comparison) ────────
+
+        /// <summary>
+        /// Returns a simulated qualifying lap time for the given driver, team, and compound.
+        /// Track evolution is applied based on <paramref name="lapIndex"/> position in the session.
+        /// </summary>
+        /// <param name="driver">Driver stats.</param>
+        /// <param name="team">Team/car stats.</param>
+        /// <param name="compound">Tyre compound used.</param>
+        /// <param name="lapIndex">Zero-based run order position (0 = first car out, n = last).</param>
+        /// <param name="totalLapsInSession">Total lap slots in the session for evo scaling.</param>
+        public float SimulateQualifyingLap(
+            DriverInfo   driver,
+            TeamInfo     team,
+            TireCompound compound,
+            int          lapIndex,
+            int          totalLapsInSession)
+            => SimulateLap(driver, team, compound, lapIndex, totalLapsInSession, part: 1);
+
+        // ─────────────────────────────────────────────────────────────────────
 
         private SessionResult RunSession(int part, List<int> ids, List<TireCompound> dry)
         {
