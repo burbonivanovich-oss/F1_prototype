@@ -172,6 +172,78 @@ class RaceEngine:
             is_player_event=True,
         ))
 
+    def _simulate_race_start(self, state: "RaceState") -> None:
+        """
+        Simulate lights-out launch. Each car gets a tiny grid-spread starting offset
+        so race times differ. Then we apply start scores to shuffle positions.
+        """
+        grid_order = state.sorted_cars()
+        grid_positions = {c.driver_id: c.position for c in grid_order}
+
+        # Apply small starting offsets so gap computation makes sense from lap 1
+        # Each grid position = 0.15s further back (realistic for a 200m grid spread)
+        for car in grid_order:
+            car.total_race_time_s = (car.position - 1) * 0.15
+
+        # Compute start score per car
+        start_scores: list[tuple[float, "CarState"]] = []
+        for car in grid_order:
+            driver = self.drivers.get(car.driver_id)
+            if not driver:
+                continue
+            score = (
+                driver.racecraft * 0.45
+                + min(driver.experience, 15) * 1.8
+                + self.rng.gauss(0, 6)  # Tighter noise → fewer extreme starts
+            )
+            start_scores.append((score, car, car.position))
+
+        # Sort by score (higher = gained more at start)
+        start_scores.sort(key=lambda x: -x[0])
+
+        # Assign new time offsets based on start rank (with tiebreaker noise)
+        for new_rank, (score, car, original_pos) in enumerate(start_scores, 1):
+            # Clamp: max 3 positions gain at start
+            clamped_rank = max(original_pos - 3, min(original_pos + 3, new_rank))
+            # Small noise prevents exact ties while preserving order
+            car.total_race_time_s = (clamped_rank - 1) * 0.15 + self.rng.uniform(0, 0.03)
+
+        # Update positions
+        self._update_positions(state)
+        self._compute_gaps(state)
+
+        # Hard-clamp actual deltas to ±3 (resolve cascading effects)
+        needs_recheck = False
+        for car in state.cars:
+            old_q = grid_positions.get(car.driver_id, car.position)
+            if abs(car.position - old_q) > 3:
+                car.total_race_time_s = (old_q - 1 + self.rng.uniform(-2, 2)) * 0.15
+                needs_recheck = True
+        if needs_recheck:
+            self._update_positions(state)
+            self._compute_gaps(state)
+
+        # Log notable starts (≥2 position change)
+        for car in state.sorted_cars():
+            driver = self.drivers.get(car.driver_id)
+            if not driver:
+                continue
+            old_q = grid_positions.get(car.driver_id, car.position)
+            delta = old_q - car.position
+            is_player = car.team_id == self.player_team_id
+            if delta >= 3:
+                state.events.append(RaceEvent(
+                    1, driver.name, "INFO",
+                    f"🟢 {driver.short_name} rocket start! +{delta} (P{old_q}→P{car.position})",
+                    is_player_event=is_player,
+                ))
+            elif delta <= -3:
+                state.events.append(RaceEvent(
+                    1, driver.name, "INFO",
+                    f"🔴 {driver.short_name} poor start: P{old_q}→P{car.position}",
+                    is_player_event=is_player,
+                ))
+
     def _apply_team_orders(self, state: "RaceState") -> None:
         order = state.team_order
         if order is None or order == TeamOrder.FREE_RACE:
@@ -222,6 +294,10 @@ class RaceEngine:
 
         if state.is_race_complete:
             return state
+
+        # ── 0. Lap 1 race start ───────────────────────────────────────────────
+        if lap == 1:
+            self._simulate_race_start(state)
 
         # ── 1. Weather update ────────────────────────────────────────────────
         weather_msgs = self.weather_sys.advance(lap)
@@ -422,8 +498,12 @@ class RaceEngine:
             # grip_bonus_s is negative for softs (faster) positive for hards (slower)
             base -= profile.compound.grip_advantage_s  # subtract: faster=more negative
 
-        # ── Weather penalty ───────────────────────────────────────────────────
+        # ── Weather penalty — scaled by driver wet skill ─────────────────────
         weather_pen = self.weather_sys.lap_time_weather_penalty_s(car.tire_compound)
+        if weather_pen > 0:
+            # wet_skill 80 = baseline; 98 (HAM) = 15% less penalty; 70 (STR) = 6% more
+            wet_mod = 1.0 - (driver.wet_skill - 80) * 0.0075
+            weather_pen *= max(0.60, min(1.40, wet_mod))
         base += weather_pen
 
         # ── Driver instruction modifier ───────────────────────────────────────
