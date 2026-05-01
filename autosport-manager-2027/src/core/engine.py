@@ -348,10 +348,15 @@ class RaceEngine:
             fuel_consumed = self.circuit.fuel_consumption_kg * fuel_multiplier
             car.fuel_kg = max(0.1, car.fuel_kg - fuel_consumed)
 
-            # Safety car: all cars drive slowly, no real racing
+            # Safety car: all cars drive slowly, field compresses
             if state.safety_car in (SafetyCarState.DEPLOYED, SafetyCarState.VSC):
                 sc_mult = SC_PACE_MULTIPLIER if state.safety_car == SafetyCarState.DEPLOYED else 1.30
                 base_time = self.circuit.base_lap_time_s * sc_mult
+                # Under full SC: compress field — cars behind close up toward the train.
+                # Each SC lap, gap_to_leader shrinks by 18% (bounded at 1.0s minimum).
+                if state.safety_car == SafetyCarState.DEPLOYED and car.gap_to_leader_s > 1.0:
+                    compression = car.gap_to_leader_s * 0.18
+                    car.total_race_time_s -= compression
                 car.last_lap_time_s = base_time + self.rng.uniform(-0.1, 0.1)
                 car.total_race_time_s += car.last_lap_time_s
                 car.laps_completed += 1
