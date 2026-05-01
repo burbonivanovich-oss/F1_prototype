@@ -17,6 +17,7 @@ from ..core.models import (
     SafetyCarState, RaceState, CarState,
 )
 from ..core.tire import TIRE_PROFILES, get_tire_phase, optimal_tire_window_remaining
+from .track_map import render_track_map
 
 if TYPE_CHECKING:
     from ..data.drivers import Driver
@@ -277,6 +278,23 @@ def build_player_panel(
     )
 
 
+# ─── Track map panel ─────────────────────────────────────────────────────────
+
+def build_track_map_panel(
+    state: RaceState,
+    drivers: dict,
+    teams: dict,
+    circuit: "Circuit",
+) -> Panel:
+    map_text = render_track_map(circuit, state, drivers, teams)
+    return Panel(
+        map_text,
+        title=f"[dim]{circuit.name.split(' Grand Prix')[0]}[/]",
+        border_style="dim",
+        padding=(0, 1),
+    )
+
+
 # ─── Weather panel ────────────────────────────────────────────────────────────
 
 def build_weather_panel(state: RaceState) -> Panel:
@@ -426,16 +444,18 @@ def render_race_screen_rich(
     )
     console.print()
 
-    # Standings + player telemetry side by side
+    # Standings + player telemetry + track map side by side
     standings_table = build_standings_table(state, drivers, teams)
     standings_panel = Panel(standings_table, title="[bold]Live Standings[/]",
                             border_style="white", padding=(0, 0))
     player_panel = build_player_panel(state, drivers, teams, circuit)
     weather_panel = build_weather_panel(state)
+    track_panel   = build_track_map_panel(state, drivers, teams, circuit)
 
-    # Rich doesn't support true side-by-side without Layout; use Columns workaround
+    right_col = Columns([player_panel, Columns([track_panel, weather_panel], equal=False)],
+                        equal=False)
     console.print(Columns(
-        [standings_panel, Columns([player_panel, weather_panel], equal=False)],
+        [standings_panel, right_col],
         equal=False, expand=True, padding=(0, 2)
     ))
 
