@@ -190,6 +190,20 @@ Full qualifying simulation before each race:
 Real F1 rule: holder of fastest race lap scores +1 point, but only if they finish P1–P10.
 Magenta "FL" badge shown next to driver name in race results. Included in constructor totals.
 
+### Undercut / Overcut AI Awareness (`core/ai.py`, `core/engine.py`)
+AI strategy engine now reacts to rival pit stops:
+- `pitted_last_lap: bool` field on `CarState` — set from `is_pitting_this_lap` at start of each new lap
+- **Undercut defense** (60% probability): if a car ≤2 positions behind pitted last lap AND tire_age ≥5 AND laps_remaining >8, consider pitting to deny fresh-tire undercut
+- **Cover pit** (45% probability): if a car ≤2 positions ahead is pitting this lap, may pit to cover
+- **Overcut instruction**: `choose_instruction()` returns ATTACK when the car directly ahead is in/just-exited pits (build gap before they emerge on fresh tires)
+- **Engineer radio alerts**: "⚠ {rival} has pitted — undercut threat!" and "{rival} is in the pits — push hard for the overcut!"
+
+### Position Battle Indicator (`ui/display.py`)
+Standings table shows `[bold red]⚔[/]` sword icon in the Gap column when two cars are within 0.5s of each other. Instantly highlights on-track battles.
+
+### Tire Age Delta vs Rivals (`ui/display.py`)
+Player telemetry panel shows `Tyre Δ: P{n}:{±laps}` for the cars immediately ahead and behind. Color-coded: green = fresher by >3 laps, yellow = within 3 laps, red = significantly older. Allows instant strategic reads for undercut/overcut timing.
+
 ## Tuning Parameters To Revisit
 
 | Parameter | Current | Flag | Location |

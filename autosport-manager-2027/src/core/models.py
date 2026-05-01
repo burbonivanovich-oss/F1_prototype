@@ -136,6 +136,7 @@ class CarState:
 
     # In-pit flag
     is_pitting_this_lap: bool = False
+    pitted_last_lap: bool = False
     pit_stop_duration_s: float = 0.0
 
     # ERS / MGU-K

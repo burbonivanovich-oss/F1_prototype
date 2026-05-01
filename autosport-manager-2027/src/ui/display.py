@@ -165,9 +165,11 @@ def build_standings_table(
 
         pos_str = f"[dim]DNF[/dim]" if car.dnf else str(car.position)
 
-        # Gap
+        # Gap — with battle indicator when within 0.5s of car ahead
         laps_behind = car.gap_to_leader_s >= 9000
         gap_s = _gap_str(car.gap_to_leader_s, laps_behind)
+        if not car.dnf and 0 < car.gap_to_ahead_s <= 0.5:
+            gap_s = f"[bold red]⚔[/] {_gap_str(car.gap_to_leader_s, laps_behind)}"
 
         # Tire compound badge — show race-relative H/M/S label
         phase = car.tire_phase
@@ -356,6 +358,33 @@ def build_player_panel(
         ers_line.append("  ERS:  ", style="white")
         ers_line.append(f"[{ers_bar}] {car.ers_charge_pct*100:.0f}%", style="bright_blue")
         lines.append(ers_line)
+
+        # Tire age delta vs rivals (ahead/behind)
+        sorted_all = state.sorted_cars()
+        pos_idx = next((i for i, c in enumerate(sorted_all) if c.driver_id == car.driver_id), -1)
+        if pos_idx >= 0:
+            tire_delta_parts = []
+            if pos_idx > 0:
+                ahead = sorted_all[pos_idx - 1]
+                d = car.tire_age_laps - ahead.tire_age_laps
+                style = "green" if d < -3 else ("yellow" if d < 3 else "red")
+                sign = "+" if d >= 0 else ""
+                tire_delta_parts.append((f"P{ahead.position}:{sign}{d}", style))
+            if pos_idx < len(sorted_all) - 1:
+                behind = sorted_all[pos_idx + 1]
+                if not behind.dnf:
+                    d = car.tire_age_laps - behind.tire_age_laps
+                    style = "green" if d < -3 else ("yellow" if d < 3 else "red")
+                    sign = "+" if d >= 0 else ""
+                    tire_delta_parts.append((f"P{behind.position}:{sign}{d}", style))
+            if tire_delta_parts:
+                td_line = Text()
+                td_line.append("  Tyre Δ: ", style="white")
+                for i, (txt, sty) in enumerate(tire_delta_parts):
+                    if i > 0:
+                        td_line.append("  ", style="dim")
+                    td_line.append(txt, style=sty)
+                lines.append(td_line)
 
         # Pit suggestion
         if profile:

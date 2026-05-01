@@ -327,6 +327,7 @@ class RaceEngine:
 
         # ── 3. Clear pitting flags from last lap ─────────────────────────────
         for car in state.cars:
+            car.pitted_last_lap = car.is_pitting_this_lap
             car.is_pitting_this_lap = False
             car.pit_stop_duration_s = 0.0
 
@@ -944,6 +945,29 @@ class RaceEngine:
                     behind_name = behind_driver.short_name if behind_driver else "car behind"
                     _radio("defend_warning", 4,
                            f"📻 Engineer: {behind_name} is {behind.gap_to_ahead_s:.1f}s behind — watch your mirrors.")
+
+            # ── Undercut threat: rival behind just pitted ────────────────────
+            laps_left = state.total_laps - lap
+            if pos_idx >= 0 and pos_idx < len(sorted_cars) - 1 and laps_left > 8:
+                for other in sorted_cars[pos_idx + 1: pos_idx + 4]:
+                    if other.dnf:
+                        continue
+                    if other.pitted_last_lap:
+                        other_driver = self.drivers.get(other.driver_id)
+                        other_name = other_driver.short_name if other_driver else "rival"
+                        gap = other.gap_to_leader_s - car.gap_to_leader_s
+                        _radio("undercut_threat", 6,
+                               f"📻 Engineer: ⚠ {other_name} has pitted — undercut threat! Gap: {gap:.1f}s. Consider boxing.")
+                        break
+
+            # ── Overcut opportunity: rival ahead just pitted ─────────────────
+            if pos_idx > 0 and laps_left > 5:
+                target_ahead = sorted_cars[pos_idx - 1]
+                if target_ahead.is_pitting_this_lap or target_ahead.pitted_last_lap:
+                    ahead_driver = self.drivers.get(target_ahead.driver_id)
+                    ahead_name = ahead_driver.short_name if ahead_driver else "car ahead"
+                    _radio("overcut_opp", 6,
+                           f"📻 Engineer: {ahead_name} is in the pits — push hard for the overcut!")
 
             # ── Fuel warning ──────────────────────────────────────────────────
             fuel_laps = car.fuel_kg / max(0.1, self.circuit.fuel_consumption_kg)

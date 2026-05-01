@@ -80,6 +80,23 @@ class AIStrategyEngine:
             if drying_laps >= 2:
                 return True
 
+        # Undercut / overcut awareness
+        if laps_remaining > 8 and car.tire_age_laps >= 5:
+            sorted_cars = race.sorted_cars()
+            my_pos = car.position
+            for other in sorted_cars:
+                if other.driver_id == car.driver_id or other.dnf:
+                    continue
+                pos_delta = my_pos - other.position  # positive = other is behind us
+                # Car just behind us pitted last lap → undercut threat
+                if 0 < pos_delta <= 2 and other.pitted_last_lap:
+                    if self.rng.random() < 0.60:
+                        return True
+                # Car just ahead of us pitted this lap → cover their undercut attempt
+                if -2 <= pos_delta < 0 and other.is_pitting_this_lap:
+                    if self.rng.random() < 0.45:
+                        return True
+
         return False
 
     # ── Compound selection ────────────────────────────────────────────────────
@@ -170,6 +187,16 @@ class AIStrategyEngine:
         # Attack when on fresh tires with pace advantage
         if car.tire_age_laps <= 3 and car.position > 1:
             return DriverInstruction.ATTACK
+
+        # Overcut push: car ahead just pitted — attack hard to build gap before they emerge
+        sorted_cars = race.sorted_cars()
+        my_pos = car.position
+        for other in sorted_cars:
+            if other.driver_id == car.driver_id or other.dnf:
+                continue
+            if other.position == my_pos - 1 and (other.is_pitting_this_lap or other.pitted_last_lap):
+                # Car directly ahead is in pits — push hard to build overcut gap
+                return DriverInstruction.ATTACK
 
         # Defend when being closely followed
         if car.gap_to_ahead_s < 0.8 and car.position < 5:
