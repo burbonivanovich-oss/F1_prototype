@@ -146,6 +146,10 @@ class CarState:
     lap_times: list[float] = field(default_factory=list)    # every lap time logged
     gap_history: list[float] = field(default_factory=list)  # gap to leader each lap
 
+    # Sector times — circuit-split lap times (S1, S2, S3)
+    last_sector_times: tuple = field(default_factory=lambda: (0.0, 0.0, 0.0))
+    best_sector_times: tuple = field(default_factory=lambda: (9999.0, 9999.0, 9999.0))
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Race-level state

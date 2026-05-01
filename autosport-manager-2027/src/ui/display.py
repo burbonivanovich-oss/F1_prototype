@@ -98,6 +98,16 @@ def _weather_icon(cond: WeatherCondition) -> str:
     return icons.get(cond, "?")
 
 
+def compound_race_label(compound: "TireCompound", available: list) -> str:
+    """Return H/M/S based on position in this race's compound allocation.
+    At Monza (C2/C3/C4): C2=H, C3=M, C4=S. At Monaco (C4/C5/C6): C4=H, C5=M, C6=S."""
+    dry = sorted([c for c in available if c.is_dry], key=lambda c: c.value)
+    if compound not in dry:
+        return compound.display_name
+    idx = dry.index(compound)
+    return ("H", "M", "S")[min(idx, 2)]
+
+
 def _sc_badge(sc: SafetyCarState) -> str:
     if sc == SafetyCarState.DEPLOYED:
         return "[bold yellow on red] SC [/]"
@@ -124,6 +134,7 @@ def build_standings_table(
     state: RaceState,
     drivers: dict,
     teams: dict,
+    available_compounds: list | None = None,
 ) -> Table:
     table = Table(
         box=box.SIMPLE_HEAD,
@@ -158,10 +169,11 @@ def build_standings_table(
         laps_behind = car.gap_to_leader_s >= 9000
         gap_s = _gap_str(car.gap_to_leader_s, laps_behind)
 
-        # Tire compound badge
-        profile = TIRE_PROFILES.get(car.tire_compound)
+        # Tire compound badge — show race-relative H/M/S label
         phase = car.tire_phase
-        tire_text = _compound_badge(car.tire_compound, car.tire_age_laps, phase, car.tire_deg_pct)
+        race_lbl = compound_race_label(car.tire_compound, available_compounds or [])
+        badge_color = _tire_color(phase, car.tire_deg_pct)
+        tire_text = Text(f"{race_lbl}·{car.tire_age_laps:02d}", style=badge_color)
 
         # Last lap time
         if car.last_lap_time_s > 0:
@@ -248,10 +260,14 @@ def build_player_panel(
             window = optimal_tire_window_remaining(
                 profile, car.tire_age_laps, circuit.tire_deg_multiplier
             )
+        # Race-relative compound label (H/M/S for this weekend's allocation)
+        race_label = compound_race_label(car.tire_compound, available_compounds or [car.tire_compound])
+        cmpd_num = car.tire_compound.name  # C3, C4, C5 etc.
+
         tire_line = Text()
         tire_line.append(f"  Tyre: ", style="white")
         tire_line.append(
-            f"{car.tire_compound.display_name} [{car.tire_age_laps} laps] — {phase_label}",
+            f"{race_label} ({cmpd_num}) [{car.tire_age_laps} laps] — {phase_label}",
             style=tire_color
         )
         if window <= 3 and phase != TirePhase.CLIFF:
@@ -278,6 +294,27 @@ def build_player_panel(
                 delta_style = "green" if delta < 0.3 else ("yellow" if delta < 1.0 else "red")
                 spark_line.append(f"  +{delta:.2f}s vs best", style=delta_style)
             lines.append(spark_line)
+
+        # Sector times (S1 / S2 / S3 with purple=personal best, green=faster, yellow=slower)
+        s1, s2, s3 = car.last_sector_times
+        if s1 > 0.1:
+            b1, b2, b3 = car.best_sector_times
+            def _s_style(t: float, best: float) -> str:
+                if t <= best + 0.001:
+                    return "bold magenta"   # personal best — purple sector
+                if t <= best + 0.15:
+                    return "green"
+                if t <= best + 0.5:
+                    return "yellow"
+                return "red"
+            sector_line = Text()
+            sector_line.append("  Sectors: ", style="white")
+            sector_line.append(f"S1 {s1:6.3f}", style=_s_style(s1, b1))
+            sector_line.append(" │ ", style="dim")
+            sector_line.append(f"S2 {s2:6.3f}", style=_s_style(s2, b2))
+            sector_line.append(" │ ", style="dim")
+            sector_line.append(f"S3 {s3:6.3f}", style=_s_style(s3, b3))
+            lines.append(sector_line)
 
         # Fuel
         fuel_laps = car.fuel_kg / circuit.fuel_consumption_kg
@@ -598,7 +635,7 @@ def render_race_screen_rich(
     # Standings + player telemetry + track map side by side
     from ..core.models import TireCompound
     available_compounds = [TireCompound(n) for n in circuit.available_compounds]
-    standings_table = build_standings_table(state, drivers, teams)
+    standings_table = build_standings_table(state, drivers, teams, available_compounds)
     standings_panel = Panel(standings_table, title="[bold]Live Standings[/]",
                             border_style="white", padding=(0, 0))
     player_panel = build_player_panel(state, drivers, teams, circuit, available_compounds)

@@ -370,6 +370,20 @@ class RaceEngine:
             # Record history for sparkline display
             car.lap_times.append(lap_time)
 
+            # Compute sector times: circuit-weighted split with independent noise
+            s = self.circuit.sector_splits
+            n1 = self.rng.gauss(0, 0.06)
+            n2 = self.rng.gauss(0, 0.06)
+            s1 = lap_time * s[0] + n1
+            s2 = lap_time * s[1] + n2
+            s3 = max(0.1, lap_time - s1 - s2)
+            car.last_sector_times = (s1, s2, s3)
+            car.best_sector_times = (
+                min(car.best_sector_times[0], s1),
+                min(car.best_sector_times[1], s2),
+                min(car.best_sector_times[2], s3),
+            )
+
             # Track fastest lap
             if lap_time < state.fastest_lap_time_s:
                 state.fastest_lap_time_s = lap_time

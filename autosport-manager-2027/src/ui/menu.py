@@ -175,21 +175,18 @@ def pre_race_strategy(
 
     # Show circuit strategy context
     available_compounds = [TireCompound(n) for n in circuit.available_compounds]
-    compound_names = {
-        TireCompound.C1: "C1 Ultra-Hard",
-        TireCompound.C2: "C2 Hard",
-        TireCompound.C3: "C3 Hard",
-        TireCompound.C4: "C4 Medium",
-        TireCompound.C5: "C5 Soft",
-        TireCompound.C6: "C6 Ultra-Soft",
-    }
+    race_labels = ("HARD", "MEDIUM", "SOFT")
+    race_colors = ("white", "yellow", "red")
 
-    console.print(f"[yellow]Available compounds:[/]")
-    for idx, c in enumerate(available_compounds, 1):
-        num = c.value
-        name = compound_names.get(c, str(c))
-        cd = COMPOUND_DISPLAY.get(num, (str(num), "white"))
-        console.print(f"  [{idx}] [{cd[1]}]{name}[/]")
+    def _compound_display(c: TireCompound, idx_in_alloc: int) -> str:
+        """e.g. 'C4 (SOFT this weekend)' at Monza where C4 is the softest option."""
+        label = race_labels[idx_in_alloc]
+        color = race_colors[idx_in_alloc]
+        return f"[{color}]{c.name} — {label}[/]"
+
+    console.print(f"[yellow]Available compounds this weekend:[/]")
+    for idx, c in enumerate(available_compounds):
+        console.print(f"  [{idx+1}] {_compound_display(c, idx)}")
 
     console.print()
     console.print(f"[dim]Circuit: {circuit.name}  Tyre deg: {circuit.tire_deg_multiplier:.2f}x  "
@@ -223,11 +220,8 @@ def pre_race_strategy(
     for driver in drivers:
         console.print(f"[bold]{driver.name}[/] (Pace {driver.pace} | Tyre Mgmt {driver.tire_management})")
         console.print("  Starting compound:")
-        for idx, c in enumerate(available_compounds, 1):
-            num = c.value
-            name = compound_names.get(c, str(c))
-            cd = COMPOUND_DISPLAY.get(num, (str(num), "white"))
-            console.print(f"    [{idx}] [{cd[1]}]{name}[/]")
+        for idx, c in enumerate(available_compounds):
+            console.print(f"    [{idx+1}] {_compound_display(c, idx)}")
 
         while True:
             try:
@@ -237,8 +231,8 @@ def pre_race_strategy(
                 )
                 if 1 <= choice <= len(available_compounds):
                     chosen = available_compounds[choice - 1]
-                    cd = COMPOUND_DISPLAY.get(chosen.value, (str(chosen.value), "white"))
-                    console.print(f"  → [{cd[1]}]{compound_names.get(chosen, str(chosen))}[/]")
+                    chosen_idx = available_compounds.index(chosen)
+                    console.print(f"  → {_compound_display(chosen, chosen_idx)}")
                     overrides[driver.id] = {"compound": chosen}
                     break
                 console.print("[red]Invalid choice.[/]")
