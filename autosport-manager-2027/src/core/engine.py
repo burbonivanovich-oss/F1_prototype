@@ -83,6 +83,8 @@ class RaceEngine:
         self._player_pit_commands: dict[int, Optional[TireCompound]] = {}
         # Player driver instructions (may be overridden each lap)
         self._player_instructions: dict[int, DriverInstruction] = {}
+        # Engineer radio cooldown: maps (driver_id, category) → last lap sent
+        self._radio_last: dict[tuple[int, str], int] = {}
 
         # Build initial race state (qualifying grid + car states)
         self.race_state = self._build_initial_state(player_car_states)
@@ -263,6 +265,9 @@ class RaceEngine:
 
         # ── 10. AI: choose next instruction ──────────────────────────────────
         self._update_ai_instructions(state)
+
+        # ── 10b. Engineer radio for player cars ───────────────────────────────
+        self._engineer_radio(state, lap)
 
         # ── 11. Add pit stop events ───────────────────────────────────────────
         for pit in pit_results:
@@ -659,6 +664,122 @@ class RaceEngine:
                 continue
             driver = self.drivers[car.driver_id]
             car.instruction = self.ai.choose_instruction(car, state, driver)
+
+    # ── Engineer radio messages ───────────────────────────────────────────────
+
+    def _engineer_radio(self, state: "RaceState", lap: int) -> None:
+        """
+        Generate engineer radio messages for player cars at key moments.
+        Rate-limited per (driver_id, category) to avoid spam.
+        """
+        from .tire import TIRE_PROFILES, optimal_tire_window_remaining
+
+        player_cars = state.get_player_cars()
+
+        for car in player_cars:
+            if car.dnf or car.is_pitting_this_lap:
+                continue
+
+            driver = self.drivers.get(car.driver_id)
+            if not driver:
+                continue
+
+            laps_left = state.total_laps - lap
+
+            def _radio(category: str, cooldown: int, msg: str) -> None:
+                key = (car.driver_id, category)
+                if lap - self._radio_last.get(key, -999) >= cooldown:
+                    self._radio_last[key] = lap
+                    state.events.append(RaceEvent(
+                        lap, driver.name, "INFO", msg, is_player_event=True
+                    ))
+
+            # ── Tire window warnings ──────────────────────────────────────────
+            profile = TIRE_PROFILES.get(car.tire_compound)
+            if profile and not car.is_pitting_this_lap:
+                window = optimal_tire_window_remaining(
+                    profile, car.tire_age_laps, self.circuit.tire_deg_multiplier
+                )
+                if car.tire_phase == TirePhase.CLIFF:
+                    _radio("tire_cliff", 2,
+                           f"📻 {driver.short_name}: Box box box! Tyre is gone — pit NOW!")
+                elif window == 4:
+                    _radio("tire_4", 5,
+                           f"📻 Engineer: {driver.short_name}, you have four laps of tyre left.")
+                elif window == 2:
+                    _radio("tire_2", 3,
+                           f"📻 Engineer: Two laps, {driver.short_name}. Start thinking about the box.")
+                elif window == 1:
+                    _radio("tire_1", 2,
+                           f"📻 Engineer: Last lap of the tyre, {driver.short_name}. Box next lap.")
+
+            # ── Safety car pit window ─────────────────────────────────────────
+            if (state.safety_car in (SafetyCarState.DEPLOYED, SafetyCarState.VSC)
+                    and car.tire_age_laps >= 6 and laps_left > 8):
+                _radio("sc_window", 4,
+                       f"📻 Engineer: Safety car — free stop available! Box this lap, {driver.short_name}!")
+
+            # ── DRS / gap battle ahead ────────────────────────────────────────
+            if 0 < car.gap_to_ahead_s <= 1.0 and car.position > 1:
+                sorted_cars = state.sorted_cars()
+                pos_idx = next((i for i, c in enumerate(sorted_cars) if c.driver_id == car.driver_id), -1)
+                if pos_idx > 0:
+                    target = sorted_cars[pos_idx - 1]
+                    target_driver = self.drivers.get(target.driver_id)
+                    target_name = target_driver.short_name if target_driver else "car ahead"
+                    if car.gap_to_ahead_s <= 0.5:
+                        _radio("drs_attack", 3,
+                               f"📻 Engineer: DRS engaged — go for it on {target_name}, {driver.short_name}!")
+                    else:
+                        _radio("drs_hunt", 4,
+                               f"📻 Engineer: Gap to {target_name}: {car.gap_to_ahead_s:.1f}s — keep pushing.")
+
+            # ── Car closing from behind ───────────────────────────────────────
+            sorted_cars = state.sorted_cars()
+            pos_idx = next((i for i, c in enumerate(sorted_cars) if c.driver_id == car.driver_id), -1)
+            if pos_idx >= 0 and pos_idx < len(sorted_cars) - 1:
+                behind = sorted_cars[pos_idx + 1]
+                if 0 < behind.gap_to_ahead_s <= 1.2 and not behind.dnf:
+                    behind_driver = self.drivers.get(behind.driver_id)
+                    behind_name = behind_driver.short_name if behind_driver else "car behind"
+                    _radio("defend_warning", 4,
+                           f"📻 Engineer: {behind_name} is {behind.gap_to_ahead_s:.1f}s behind — watch your mirrors.")
+
+            # ── Fuel warning ──────────────────────────────────────────────────
+            fuel_laps = car.fuel_kg / max(0.1, self.circuit.fuel_consumption_kg)
+            if fuel_laps < laps_left - 1 and laps_left > 3:
+                _radio("fuel_warn", 5,
+                       f"📻 Engineer: Fuel is short, {driver.short_name} — switch to fuel save mode.")
+            elif 1 < laps_left <= 5 and fuel_laps >= laps_left:
+                _radio("fuel_ok", 99,
+                       f"📻 Engineer: Fuel is fine to the end. Push if you need to.")
+
+            # ── Final laps sprint ─────────────────────────────────────────────
+            if laps_left == 5:
+                _radio("5_to_go", 99,
+                       f"📻 Engineer: Five laps to go, {driver.short_name}. Give it everything.")
+            elif laps_left == 3:
+                _radio("3_to_go", 99,
+                       f"📻 Engineer: Three laps remaining. P{car.position} — keep it clean.")
+            elif laps_left == 1:
+                _radio("last_lap", 99,
+                       f"📻 Engineer: Final lap, {driver.short_name}! You're P{car.position}.")
+
+            # ── New position gained (podium / points) ────────────────────────
+            if car.position <= 3:
+                _radio("podium", 10,
+                       f"📻 Engineer: P{car.position} — you're on the podium! Keep it together.")
+            elif car.position <= 10 and laps_left <= 10:
+                _radio("points", 8,
+                       f"📻 Engineer: P{car.position} — you're in the points. Bring it home.")
+
+            # ── Fastest lap within reach (last 10 laps) ───────────────────────
+            fl = state.fastest_lap_time_s
+            ll = car.last_lap_time_s
+            if (laps_left <= 10 and laps_left >= 2 and ll > 0 and fl > 0
+                    and ll - fl < 0.8 and car.tire_phase != TirePhase.CLIFF):
+                _radio("fl_attempt", 5,
+                       f"📻 Engineer: You're {ll - fl:.2f}s off fastest lap — push for the bonus point!")
 
     # ── Race finalisation ─────────────────────────────────────────────────────
 
