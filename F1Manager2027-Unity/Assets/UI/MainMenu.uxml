@@ -29,6 +29,40 @@
             <ui:Button name="circuit-confirm-btn" class="confirm-button" text="CONFIRM CIRCUIT" />
         </ui:VisualElement>
 
+        <!-- Qualifying results viewer -->
+        <ui:VisualElement name="qualifying-screen" class="screen hidden-screen">
+            <ui:Label name="qual-session-title" class="screen-title" text="Q1  —  QUALIFYING" />
+            <ui:Label name="qual-session-desc"  class="qual-session-desc" text="20 drivers · bottom 5 eliminated" />
+
+            <!-- Session tabs -->
+            <ui:VisualElement class="qual-tabs">
+                <ui:Button name="qual-tab-q1" class="qual-tab qual-tab-active" text="Q1" />
+                <ui:Button name="qual-tab-q2" class="qual-tab qual-tab-inactive" text="Q2" />
+                <ui:Button name="qual-tab-q3" class="qual-tab qual-tab-inactive" text="Q3" />
+            </ui:VisualElement>
+
+            <!-- Column headers -->
+            <ui:VisualElement class="qual-header-row">
+                <ui:Label class="qual-col-pos"  text="POS" />
+                <ui:Label class="qual-col-bar"  text="" />
+                <ui:Label class="qual-col-name" text="DRIVER" />
+                <ui:Label class="qual-col-team" text="TEAM" />
+                <ui:Label class="qual-col-time" text="BEST LAP" />
+                <ui:Label class="qual-col-gap"  text="GAP" />
+                <ui:Label class="qual-col-cmpd" text="TYRE" />
+                <ui:Label class="qual-col-badge-hdr" text="STATUS" />
+            </ui:VisualElement>
+
+            <!-- Timing tower -->
+            <ui:ScrollView name="qual-timing-tower" class="qual-tower" />
+
+            <!-- Pole / Q2-rule notice -->
+            <ui:Label name="qual-pole-notice" class="qual-pole-notice" text="" />
+
+            <!-- Navigation -->
+            <ui:Button name="qual-next-btn" class="confirm-button" text="Q2  →" />
+        </ui:VisualElement>
+
         <!-- Pre-race strategy -->
         <ui:VisualElement name="strategy-screen" class="screen hidden-screen">
             <ui:Label class="screen-title" text="PRE-RACE STRATEGY" />

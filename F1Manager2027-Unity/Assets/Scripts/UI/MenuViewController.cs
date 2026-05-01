@@ -132,7 +132,8 @@ namespace F1Manager
             PopulateResults(state);
         }
 
-        private void ShowOnly(VisualElement screen)
+        /// <summary>Hides all managed screens (so QualifyingViewController can take over).</summary>
+        public void HideAll()
         {
             foreach (var s in new[] { _teamScreen, _circuitScreen, _strategyScreen, _resultsScreen })
             {
@@ -140,6 +141,11 @@ namespace F1Manager
                 s.RemoveFromClassList("active-screen");
                 s.AddToClassList("hidden-screen");
             }
+        }
+
+        private void ShowOnly(VisualElement screen)
+        {
+            HideAll();
             screen?.RemoveFromClassList("hidden-screen");
             screen?.AddToClassList("active-screen");
         }

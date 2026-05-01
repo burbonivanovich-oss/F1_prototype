@@ -22,8 +22,9 @@ namespace F1Manager
         [SerializeField] private GameDatabase gameDatabase;
 
         // ── Sub-controllers ───────────────────────────────────────────────────
-        private MenuViewController  _menuVC;
-        private RaceViewController  _raceVC;
+        private MenuViewController      _menuVC;
+        private QualifyingViewController _qualVC;
+        private RaceViewController      _raceVC;
 
         // ── Session state ─────────────────────────────────────────────────────
         public TeamInfo    SelectedTeam    { get; private set; }
@@ -51,6 +52,7 @@ namespace F1Manager
         private void Start()
         {
             _menuVC = new MenuViewController(menuDocument.rootVisualElement, this);
+            _qualVC = new QualifyingViewController(menuDocument.rootVisualElement, this);
             _raceVC = new RaceViewController(raceDocument.rootVisualElement, this);
 
             raceDocument.rootVisualElement.style.display = DisplayStyle.None;
@@ -87,6 +89,14 @@ namespace F1Manager
             var qEngine = new QualifyingEngine(SelectedCircuit, allDrivers, allTeams, _rng);
             QualifyingResult = qEngine.RunQualifying(availableCompounds, SelectedTeam.id);
 
+            _menuVC.HideAll();
+            _qualVC.Show(QualifyingResult);
+        }
+
+        public void OnQualifyingComplete(QualifyingResult result)
+        {
+            QualifyingResult = result;
+            _qualVC.Hide();
             _menuVC.ShowStrategyScreen(SelectedTeam, SelectedCircuit, QualifyingResult);
         }
 
@@ -112,7 +122,7 @@ namespace F1Manager
                 {
                     car.FuelKg = ov.FuelKg;
                     if (ov.StartingCompound.HasValue)
-                        car.TireCompound = ov.StartingCompound.Value;
+                        car.Compound = ov.StartingCompound.Value;
                 }
             }
 
