@@ -186,9 +186,9 @@ Full qualifying simulation before each race:
 - Player compound choice per driver per session with grip delta shown
 - Timing table shows H/M/S labels, gaps, eliminated markers
 
-### Fastest Lap Bonus Point
-Real F1 rule: holder of fastest race lap scores +1 point, but only if they finish P1–P10.
-Magenta "FL" badge shown next to driver name in race results. Included in constructor totals.
+### Fastest Lap Display
+Fastest lap holder shown with magenta "FL" badge in race results. **No bonus point** —
+rule was removed in 2025 regulations (`season.py` does not award +1 for FL).
 
 ### Undercut / Overcut AI Awareness (`core/ai.py`, `core/engine.py`)
 AI strategy engine now reacts to rival pit stops:
@@ -218,14 +218,34 @@ Player telemetry panel shows `Tyre Δ: P{n}:{±laps}` for the cars immediately a
 | Momentum decay rate | 0.82/lap | Balance drama vs stability | engine.py |
 | power_sensitivity lap time scale | 0.015s/pt | Circuit type gap width | engine.py |
 
+### Season Mode (`src/core/season.py`, `src/main.py`)
+Full 24-race season loop accessible from the main menu (mode "2"):
+- `SeasonEngine` tracks driver + constructor standings, 24-round calendar, sprint weekends
+- Race points `[25,18,15,12,10,8,6,4,2,1]`; sprint points `[8,7,6,5,4,3,2,1]`
+- No fastest-lap bonus (rule removed 2025)
+- Prize money distribution at season end: P1=$69M … P10=$27M
+
+### Car Development Screen (`src/core/car_development.py`, `src/ui/development_screen.py`)
+Rich TUI upgrade tree accessible between races (`d` command in season mode):
+- 21 nodes across 9 areas: PU (PU_T1/T2/T3, ERS_T1/T2), AERO_FRONT/REAR/FLOOR, CHASSIS, SUSPENSION, BRAKES, GEARBOX, COOLING
+- Each node costs tokens + R&D points; weekly tick accrues R&D, rolls for success
+- **Note**: Python implementation uses single-phase `weeks_to_develop` (no research phase).
+  The full two-phase Research→Development workflow with ATR budget is Unity-only (see Unity CLAUDE.md).
+- AI teams auto-develop via `auto_develop_ai()`
+
+### Driver Market (`src/core/driver_market.py`)
+Seasonal contract system: `DriverMarket.make_offer()`, `run_ai_transfers()`, `close_transfer_window()`.
+Salary bands by average pace+racecraft; team budget caps: top=€90M, mid=€60M, lower=€35M.
+
 ## Known Prototype Limitations
 
-1. **No season management**: Only single-race prototype; no R&D, contracts, or budget system yet
-2. **No save/load**: Each run is fresh
-3. **20 cars not 24**: Prototype uses 20 drivers (2 per 10 teams)
-4. **Pit lane time fixed**: 20s pit lane loss is a constant approximation
-5. **No sprint format**: Only traditional race weekend
-6. **Weather forecast shows condition only**: No rain intensity forecast
+1. **No save/load**: Each run is fresh
+2. **20 cars not 24**: Prototype uses 20 drivers (2 per 10 teams)
+3. **Pit lane time fixed**: 20s pit lane loss is a constant approximation
+4. **No sprint format**: Only traditional race weekend (season.py calendar includes sprint rounds but SprintEngine is Unity-only)
+5. **Weather forecast shows condition only**: No rain intensity forecast
+6. **R&D single-phase**: Python car_development.py has one `weeks_to_develop` phase; two-phase Research/Development with ATR budget is Unity-only
+7. **No EDUO tracking**: Power unit component penalties not tracked in Python season mode
 
 ## Development Notes
 
